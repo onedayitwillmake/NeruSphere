@@ -27,7 +27,7 @@ WorldController::~WorldController() {
 }
 
 void WorldController::init( int positionIterations, int velocityIterations ) {
-	b2Vec2 gravity(0.0f, 1.0f);
+	b2Vec2 gravity(0.0f, 0.0f);
 	_world = new b2World( gravity );
 	_positionIterations = positionIterations;
 	_velocityIterations = velocityIterations;
@@ -134,7 +134,7 @@ b2Body* WorldController::createCircle( float radius, ci::Vec2f pos ) {
 	b2FixtureDef mFixtureDef;
 	mFixtureDef.shape = &aShape;
 	mFixtureDef.friction = 0.3f;
-	mFixtureDef.restitution = 0.01f;
+	mFixtureDef.restitution = 0.1f;
 	mFixtureDef.density = 1.0f;
 
 	// Body definition
