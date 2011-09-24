@@ -11,6 +11,8 @@
 #ifndef WORLDCONTROLLER_H_
 #define WORLDCONTROLLER_H_
 #include <Box2D/Box2D.h>
+#include "cinder/Vector.h"
+
 class WorldController
 {
 	public:
@@ -29,8 +31,13 @@ class WorldController
 		void debugDraw( bool drawBodies=true, bool drawContacts=true );
 		void draw();
 
+		b2Body* createRect( ci::Vec2f size, ci::Vec2f pos );
+		b2Body* createCircle( float size, ci::Vec2f pos );
+
 	private:
 		b2World* _world;
+		int _velocityIterations, _positionIterations;
+		float _timeStep;
 };
 
 #endif /* WORLDCONTROLLER_H_ */

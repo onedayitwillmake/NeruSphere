@@ -539,7 +539,7 @@
 								</option>
 								<option id="macosx.cpp.link.option.libs.376900039" name="Libraries (-l)" superClass="macosx.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="gl"/>
-									<listOptionValue builtIn="false" value="cinder_d"/>
+									<listOptionValue builtIn="false" value="cinder"/>
 								</option>
 								<option id="macosx.cpp.link.option.other.251685323" name="Other options (-Xlinker [option])" superClass="macosx.cpp.link.option.other" valueType="stringList">
 									<listOptionValue builtIn="false" value=""/>
@@ -560,21 +560,26 @@
 								<option id="gnu.cpp.compiler.option.include.paths.1192214293" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="${CINDER_PATH}/boost"/>
 									<listOptionValue builtIn="false" value="${CINDER_PATH}/include"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:${ProjDirPath}/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NeruSphere/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NeruSphere/thirdparty}&quot;"/>
 									<listOptionValue builtIn="false" value="/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/OpenGL.framework/Headers"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.optimization.level.483634675" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.other.other.1928456890" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -arch i386" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.optimization.flags.187548648" name="Other optimization flags" superClass="gnu.cpp.compiler.option.optimization.flags" value="-ffast-math" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.527275410" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.macosx.base.679590689" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.macosx.base">
 								<option id="gnu.c.compiler.option.misc.other.364181773" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -arch i386" valueType="string"/>
+								<option id="gnu.c.compiler.option.optimization.flags.102608058" name="Other optimization flags" superClass="gnu.c.compiler.option.optimization.flags" value="-ffast-math" valueType="string"/>
+								<option id="gnu.c.compiler.option.optimization.level.2004784964" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" value="gnu.c.optimization.level.most" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.538961224" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="thirdparty"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

@@ -17,6 +17,7 @@
 #include "Conversions.h"
 #include "cinder/app/App.h"
 
+using namespace ci::box2d;
 WorldController::WorldController() {
 	std::cout << "WorldController Constructor! " << std::endl;
 }
@@ -26,39 +27,16 @@ WorldController::~WorldController() {
 }
 
 void WorldController::init( int positionIterations, int velocityIterations ) {
-	b2Vec2 gravity(0.0f, -1000.0f);
+	b2Vec2 gravity(0.0f, 1.0f);
 	_world = new b2World( gravity );
-
-	using namespace ci::box2d;
-	ci::app::App *appInstance = ci::app::App::get();
-
-	ci::Vec2f size = appInstance->getWindowSize()/2.0f + ci::Vec2f(100.0f, 0.0f);
-	ci::Vec2f pos = appInstance->getWindowCenter();
-
-	ci::Rectf mBounds = ci::Rectf( -size.x/2.0f, -size.y/2.0f, size.x/2.0f, size.y/2.0f );
-
-
-	b2PolygonShape mShape;
-	mShape.SetAsBox(	Conversions::toPhysics( size.x/2.0f ), Conversions::toPhysics( size.y/2.0f ) );
-
-	//
-	b2FixtureDef mFixtureDef;
-	mFixtureDef.shape = &mShape;
-	mFixtureDef.friction = 0.3f;
-	mFixtureDef.restitution = 0.15f;
-	mFixtureDef.density = 1.0f;
-
-
-	b2BodyDef mBodyDef;
-	mBodyDef.type = b2_dynamicBody;
-	mBodyDef.position.Set(	Conversions::toPhysics( pos.x ), Conversions::toPhysics( pos.y ) );
-
-	b2Body* body = _world->CreateBody( &mBodyDef );
-	body->CreateFixture( &mFixtureDef );
+	_positionIterations = positionIterations;
+	_velocityIterations = velocityIterations;
+	_timeStep = 1.0f / 60.0f;
 }
 
 void WorldController::update() {
-
+	_world->Step( _timeStep, _velocityIterations, _positionIterations );
+	_world->ClearForces();
 }
 
 void WorldController::clear() {
@@ -118,4 +96,54 @@ void WorldController::debugDraw( bool drawBodies, bool drawContacts ) {
 		}
 
 	}
+}
+
+
+b2Body* WorldController::createRect( ci::Vec2f size, ci::Vec2f pos ) {
+	ci::app::App *appInstance = ci::app::App::get();
+
+	// Shape definition
+	b2PolygonShape mShape;
+	mShape.SetAsBox(	Conversions::toPhysics( size.x/2.0f ), Conversions::toPhysics( size.y/2.0f ) );
+
+	// Fixture definition
+	b2FixtureDef mFixtureDef;
+	mFixtureDef.shape = &mShape;
+	mFixtureDef.friction = 0.3f;
+	mFixtureDef.restitution = 0.0f;
+	mFixtureDef.density = 1.0f;
+
+	// Body definition
+	b2BodyDef mBodyDef;
+	mBodyDef.type = b2_dynamicBody;
+	mBodyDef.position.Set(	Conversions::toPhysics( pos.x ), Conversions::toPhysics( pos.y ) );
+
+	b2Body* body = _world->CreateBody( &mBodyDef );
+	body->CreateFixture( &mFixtureDef );
+
+	return body;
+}
+
+b2Body* WorldController::createCircle( float radius, ci::Vec2f pos ) {
+
+	// Shape definition
+	b2CircleShape aShape;
+	aShape.m_radius = Conversions::toPhysics( radius );
+
+	// Fixture definition
+	b2FixtureDef mFixtureDef;
+	mFixtureDef.shape = &aShape;
+	mFixtureDef.friction = 0.3f;
+	mFixtureDef.restitution = 0.01f;
+	mFixtureDef.density = 1.0f;
+
+	// Body definition
+	b2BodyDef mBodyDef;
+	mBodyDef.type = b2_dynamicBody;
+	mBodyDef.position.Set(	Conversions::toPhysics( pos.x ), Conversions::toPhysics( pos.y ) );
+
+	b2Body* body = _world->CreateBody( &mBodyDef );
+	body->CreateFixture( &mFixtureDef );
+
+	return body;
 }
