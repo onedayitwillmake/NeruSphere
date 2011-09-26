@@ -14,8 +14,10 @@
 #include "cinder/Rect.h"
 #include "cinder/gl/gl.h"
 #include "cinder/Color.h"
-#include "Conversions.h"
 #include "cinder/app/App.h"
+#include "Conversions.h"
+#include "Constants.h"
+#include "PhysicsObject.h"
 
 using namespace ci::box2d;
 WorldController::WorldController() {
@@ -23,6 +25,17 @@ WorldController::WorldController() {
 }
 
 WorldController::~WorldController() {
+	std::cout << "WorldController Dealloc! " << std::endl;
+
+	b2Body* node = _world->GetBodyList();
+	while( node ) {
+		PhysicsObject* physicsObject = (PhysicsObject*) node->GetUserData();
+		if( physicsObject ) {
+			delete physicsObject;
+		}
+		node->SetUserData( NULL );
+		node = node->GetNext();
+	}
 	delete _world;
 }
 
@@ -37,18 +50,43 @@ void WorldController::init( int positionIterations, int velocityIterations ) {
 void WorldController::update() {
 	_world->Step( _timeStep, _velocityIterations, _positionIterations );
 	_world->ClearForces();
+
+	b2Body* node = _world->GetBodyList();
+	while( node ) {
+		b2Body* b = node;
+		node = node->GetNext();
+		PhysicsObject* physicsObject = (PhysicsObject*) b->GetUserData();
+		if( physicsObject ) {
+			physicsObject->update();
+			if( physicsObject->isDead() ) {
+
+				// Destruct physics object
+				PhysicsObject* physicsObject = (PhysicsObject*) b->GetUserData();
+				if( physicsObject ) {
+					delete physicsObject;
+				}
+				_world->DestroyBody( b );
+			}
+		}
+	}
 }
 
 void WorldController::clear() {
 
 }
 
-void WorldController::removeDeadElements() {
-
-}
-
 void WorldController::draw() {
-	debugDraw();
+	if( Constants::Defaults::DEBUG_DRAW )
+		debugDraw();
+
+	b2Body* b = _world->GetBodyList();
+	while( b ) {
+		PhysicsObject* physicsElement = (PhysicsObject*) b->GetUserData();
+		if( physicsElement ) {
+			physicsElement->draw();
+		}
+		b = b->GetNext();
+	}
 }
 
 void WorldController::debugDraw( bool drawBodies, bool drawContacts ) {
@@ -133,7 +171,7 @@ b2Body* WorldController::createCircle( float radius, ci::Vec2f pos ) {
 	// Fixture definition
 	b2FixtureDef mFixtureDef;
 	mFixtureDef.shape = &aShape;
-	mFixtureDef.friction = 0.3f;
+	mFixtureDef.friction = 0.9f;
 	mFixtureDef.restitution = 0.1f;
 	mFixtureDef.density = 1.0f;
 
@@ -144,6 +182,7 @@ b2Body* WorldController::createCircle( float radius, ci::Vec2f pos ) {
 
 	b2Body* body = _world->CreateBody( &mBodyDef );
 	body->CreateFixture( &mFixtureDef );
+
 
 	return body;
 }
