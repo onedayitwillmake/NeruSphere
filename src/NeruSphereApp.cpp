@@ -25,6 +25,7 @@
 #include "AudioAnalyzer.h"
 #include "Constants.h"
 #include "PhysicsObject.h"
+#include "Planet.h"
 #include <vector>
 
 using namespace ci::box2d;
@@ -32,7 +33,8 @@ using namespace ci;
 class NeruSphereApp : public ci::app::AppBasic {
 public:
 	WorldController _worldController;
-	b2Body* _planet;
+	b2Body* _planetBody;
+	Planet* _planetPhysicsObject;
 	AudioAnalyzer _audioAnalyzer;
 
 	void setup();
@@ -52,17 +54,13 @@ void NeruSphereApp::setup() {
 	std::cout << "Setting application path: " << getAppPath() << std::endl;
 	chdir( getAppPath().c_str( ) );
 
+	_planetBody = NULL;
+	_planetPhysicsObject = NULL;
+
 	_worldController.init( 4, 2 );
 	setupHeads();
 
-//	Constants::Instances::PERLIN_NOISE = Perlin(4, ci::Rand::randInt(999));
-	_planet = NULL;
-
-//	for(uint32_t j = 0; j < 60 * 5; j++) {
-//		_worldController.update();
-//		doGravity(j);
-//	}
-
+	ci::gl::enableAlphaBlending();
 }
 
 void NeruSphereApp::setupHeads() {
@@ -88,7 +86,9 @@ void NeruSphereApp::update() {
 	_audioAnalyzer.update();
 
 	using namespace ci::box2d;
-	if(_planet) _worldController.getWorld()->DestroyBody(_planet);
+	if(_planetBody) {
+		_worldController.getWorld()->DestroyBody(_planetBody);
+	}
 
 	// Shape definition
 	b2CircleShape aShape;
@@ -107,11 +107,22 @@ void NeruSphereApp::update() {
 	mBodyDef.position = Conversions::toPhysics( getWindowCenter() );
 	b2Body* body = _worldController.getWorld()->CreateBody( &mBodyDef );
 	body->CreateFixture( &mFixtureDef );
-	_planet = body;
+
+	_planetBody = body;
+
+	if( _planetPhysicsObject ) {
+		_planetPhysicsObject->setBody( body );
+	} else {
+		_planetPhysicsObject = new Planet( body );
+	}
+
+	body->SetUserData( _planetPhysicsObject );
 }
 
 void NeruSphereApp::draw() {
 	ci::gl::clear( ci::Color(0,0,0) );
+	ci::gl::color( ColorA(1.0f, 1.0f, 1.0f, 1.0f ) );
+
 	_worldController.draw();
 	_audioAnalyzer.draw();
 }

@@ -8,6 +8,8 @@
 #ifndef PHYSICSOBJECT_H_
 #define PHYSICSOBJECT_H_
 #include <Box2D/Box2D.h>
+#include "cinder/gl/gl.h"
+#include "cinder/gl/Texture.h"
 
 class PhysicsObject
 {
@@ -20,12 +22,16 @@ class PhysicsObject
 		void update();
 		// Draws the body
 		void draw();
-		bool isDead() { return false; };
+		void debugDraw();
 
 		///// ACCESSORS
 		b2Body*getBody() const { return _body; }
+		void setBody( b2Body* aBody );
+		bool isDead() { return false; };
 
 	protected:
+		void setupTexture();
+
 		// Applies radial gravity - assumes center is in physics units
 		void applyRadialGravity( b2Vec2 center );
 		// Applies perlin noise to the bodies motion
@@ -38,6 +44,8 @@ class PhysicsObject
 		int	_lifetime;
 		int _age;
 		float _agePer;
+
+		ci::gl::Texture texture;
 };
 
 #endif /* PHYSICSOBJECT_H_ */

@@ -23,7 +23,8 @@ namespace Constants {
 	};
 
 	struct Defaults {
-		const static int HEAD_COUNT = 400;
+
+		const static int HEAD_COUNT = 4;
 		const static bool DEBUG_DRAW = false;
 	};
 }

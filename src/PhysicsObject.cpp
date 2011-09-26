@@ -10,19 +10,31 @@
 #include "cinder/Vector.h"
 #include "cinder/CinderMath.h"
 #include "cinder/app/App.h"
-#include "cinder/gl/gl.h"
+#include "cinder/ImageIo.h"
+#include "cinder/Utilities.h"
+#include "cinder/CinderResources.h"
 #include "Conversions.h"
 #include "Constants.h"
+#include "Resources.h"
+#include "cinder/Rect.h"
 
 using namespace ci;
+using namespace ci::box2d;
+
 PhysicsObject::PhysicsObject( b2Body* aBody ) {
-	_body = aBody;
 	std::cout << "PhysicsObject created!" << std::endl;
+
+	setBody( aBody );
+	texture = gl::Texture( loadImage( ci::app::App::get()->loadResource( RES_PLANET ) ) );;
 }
 
 PhysicsObject::~PhysicsObject() {
 	std::cout << "PhysicsObject destructor!" << std::endl;
 	_body = NULL;
+}
+
+void PhysicsObject::setupTexture() {
+	texture = gl::Texture( loadImage( ci::app::App::get()->loadResource( RES_PLANET ) ) );
 }
 
 void PhysicsObject::update() {
@@ -32,7 +44,6 @@ void PhysicsObject::update() {
 }
 
 void PhysicsObject::applyRadialGravity( b2Vec2 center ) {
-	using namespace ci::box2d;
 	b2Vec2 pos = _body->GetPosition();
 	b2Vec2 delta = center - pos;
 
@@ -63,9 +74,28 @@ void PhysicsObject::limitSpeed() {
 }
 
 void PhysicsObject::draw() {
-	gl::color( ColorA(1.0f, 0.0, 0.1f, 0.2f ) );
-	gl::pushMatrices(); // Store old matrix
-	gl::translate( ci::box2d::Conversions::toScreen( _body->GetPosition() ) );
+
+
+	if( !texture ) return;
+
+	gl::color( ColorA(1.0f, 1.0f, 1.0f, 1.0f) );
+	gl::pushMatrices();
+		gl::translate( ci::box2d::Conversions::toScreen( _body->GetPosition() ) );
+			gl::rotate( ci::box2d::Conversions::radiansToDegrees( _body->GetAngle() ) );
+				float desiredRadius = _radius;
+				ci::Vec2f pos = ci::box2d::Conversions::toScreen( _body->GetPosition() ) ;
+				ci::Rectf rect = Rectf(desiredRadius*-0.5,
+						desiredRadius*-0.5,
+						desiredRadius,
+						desiredRadius );
+				gl::draw( texture, rect );
+	gl::popMatrices();
+}
+
+void PhysicsObject::debugDraw() {
+
+	glMatrixMode( GL_MODELVIEW );
+	glPushMatrix();
 		b2Fixture* fixture = _body->GetFixtureList();
 		while( fixture != NULL ) {
 			switch( fixture->GetType() ) {
@@ -91,4 +121,11 @@ void PhysicsObject::draw() {
 			fixture = fixture->GetNext();
 		}
 	gl::popMatrices();
+}
+
+
+///// ACCESSORS
+void PhysicsObject::setBody( b2Body* aBody ) {
+	_body = aBody;
+	_radius = ci::box2d::Conversions::toScreen( _body->GetFixtureList()->GetShape()->m_radius );
 }
