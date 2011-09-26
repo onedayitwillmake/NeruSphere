@@ -19,15 +19,15 @@ class PhysicsObject
 
 
 		// Updates thebody
-		void update();
+		virtual void update();
 		// Draws the body
-		void draw();
+		virtual void draw();
 		void debugDraw();
 
 		///// ACCESSORS
 		b2Body*getBody() const { return _body; }
 		void setBody( b2Body* aBody );
-		bool isDead() { return false; };
+		bool isDead() { return false; /*_age > _lifetime;*/ };
 
 	protected:
 		void setupTexture();
@@ -38,6 +38,7 @@ class PhysicsObject
 		void applyNoise();
 		// Limits linearvelocity of the object
 		void limitSpeed();
+		void reset();
 
 		b2Body * _body;
 		float _radius;

@@ -9,6 +9,7 @@
 #include <iostream>
 #include "cinder/Vector.h"
 #include "cinder/CinderMath.h"
+#include "cinder/Rand.h"
 #include "cinder/app/App.h"
 #include "cinder/ImageIo.h"
 #include "cinder/Utilities.h"
@@ -21,15 +22,18 @@
 using namespace ci;
 using namespace ci::box2d;
 
+static int count = 0;
 PhysicsObject::PhysicsObject( b2Body* aBody ) {
-	std::cout << "PhysicsObject created!" << std::endl;
+//	std::cout << "PhysicsObject created!" << std::endl;
 
 	setBody( aBody );
-	texture = gl::Texture( loadImage( ci::app::App::get()->loadResource( RES_PLANET ) ) );;
+	_lifetime = ci::Rand::randInt( Constants::Heads::MIN_LIFETIME, Constants::Heads::MAX_LIFETIME );
+	_age = 0;
+//	texture = gl::Texture( loadImage( ci::app::App::get()->loadResource( RES_PLANET ) ) );;
 }
 
 PhysicsObject::~PhysicsObject() {
-	std::cout << "PhysicsObject destructor!" << std::endl;
+//	std::cout << "PhysicsObject destructor!" << std::endl;
 	_body = NULL;
 }
 
@@ -38,6 +42,12 @@ void PhysicsObject::setupTexture() {
 }
 
 void PhysicsObject::update() {
+
+	if(++_age > _lifetime) {
+		reset();
+		return;
+	}
+
 	applyRadialGravity( ci::box2d::Conversions::toPhysics( ci::app::App::get()->getWindowCenter() ) );
 	applyNoise();
 	limitSpeed();
@@ -47,25 +57,29 @@ void PhysicsObject::applyRadialGravity( b2Vec2 center ) {
 	b2Vec2 pos = _body->GetPosition();
 	b2Vec2 delta = center - pos;
 
-	float lengthSQ = ci::math<float>::max( delta.LengthSquared(), ci::box2d::Conversions::toPhysics(75.0f) );
+	float lengthSQ = ci::math<float>::max( delta.LengthSquared(), ci::box2d::Conversions::toPhysics( Constants::Heads::MIN_GRAVITY_DISTANCE  ) );
+//	std::cout << lengthSQ << std::endl;
+
 	float forceScale = ci::math<float>::max(0.2, Conversions::toPhysics( Constants::Forces::GRAVITY_FORCE ) / lengthSQ);
 	delta.Normalize();
 
 	b2Vec2 force = forceScale * delta;
-	_body->ApplyForce( force, center );
+	_body->ApplyForce( force, _body->GetWorldCenter() );
 }
 
 void PhysicsObject::applyNoise( ) {
 	b2Vec2 pos = _body->GetPosition();
-	ci::Vec3f noise = Constants::Instances::PERLIN_NOISE()->dfBm( ci::Vec3f( pos.x*0.01, pos.y*0.01, (float)ci::app::App::get()->getElapsedFrames() * 0.001) ) * 0.3;
+	ci::Vec3f noise = Constants::Instances::PERLIN_NOISE()->dfBm( ci::Vec3f( pos.x, pos.y, (float)ci::app::App::get()->getElapsedFrames() * 0.001) ) * Constants::Heads::PERLIN_STRENGTH;
 	b2Vec2 force = b2Vec2( noise.x, noise.y );
+
+
 	_body->ApplyForce( force, _body->GetWorldCenter() );
 }
 
 void PhysicsObject::limitSpeed() {
 	b2Vec2 velocity = _body->GetLinearVelocity();
 	float speedSQ = velocity.LengthSquared();
-	float maxSpeed = 15;
+	float maxSpeed = Constants::Heads::MAX_SPEED;
 	if( speedSQ > maxSpeed * maxSpeed ) {
 		velocity.Normalize();
 		velocity *= maxSpeed;
@@ -75,6 +89,9 @@ void PhysicsObject::limitSpeed() {
 
 void PhysicsObject::draw() {
 
+
+	debugDraw();
+	return;
 
 	if( !texture ) return;
 
@@ -96,6 +113,7 @@ void PhysicsObject::debugDraw() {
 
 	glMatrixMode( GL_MODELVIEW );
 	glPushMatrix();
+		gl::translate( ci::box2d::Conversions::toScreen( _body->GetPosition() ) );
 		b2Fixture* fixture = _body->GetFixtureList();
 		while( fixture != NULL ) {
 			switch( fixture->GetType() ) {
@@ -123,6 +141,24 @@ void PhysicsObject::debugDraw() {
 	gl::popMatrices();
 }
 
+
+void PhysicsObject::reset() {
+	_body->SetLinearVelocity( b2Vec2(0,0) );
+	_body->SetAngularVelocity( 0 );
+
+	float appWidth = (float)ci::app::App::get()->getWindowWidth();
+	float appHeight = (float)ci::app::App::get()->getWindowHeight();
+	float radius = ci::math<float>::sqrt( appWidth*appWidth + appHeight*appHeight );
+	float angle = ci::Rand::randFloat(M_PI*2);
+
+	float x = ci::app::App::get()->getWindowCenter().x + ci::math<float>::cos( angle ) * radius*0.5;
+	float y = ci::app::App::get()->getWindowCenter().y + ci::math<float>::sin( angle ) * radius*0.5;
+	ci::Vec2f position = ci::Vec2f(x, y);
+	_body->SetTransform( Conversions::toPhysics(position), 0);
+
+	_lifetime = ci::Rand::randInt( Constants::Heads::MIN_LIFETIME, Constants::Heads::MAX_LIFETIME );
+	_age = 0;
+}
 
 ///// ACCESSORS
 void PhysicsObject::setBody( b2Body* aBody ) {

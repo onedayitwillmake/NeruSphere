@@ -47,7 +47,7 @@ public:
 };
 
 void NeruSphereApp::prepareSettings( ci::app::AppBasic::Settings *settings ) {
-	settings->setWindowSize( 1280, 800 );
+	settings->setWindowSize( 1600, 1000 );
 }
 
 void NeruSphereApp::setup() {
@@ -60,7 +60,7 @@ void NeruSphereApp::setup() {
 	_worldController.init( 4, 2 );
 	setupHeads();
 
-	ci::gl::enableAlphaBlending();
+//	ci::gl::enableAlphaBlending();
 }
 
 void NeruSphereApp::setupHeads() {
@@ -68,11 +68,11 @@ void NeruSphereApp::setupHeads() {
 	ci::Vec2f pos = getWindowCenter();
 
 	int count = Constants::Defaults::HEAD_COUNT;
-	for(int i = 1; i < count; i++) {
+	for(int i = 1; i <= count; i++) {
 		pos.x = i * (float)getWindowSize().x/ (float)count;
 		pos.y = ci::Rand::randFloat(-1000, 1000);
 
-		b2Body* body = _worldController.createCircle( size.x, pos );
+		b2Body* body = _worldController.createCircle( ci::Rand::randFloat(size.x*0.7, size.x*1.25), pos );
 		PhysicsObject* physicsObject = new PhysicsObject( body );
 		body->SetUserData( physicsObject );
 	}
@@ -92,13 +92,13 @@ void NeruSphereApp::update() {
 
 	// Shape definition
 	b2CircleShape aShape;
-	aShape.m_radius = Conversions::toPhysics( 20 + _audioAnalyzer.getAverageVolume() * 23 );
+	aShape.m_radius = Conversions::toPhysics( 10 + _audioAnalyzer.getAverageVolume() * 20 );
 
 	// Fixture definition
 	b2FixtureDef mFixtureDef;
 	mFixtureDef.shape = &aShape;
 	mFixtureDef.friction = 1.0f;
-	mFixtureDef.restitution = 0.0f;
+	mFixtureDef.restitution = 0.2f;
 	mFixtureDef.density = 1.0f;
 
 	// Body definition
@@ -132,4 +132,4 @@ void NeruSphereApp::shutdown() {
 	AppBasic::shutdown();
 }
 
-CINDER_APP_BASIC( NeruSphereApp, ci::app::RendererGl )
+CINDER_APP_BASIC( NeruSphereApp, ci::app::RendererGl(1) )

@@ -79,10 +79,12 @@ void WorldController::draw() {
 	if( Constants::Defaults::DEBUG_DRAW )
 		debugDraw();
 
+
 	b2Body* b = _world->GetBodyList();
 	while( b ) {
 		PhysicsObject* physicsElement = (PhysicsObject*) b->GetUserData();
 		if( physicsElement ) {
+			ci::gl::color( ci::ColorA(1.0f, 0.0, 0.1f, 0.5f ) );
 			physicsElement->draw();
 		}
 		b = b->GetNext();
@@ -172,7 +174,7 @@ b2Body* WorldController::createCircle( float radius, ci::Vec2f pos ) {
 	b2FixtureDef mFixtureDef;
 	mFixtureDef.shape = &aShape;
 	mFixtureDef.friction = 0.9f;
-	mFixtureDef.restitution = 0.1f;
+	mFixtureDef.restitution = 0.8f;
 	mFixtureDef.density = 1.0f;
 
 	// Body definition
