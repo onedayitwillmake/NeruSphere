@@ -17,11 +17,9 @@ class Planet : public PhysicsObject
 	public:
 		Planet( b2Body* aBody ): PhysicsObject( aBody ) {};
 		virtual ~Planet();
-
 		void draw();
 		void update();
-	protected:
-		void setupTexture();
+		virtual void setupTexture();
 };
 
 #endif /* PLANET_H_ */

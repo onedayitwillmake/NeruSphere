@@ -22,6 +22,7 @@ class PhysicsObject
 		virtual void update();
 		// Draws the body
 		virtual void draw();
+		virtual void setupTexture();
 		void debugDraw();
 
 		///// ACCESSORS
@@ -30,7 +31,7 @@ class PhysicsObject
 		bool isDead() { return false; /*_age > _lifetime;*/ };
 
 	protected:
-		void setupTexture();
+
 
 		// Applies radial gravity - assumes center is in physics units
 		void applyRadialGravity( b2Vec2 center );

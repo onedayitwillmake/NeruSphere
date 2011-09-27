@@ -27,7 +27,6 @@ PhysicsObject::PhysicsObject( b2Body* aBody ) {
 	_lifetime = ci::Rand::randInt( Constants::Heads::MIN_LIFETIME, Constants::Heads::MAX_LIFETIME );
 	_age = 0;
 	setBody( aBody );
-	setupTexture();
 }
 
 PhysicsObject::~PhysicsObject() {
@@ -36,6 +35,7 @@ PhysicsObject::~PhysicsObject() {
 }
 
 void PhysicsObject::setupTexture() {
+	std::cout << "setupTexture!" << std::endl;
 	texture = *Constants::Textures::HEAD();
 }
 

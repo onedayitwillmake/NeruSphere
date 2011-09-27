@@ -67,7 +67,7 @@ void NeruSphereApp::setup() {
 }
 
 void NeruSphereApp::setupHeads() {
-	ci::Vec2f size = ci::Vec2f( 20, 10 );
+	ci::Vec2f size = ci::Vec2f( 8, 10 );
 	ci::Vec2f pos = getWindowCenter();
 
 	int count = Constants::Defaults::HEAD_COUNT;
@@ -77,6 +77,7 @@ void NeruSphereApp::setupHeads() {
 
 		b2Body* body = _worldController.createCircle( ci::Rand::randFloat(size.x*0.7, size.x*1.25), pos );
 		PhysicsObject* physicsObject = new PhysicsObject( body );
+		physicsObject->setupTexture();
 		body->SetUserData( physicsObject );
 	}
 }
@@ -98,7 +99,7 @@ void NeruSphereApp::update() {
 	b2CircleShape aShape;
 
 	static float lastSize = 1;
-	lastSize -= (lastSize - Conversions::toPhysics( 30 + _audioAnalyzer.getAverageVolume() * 25 ) ) * 0.4f;
+	lastSize -= (lastSize - Conversions::toPhysics( 15 + _audioAnalyzer.getAverageVolume() * 20 ) ) * 0.4f;
 	aShape.m_radius = lastSize;
 
 	// Fixture definition
@@ -121,6 +122,7 @@ void NeruSphereApp::update() {
 		_planetPhysicsObject->setBody( body );
 	} else {
 		_planetPhysicsObject = new Planet( body );
+		_planetPhysicsObject->setupTexture();
 	}
 
 	body->SetUserData( _planetPhysicsObject );

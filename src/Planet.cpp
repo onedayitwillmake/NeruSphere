@@ -9,14 +9,13 @@
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/Color.h"
-#include "cinder/CinderResources.h"
-#include "cinder/ImageIo.h"
+#include "Constants.h"
 #include "cinder/app/App.h"
 #include "Resources.h"
 
 
 Planet::~Planet() {
-	std::cout << "Planet created" << std::endl;
+	std::cout << "Planet destructor" << std::endl;
 }
 
 void Planet::draw() {
@@ -25,5 +24,5 @@ void Planet::draw() {
 }
 void Planet::update() {}
 void Planet::setupTexture() {
-	texture = ci::gl::Texture( ci::loadImage( ci::app::App::get()->loadResource( RES_PLANET ) ) );
+	texture = *Constants::Textures::PLANET();
 }

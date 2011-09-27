@@ -27,7 +27,7 @@ namespace Constants {
 	};
 
 	struct Defaults {
-		const static int HEAD_COUNT = 200;
+		const static int HEAD_COUNT = 350;
 		const static bool DEBUG_DRAW = false;
 	};
 
@@ -49,8 +49,24 @@ namespace Constants {
 				initialized = true;
 
 				ci::gl::Texture::Format format;
-				format.enableMipmapping( true );
-				format.setMinFilter( GL_LINEAR_MIPMAP_LINEAR );
+				format.enableMipmapping( false );
+				format.setMinFilter( GL_NEAREST );
+				format.setMagFilter( GL_NEAREST );
+
+				texture = ci::gl::Texture( ci::loadImage( ci::app::App::get()->loadResource( RES_HEAD ) ), format );
+			}
+			return &texture;
+		}
+
+		static ci::gl::Texture* PLANET() {
+			static bool initialized = false;
+			static ci::gl::Texture texture;
+			if( !initialized ) {
+				initialized = true;
+
+				ci::gl::Texture::Format format;
+				format.enableMipmapping( false );
+				format.setMinFilter( GL_NEAREST );
 				format.setMagFilter( GL_NEAREST );
 
 				texture = ci::gl::Texture( ci::loadImage( ci::app::App::get()->loadResource( RES_PLANET ) ), format );
