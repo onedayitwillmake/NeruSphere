@@ -48,6 +48,7 @@ public:
 
 void NeruSphereApp::prepareSettings( ci::app::AppBasic::Settings *settings ) {
 	settings->setWindowSize( 1600, 1000 );
+	settings->setFrameRate( 60 );
 }
 
 void NeruSphereApp::setup() {

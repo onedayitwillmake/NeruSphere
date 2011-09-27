@@ -174,7 +174,7 @@ b2Body* WorldController::createCircle( float radius, ci::Vec2f pos ) {
 	b2FixtureDef mFixtureDef;
 	mFixtureDef.shape = &aShape;
 	mFixtureDef.friction = 0.9f;
-	mFixtureDef.restitution = 0.8f;
+	mFixtureDef.restitution = 0.4f;
 	mFixtureDef.density = 1.0f;
 
 	// Body definition

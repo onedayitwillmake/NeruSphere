@@ -59,6 +59,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NeruSphere/thirdparty}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NeruSphere/include}&quot;"/>
 									<listOptionValue builtIn="false" value="/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/OpenGL.framework/Headers"/>
+									<listOptionValue builtIn="false" value="/System/Library/Frameworks/Cocoa.framework/Headers/"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.optimization.level.960717740" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.other.other.1735799906" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -arch i386" valueType="string"/>
@@ -563,6 +564,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NeruSphere/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NeruSphere/thirdparty}&quot;"/>
 									<listOptionValue builtIn="false" value="/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/OpenGL.framework/Headers"/>
+									<listOptionValue builtIn="false" value="/System/Library/Frameworks/Cocoa.framework/Headers/"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.optimization.level.483634675" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.other.other.1928456890" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -arch i386" valueType="string"/>
