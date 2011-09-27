@@ -20,7 +20,7 @@ namespace cinder
 		struct Conversions
 		{
 
-				const static int32_t SCALING = 50; //50 pixels per meter sounds reasonable
+				const static int32_t SCALING = 64; //64 pixels per meter sounds reasonable
 
 				static Vec2f toScreen(b2Vec2 fin) {
 					return Vec2f(fin.x, fin.y) * (float) SCALING;

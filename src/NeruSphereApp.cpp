@@ -30,6 +30,8 @@
 
 using namespace ci::box2d;
 using namespace ci;
+
+
 class NeruSphereApp : public ci::app::AppBasic {
 public:
 	WorldController _worldController;
@@ -48,7 +50,7 @@ public:
 
 void NeruSphereApp::prepareSettings( ci::app::AppBasic::Settings *settings ) {
 	settings->setWindowSize( 1600, 1000 );
-	settings->setFrameRate( 60 );
+	settings->setFrameRate( 30 );
 }
 
 void NeruSphereApp::setup() {
@@ -61,11 +63,11 @@ void NeruSphereApp::setup() {
 	_worldController.init( 4, 2 );
 	setupHeads();
 
-//	ci::gl::enableAlphaBlending();
+	ci::gl::enableAlphaBlending();
 }
 
 void NeruSphereApp::setupHeads() {
-	ci::Vec2f size = ci::Vec2f( 10, 10 );
+	ci::Vec2f size = ci::Vec2f( 20, 10 );
 	ci::Vec2f pos = getWindowCenter();
 
 	int count = Constants::Defaults::HEAD_COUNT;
@@ -82,6 +84,7 @@ void NeruSphereApp::setupHeads() {
 void NeruSphereApp::mouseDown( ci::app::MouseEvent event ) {
 }
 
+
 void NeruSphereApp::update() {
 	_worldController.update();
 	_audioAnalyzer.update();
@@ -93,7 +96,10 @@ void NeruSphereApp::update() {
 
 	// Shape definition
 	b2CircleShape aShape;
-	aShape.m_radius = Conversions::toPhysics( 10 + _audioAnalyzer.getAverageVolume() * 20 );
+
+	static float lastSize = 1;
+	lastSize -= (lastSize - Conversions::toPhysics( 30 + _audioAnalyzer.getAverageVolume() * 25 ) ) * 0.4f;
+	aShape.m_radius = lastSize;
 
 	// Fixture definition
 	b2FixtureDef mFixtureDef;
@@ -133,4 +139,4 @@ void NeruSphereApp::shutdown() {
 	AppBasic::shutdown();
 }
 
-CINDER_APP_BASIC( NeruSphereApp, ci::app::RendererGl(1) )
+CINDER_APP_BASIC( NeruSphereApp, ci::app::RendererGl )

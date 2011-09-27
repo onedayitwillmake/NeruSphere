@@ -22,14 +22,12 @@
 using namespace ci;
 using namespace ci::box2d;
 
-static int count = 0;
-PhysicsObject::PhysicsObject( b2Body* aBody ) {
-//	std::cout << "PhysicsObject created!" << std::endl;
 
-	setBody( aBody );
+PhysicsObject::PhysicsObject( b2Body* aBody ) {
 	_lifetime = ci::Rand::randInt( Constants::Heads::MIN_LIFETIME, Constants::Heads::MAX_LIFETIME );
 	_age = 0;
-//	texture = gl::Texture( loadImage( ci::app::App::get()->loadResource( RES_PLANET ) ) );;
+	setBody( aBody );
+	setupTexture();
 }
 
 PhysicsObject::~PhysicsObject() {
@@ -38,7 +36,7 @@ PhysicsObject::~PhysicsObject() {
 }
 
 void PhysicsObject::setupTexture() {
-	texture = gl::Texture( loadImage( ci::app::App::get()->loadResource( RES_PLANET ) ) );
+	texture = *Constants::Textures::HEAD();
 }
 
 void PhysicsObject::update() {
@@ -89,10 +87,6 @@ void PhysicsObject::limitSpeed() {
 
 void PhysicsObject::draw() {
 
-
-	debugDraw();
-	return;
-
 	if( !texture ) return;
 
 	gl::color( ColorA(1.0f, 1.0f, 1.0f, 1.0f) );
@@ -101,10 +95,10 @@ void PhysicsObject::draw() {
 			gl::rotate( ci::box2d::Conversions::radiansToDegrees( _body->GetAngle() ) );
 				float desiredRadius = _radius;
 				ci::Vec2f pos = ci::box2d::Conversions::toScreen( _body->GetPosition() ) ;
-				ci::Rectf rect = Rectf(desiredRadius*-0.5,
-						desiredRadius*-0.5,
+				ci::Rectf rect = Rectf(-desiredRadius,
+						-desiredRadius,
 						desiredRadius,
-						desiredRadius );
+						desiredRadius);
 				gl::draw( texture, rect );
 	gl::popMatrices();
 }
