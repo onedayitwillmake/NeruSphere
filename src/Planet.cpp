@@ -7,11 +7,10 @@
 
 #include "Planet.h"
 #include "cinder/gl/gl.h"
-#include "cinder/gl/Texture.h"
 #include "cinder/Color.h"
-#include "Constants.h"
 #include "cinder/app/App.h"
-#include "Resources.h"
+#include "Constants.h"
+#include "Textures.h"
 
 
 Planet::~Planet() {
@@ -20,6 +19,7 @@ Planet::~Planet() {
 
 void Planet::draw() {
 	ci::gl::color( ci::ColorA(1.0f, 0.0, 0.2f, 0.5f ) );
+	_radius = 10;
 	PhysicsObject::draw();
 }
 void Planet::update() {}

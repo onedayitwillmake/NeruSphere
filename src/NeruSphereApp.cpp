@@ -10,20 +10,20 @@
  * Mario Gonzalez
  * http://onedayitwillmake
  */
-
-
+#include "gl.h"
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/gl.h"
 #include "cinder/Vector.h"
 #include "cinder/app/MouseEvent.h"
 #include "cinder/Rand.h"
-#include "gl.h"
+#include "cinder/Display.h"
 #include "WorldController.h"
 #include "Conversions.h"
 #include "cinder/CinderMath.h"
 #include "cinder/Perlin.h"
 #include "AudioAnalyzer.h"
 #include "Constants.h"
+#include "Textures.h"
 #include "PhysicsObject.h"
 #include "Planet.h"
 #include <vector>
@@ -49,13 +49,16 @@ public:
 };
 
 void NeruSphereApp::prepareSettings( ci::app::AppBasic::Settings *settings ) {
-	settings->setWindowSize( 1600, 1000 );
+	settings->setWindowSize( 800, 600);
+	settings->setDisplay( Display::getDisplays().at(1) );
 //	settings->setFrameRate( 30 );
 }
 
 void NeruSphereApp::setup() {
 	std::cout << "Setting application path: " << getAppPath() << std::endl;
 	chdir( getAppPath().c_str( ) );
+
+	Constants::Textures::loadTextures();
 
 	_planetBody = NULL;
 	_planetPhysicsObject = NULL;
@@ -67,7 +70,6 @@ void NeruSphereApp::setup() {
 }
 
 void NeruSphereApp::setupHeads() {
-	ci::Vec2f size = ci::Vec2f( 25, 10 );
 	ci::Vec2f pos = getWindowCenter();
 
 	int count = Constants::Defaults::HEAD_COUNT;
@@ -75,7 +77,7 @@ void NeruSphereApp::setupHeads() {
 		pos.x = i * (float)getWindowSize().x/ (float)count;
 		pos.y = ci::Rand::randFloat(-1000, 1000);
 
-		b2Body* body = _worldController.createCircle( ci::Rand::randFloat(size.x*0.7, size.x*1.25), pos );
+		b2Body* body = _worldController.createCircle( ci::Rand::randFloat(Constants::Defaults::HEAD_SIZE_MIN, Constants::Defaults::HEAD_SIZE_MAX), pos );
 		PhysicsObject* physicsObject = new PhysicsObject( body );
 		physicsObject->setupTexture();
 		body->SetUserData( physicsObject );

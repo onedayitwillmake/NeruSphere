@@ -11,12 +11,11 @@
 #include "cinder/CinderMath.h"
 #include "cinder/Rand.h"
 #include "cinder/app/App.h"
-#include "cinder/ImageIo.h"
 #include "cinder/Utilities.h"
 #include "cinder/CinderResources.h"
 #include "Conversions.h"
 #include "Constants.h"
-#include "Resources.h"
+#include "Textures.h"
 #include "cinder/Rect.h"
 
 using namespace ci;
@@ -35,7 +34,7 @@ PhysicsObject::~PhysicsObject() {
 }
 
 void PhysicsObject::setupTexture() {
-	texture = *Constants::Textures::HEAD();
+	texture = *Constants::Textures::getRandomHeadTexture();
 }
 
 void PhysicsObject::update() {
@@ -54,12 +53,12 @@ void PhysicsObject::applyRadialGravity( b2Vec2 center ) {
 	b2Vec2 pos = _body->GetPosition();
 	b2Vec2 delta = center - pos;
 
+	// Get the length squared - if too close use min distance
 	float lengthSQ = ci::math<float>::max( delta.LengthSquared(), ci::box2d::Conversions::toPhysics( Constants::Heads::MIN_GRAVITY_DISTANCE  ) );
-//	std::cout << lengthSQ << std::endl;
+	// Scale inverse to lengthsq but always apply some gravity
+	float forceScale = ci::math<float>::max(0.1, Conversions::toPhysics( Constants::Forces::GRAVITY_FORCE ) / lengthSQ);
 
-	float forceScale = ci::math<float>::max(0.7, Conversions::toPhysics( Constants::Forces::GRAVITY_FORCE ) / lengthSQ);
 	delta.Normalize();
-
 	b2Vec2 force = forceScale * delta;
 	_body->ApplyForce( _body->GetMass() * force, _body->GetWorldCenter() );
 }
@@ -86,9 +85,7 @@ void PhysicsObject::limitSpeed() {
 
 void PhysicsObject::draw() {
 
-	if( !texture ) return;
-//	debugDraw();
-//	return;
+	if( !texture || ci::app::App::get()->getElapsedFrames() < 60 ) return;
 
 	gl::color( ColorA(1.0f, 1.0f, 1.0f, 1.0f) );
 	gl::pushMatrices();
