@@ -39,6 +39,7 @@ class PhysicsObject
 		void applyNoise();
 		// Limits linearvelocity of the object
 		void limitSpeed();
+		void faceCenter();
 		void reset();
 
 		b2Body * _body;

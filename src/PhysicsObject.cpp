@@ -47,6 +47,7 @@ void PhysicsObject::update() {
 	applyRadialGravity( ci::box2d::Conversions::toPhysics( ci::app::App::get()->getWindowCenter() ) );
 	applyNoise();
 	limitSpeed();
+	faceCenter();
 }
 
 void PhysicsObject::applyRadialGravity( b2Vec2 center ) {
@@ -72,6 +73,13 @@ void PhysicsObject::applyNoise( ) {
 	_body->ApplyForce( _body->GetMass() * force, _body->GetWorldCenter() );
 }
 
+void PhysicsObject::faceCenter() {
+	b2Vec2 center = ci::box2d::Conversions::toPhysics( ci::app::App::get()->getWindowCenter() );
+	b2Vec2 pos = _body->GetPosition();
+	float angle = ci::math<float>::atan2( center.y - pos.y, center.x - pos.x ) - M_PI_2;
+	_body->SetTransform( pos, angle );
+}
+
 void PhysicsObject::limitSpeed() {
 	b2Vec2 velocity = _body->GetLinearVelocity();
 	float speedSQ = velocity.LengthSquared();
@@ -91,7 +99,7 @@ void PhysicsObject::draw() {
 	gl::pushMatrices();
 		gl::translate( ci::box2d::Conversions::toScreen( _body->GetPosition() ) );
 			gl::rotate( ci::box2d::Conversions::radiansToDegrees( _body->GetAngle() ) );
-				float desiredRadius = _radius*2.5;
+				float desiredRadius = _radius;
 				ci::Vec2f pos = ci::box2d::Conversions::toScreen( _body->GetPosition() ) ;
 				ci::Rectf rect = Rectf(-desiredRadius,
 						-desiredRadius,
@@ -155,5 +163,6 @@ void PhysicsObject::reset() {
 ///// ACCESSORS
 void PhysicsObject::setBody( b2Body* aBody ) {
 	_body = aBody;
+	_body->SetFixedRotation( true );
 	_radius = ci::box2d::Conversions::toScreen( _body->GetFixtureList()->GetShape()->m_radius );
 }

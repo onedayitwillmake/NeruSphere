@@ -23,9 +23,9 @@ namespace Constants {
 	};
 
 	struct Defaults {
-		const static int HEAD_COUNT = 3;
-		const static int HEAD_SIZE_MIN = 8;
-		const static int HEAD_SIZE_MAX = 8;
+		const static int HEAD_COUNT = 30;
+		const static int HEAD_SIZE_MIN = 128;
+		const static int HEAD_SIZE_MAX = 128;
 		const static bool DEBUG_DRAW = false;
 	};
 
@@ -41,7 +41,7 @@ namespace Constants {
 
 	struct Planet {
 		const static float EASE_SPEED = 0.8f;
-		const static float VOLUME_RANGE = 24.0f;
+		const static float VOLUME_RANGE = 15.0f;
 		const static float MIN_SIZE = 5.0f;
 	};
 }

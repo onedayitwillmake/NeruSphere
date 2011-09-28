@@ -44,11 +44,17 @@ namespace Constants {
 				return &texture;
 			}
 
+			/**
+			 * Stores and retrieves the static texture cache for the app
+			 */
 			static std::vector<ci::gl::Texture>* cache() {
 				static std::vector<ci::gl::Texture> _internalcache;
 				return &_internalcache;
 			}
 
+			/**
+			 * Naive texture loader for app - circle_x_.png
+			 */
 			static void loadTextures() {
 				for( int i = 0; i <= 12; i++ ) {
 					ci::gl::Texture::Format format;
@@ -65,6 +71,9 @@ namespace Constants {
 				}
 			}
 
+			/**
+			 * Retrieves a random head texture from the cache
+			 */
 			static ci::gl::Texture* getRandomHeadTexture() {
 				int index = ci::Rand::randInt( cache()->size() - 1 );
 				std::cout <<  cache()->size() << std::endl;
