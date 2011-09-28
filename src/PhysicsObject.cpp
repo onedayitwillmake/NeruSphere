@@ -35,7 +35,6 @@ PhysicsObject::~PhysicsObject() {
 }
 
 void PhysicsObject::setupTexture() {
-	std::cout << "setupTexture!" << std::endl;
 	texture = *Constants::Textures::HEAD();
 }
 
@@ -58,11 +57,11 @@ void PhysicsObject::applyRadialGravity( b2Vec2 center ) {
 	float lengthSQ = ci::math<float>::max( delta.LengthSquared(), ci::box2d::Conversions::toPhysics( Constants::Heads::MIN_GRAVITY_DISTANCE  ) );
 //	std::cout << lengthSQ << std::endl;
 
-	float forceScale = ci::math<float>::max(0.2, Conversions::toPhysics( Constants::Forces::GRAVITY_FORCE ) / lengthSQ);
+	float forceScale = ci::math<float>::max(0.7, Conversions::toPhysics( Constants::Forces::GRAVITY_FORCE ) / lengthSQ);
 	delta.Normalize();
 
 	b2Vec2 force = forceScale * delta;
-	_body->ApplyForce( force, _body->GetWorldCenter() );
+	_body->ApplyForce( _body->GetMass() * force, _body->GetWorldCenter() );
 }
 
 void PhysicsObject::applyNoise( ) {
@@ -71,13 +70,13 @@ void PhysicsObject::applyNoise( ) {
 	b2Vec2 force = b2Vec2( noise.x, noise.y );
 
 
-	_body->ApplyForce( force, _body->GetWorldCenter() );
+	_body->ApplyForce( _body->GetMass() * force, _body->GetWorldCenter() );
 }
 
 void PhysicsObject::limitSpeed() {
 	b2Vec2 velocity = _body->GetLinearVelocity();
 	float speedSQ = velocity.LengthSquared();
-	float maxSpeed = Constants::Heads::MAX_SPEED;
+	float maxSpeed = Conversions::toPhysics( Constants::Heads::MAX_SPEED );
 	if( speedSQ > maxSpeed * maxSpeed ) {
 		velocity.Normalize();
 		velocity *= maxSpeed;
@@ -88,12 +87,14 @@ void PhysicsObject::limitSpeed() {
 void PhysicsObject::draw() {
 
 	if( !texture ) return;
+//	debugDraw();
+//	return;
 
 	gl::color( ColorA(1.0f, 1.0f, 1.0f, 1.0f) );
 	gl::pushMatrices();
 		gl::translate( ci::box2d::Conversions::toScreen( _body->GetPosition() ) );
 			gl::rotate( ci::box2d::Conversions::radiansToDegrees( _body->GetAngle() ) );
-				float desiredRadius = _radius;
+				float desiredRadius = _radius*2.5;
 				ci::Vec2f pos = ci::box2d::Conversions::toScreen( _body->GetPosition() ) ;
 				ci::Rectf rect = Rectf(-desiredRadius,
 						-desiredRadius,

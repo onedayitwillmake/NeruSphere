@@ -24,5 +24,5 @@ void Planet::draw() {
 }
 void Planet::update() {}
 void Planet::setupTexture() {
-	texture = *Constants::Textures::PLANET();
+	texture = *Constants::Textures::HEAD();
 }

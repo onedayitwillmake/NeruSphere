@@ -50,7 +50,7 @@ public:
 
 void NeruSphereApp::prepareSettings( ci::app::AppBasic::Settings *settings ) {
 	settings->setWindowSize( 1600, 1000 );
-	settings->setFrameRate( 30 );
+//	settings->setFrameRate( 30 );
 }
 
 void NeruSphereApp::setup() {
@@ -63,11 +63,11 @@ void NeruSphereApp::setup() {
 	_worldController.init( 4, 2 );
 	setupHeads();
 
-	ci::gl::enableAlphaBlending();
+	ci::gl::enableAdditiveBlending();
 }
 
 void NeruSphereApp::setupHeads() {
-	ci::Vec2f size = ci::Vec2f( 8, 10 );
+	ci::Vec2f size = ci::Vec2f( 25, 10 );
 	ci::Vec2f pos = getWindowCenter();
 
 	int count = Constants::Defaults::HEAD_COUNT;
@@ -98,15 +98,16 @@ void NeruSphereApp::update() {
 	// Shape definition
 	b2CircleShape aShape;
 
+
 	static float lastSize = 1;
-	lastSize -= (lastSize - Conversions::toPhysics( 15 + _audioAnalyzer.getAverageVolume() * 20 ) ) * 0.4f;
+	lastSize -= (lastSize - Conversions::toPhysics( Constants::Planet::MIN_SIZE + _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE ) ) * Constants::Planet::EASE_SPEED;
 	aShape.m_radius = lastSize;
 
 	// Fixture definition
 	b2FixtureDef mFixtureDef;
 	mFixtureDef.shape = &aShape;
 	mFixtureDef.friction = 1.0f;
-	mFixtureDef.restitution = 0.2f;
+	mFixtureDef.restitution = 0.0f;
 	mFixtureDef.density = 1.0f;
 
 	// Body definition
