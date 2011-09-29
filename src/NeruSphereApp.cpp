@@ -16,6 +16,7 @@
 #include "cinder/Vector.h"
 #include "cinder/app/MouseEvent.h"
 #include "cinder/Rand.h"
+#include "cinder/Color.h"
 #include "cinder/Display.h"
 #include "WorldController.h"
 #include "Conversions.h"
@@ -26,7 +27,10 @@
 #include "Textures.h"
 #include "PhysicsObject.h"
 #include "Planet.h"
+#include "SimpleGUI.h"
 #include <vector>
+
+
 
 using namespace ci::box2d;
 using namespace ci;
@@ -38,9 +42,11 @@ public:
 	b2Body* _planetBody;
 	Planet* _planetPhysicsObject;
 	AudioAnalyzer _audioAnalyzer;
+	mowa::sgui::SimpleGUI* _gui;
 
 	void setup();
 	void setupHeads();
+	void setupGUI();
 	void prepareSettings( ci::app::AppBasic::Settings *settings );
 	void mouseDown( ci::app::MouseEvent event );
 	void update();
@@ -65,8 +71,23 @@ void NeruSphereApp::setup() {
 
 	_worldController.init( 4, 2 );
 	setupHeads();
+	setupGUI();
 
-	ci::gl::enableAdditiveBlending();
+
+}
+
+void NeruSphereApp::setupGUI() {
+	using namespace  ci;
+	_gui = new mowa::sgui::SimpleGUI( this );
+	_gui->textColor = ci::ColorA(1,1,1,1);
+	_gui->lightColor = ci::ColorA(1, 0, 1, 1);
+	_gui->darkColor = ci::ColorA(0.05,0.05,0.05, 1);
+	_gui->bgColor = ci::ColorA(0.15, 0.15, 0.15, 1.0);
+	_gui->addSeparator();
+	_gui->addParam("HeadCount", &Constants::Defaults::HEAD_COUNT, 1, 300 );
+	//_gui->addSeparator();
+	//_toggle = _gui->addButton("START");
+	//_toggle->registerClick( this, &UserStreamRecorder::onToggleRecordingClicked );
 }
 
 void NeruSphereApp::setupHeads() {
@@ -135,13 +156,16 @@ void NeruSphereApp::draw() {
 	ci::gl::clear( ci::Color(0,0,0) );
 	ci::gl::color( ColorA(1.0f, 1.0f, 1.0f, 1.0f ) );
 
+	ci::gl::enableAlphaBlending();
 	_worldController.draw();
 	_audioAnalyzer.draw();
+	_gui->draw();
 }
 
 void NeruSphereApp::shutdown() {
 	std::cout << "Shutdown..." << std::endl;
 	AppBasic::shutdown();
 }
+
 
 CINDER_APP_BASIC( NeruSphereApp, ci::app::RendererGl )

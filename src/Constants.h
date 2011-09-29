@@ -19,30 +19,49 @@ namespace Constants {
 	};
 
 	struct Forces {
-		const static float GRAVITY_FORCE = 40000.0f;
+		static float GRAVITY_FORCE;
 	};
 
 	struct Defaults {
-		const static int HEAD_COUNT = 30;
-		const static int HEAD_SIZE_MIN = 128;
-		const static int HEAD_SIZE_MAX = 128;
-		const static bool DEBUG_DRAW = false;
+		static int HEAD_COUNT;
+		static int HEAD_SIZE_MIN;
+		static int HEAD_SIZE_MAX;
+		static bool DEBUG_DRAW;
 	};
 
 	struct Heads {
-		const static int MIN_LIFETIME = 1200;
-		const static int MAX_LIFETIME = 3000;
+		static int MIN_LIFETIME;
+		static int MAX_LIFETIME;
 
-		const static float MAX_SPEED = 1075.0f;
-		const static float PERLIN_STRENGTH = 0.5f;
+		static float MAX_SPEED;
+		static float PERLIN_STRENGTH;
 
-		const static float MIN_GRAVITY_DISTANCE = 50.0f * 50.0f; // min distance Squared
+		static float MIN_GRAVITY_DISTANCE;
 	};
 
 	struct Planet {
-		const static float EASE_SPEED = 0.8f;
-		const static float VOLUME_RANGE = 15.0f;
-		const static float MIN_SIZE = 5.0f;
+		static float EASE_SPEED;
+		static float VOLUME_RANGE;
+		static float MIN_SIZE;
 	};
+
+	static void init() {
+		Constants::Forces::GRAVITY_FORCE = 40000.0f;
+
+		Constants::Defaults::HEAD_COUNT = 30;
+		Constants::Defaults::HEAD_SIZE_MIN = 128;
+		Constants::Defaults::HEAD_SIZE_MAX = 128;
+		Constants::Defaults::DEBUG_DRAW = false;
+
+		Constants::Heads::MIN_LIFETIME = 1200;
+		Constants::Heads::MAX_LIFETIME = 3000;
+		Constants::Heads::MAX_SPEED = 1075.0f;
+		Constants::Heads::PERLIN_STRENGTH = 0.5f;
+		Constants::Heads::MIN_GRAVITY_DISTANCE = 50.0f * 50.0f; // min distance Squared
+
+		Constants::Planet::EASE_SPEED = 0.8f;
+		Constants::Planet::VOLUME_RANGE = 15.0f;
+		Constants::Planet::MIN_SIZE = 5.0f;
+	}
 }
 #endif /* CONSTANTS_H_ */
