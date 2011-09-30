@@ -8,7 +8,6 @@
 #ifndef PHYSICSOBJECT_H_
 #define PHYSICSOBJECT_H_
 #include <Box2D/Box2D.h>
-#include "cinder/gl/gl.h"
 #include "cinder/gl/Texture.h"
 
 class PhysicsObject
