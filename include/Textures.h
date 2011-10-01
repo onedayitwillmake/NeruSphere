@@ -1,4 +1,4 @@
-#include "Constants.h"
+
 #include "cinder/ImageIo.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/Rand.h"
@@ -7,6 +7,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include "Constants.h"
 
 namespace Constants {
 	struct Textures {
@@ -67,7 +68,6 @@ namespace Constants {
 					ci::gl::Texture texture = ci::gl::Texture( ci::loadImage( ci::app::App::get()->loadResource( path.str() ) ), format );
 
 					cache()->push_back( texture );
-					std::cout <<  cache()->size() << std::endl;
 				}
 			}
 
@@ -76,7 +76,6 @@ namespace Constants {
 			 */
 			static ci::gl::Texture* getRandomHeadTexture() {
 				int index = ci::Rand::randInt( cache()->size() - 1 );
-				std::cout <<  cache()->size() << std::endl;
 				return &cache()->at( index );
 			}
 	};

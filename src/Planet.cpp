@@ -16,10 +16,8 @@
 Planet::~Planet() {
 	std::cout << "Planet destructor" << std::endl;
 }
-
-void Planet::draw() {
-	ci::gl::color( ci::ColorA(1.0f, 0.0, 0.2f, 0.5f ) );
-	_radius = 10;
+void Planet::drawImp() {
+	ci::gl::color( ci::ColorA(1.0f, 1.0f, 1.0f, 1.0f ) );
 	PhysicsObject::draw();
 }
 void Planet::update() {}

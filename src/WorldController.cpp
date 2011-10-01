@@ -72,12 +72,32 @@ void WorldController::update() {
 }
 
 void WorldController::clear() {
+	b2Body *node = _world->GetBodyList();
+	while( node ) {
+		b2Body* b = node;
+		node = node->GetNext();
 
+		// Destruct physics object
+		PhysicsObject* physicsObject = (PhysicsObject*) b->GetUserData();
+		if( physicsObject ) {
+			delete physicsObject;
+		}
+		_world->DestroyBody( b );
+	}
+
+	b2Joint* joint = _world->GetJointList();
+	while (joint) {
+		b2Joint* j = joint;
+		joint = joint->GetNext();
+		_world->DestroyJoint(j);
+	}
 }
 
 void WorldController::draw() {
-	if( Constants::Defaults::DEBUG_DRAW )
+	if( Constants::Defaults::DEBUG_DRAW ) {
 		debugDraw();
+		return;
+	}
 
 
 	b2Body* b = _world->GetBodyList();

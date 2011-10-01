@@ -21,7 +21,7 @@ AudioAnalyzer::AudioAnalyzer() {
 	//initialize the audio Input, using the default input device
 	mInput = audio::Input();
 
-	std::cout <<  mInput.getDefaultDevice() << std::endl;
+//	std::cout <<  mInput.getDefaultDevice() << std::endl;
 
 
 

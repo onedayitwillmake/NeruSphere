@@ -17,7 +17,6 @@
 #include "Constants.h"
 #include "Textures.h"
 #include "cinder/Rect.h"
-
 using namespace ci;
 using namespace ci::box2d;
 
@@ -26,6 +25,9 @@ PhysicsObject::PhysicsObject( b2Body* aBody ) {
 	_lifetime = ci::Rand::randInt( Constants::Heads::MIN_LIFETIME, Constants::Heads::MAX_LIFETIME );
 	_age = 0;
 	setBody( aBody );
+	_body->SetAngularDamping(0.5);
+	_body->SetLinearDamping(0.5);
+	std::cout << "PhysicsObject- MAX LIFE" << Constants::Heads::MIN_LIFETIME << std::endl;
 }
 
 PhysicsObject::~PhysicsObject() {
@@ -94,6 +96,7 @@ void PhysicsObject::limitSpeed() {
 void PhysicsObject::draw() {
 
 	if( !texture || ci::app::App::get()->getElapsedFrames() < 60 ) return;
+
 
 	gl::color( ColorA(1.0f, 1.0f, 1.0f, 1.0f) );
 	gl::pushMatrices();

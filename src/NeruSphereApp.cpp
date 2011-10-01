@@ -28,6 +28,8 @@
 #include "PhysicsObject.h"
 #include "Planet.h"
 #include "SimpleGUI.h"
+
+#include <map>
 #include <vector>
 
 
@@ -44,6 +46,7 @@ public:
 	AudioAnalyzer _audioAnalyzer;
 	mowa::sgui::SimpleGUI* _gui;
 
+
 	void setup();
 	void setupHeads();
 	void setupGUI();
@@ -52,56 +55,63 @@ public:
 	void update();
 	void shutdown();
 	void draw();
+
+	bool restart( ci::app::MouseEvent event );
 };
 
+
 void NeruSphereApp::prepareSettings( ci::app::AppBasic::Settings *settings ) {
+//
 	settings->setWindowSize( 800, 600);
 	settings->setDisplay( Display::getDisplays().at(1) );
 //	settings->setFrameRate( 30 );
 }
 
 void NeruSphereApp::setup() {
-	std::cout << "Setting application path: " << getAppPath() << std::endl;
-	chdir( getAppPath().c_str( ) );
 
-	Constants::init();
 	Constants::Textures::loadTextures();
+	Constants::init();
 
+	std::cout << "setup-PRE  LIFE" << Constants::Heads::MIN_LIFETIME << std::endl;
 	_planetBody = NULL;
 	_planetPhysicsObject = NULL;
 
 	_worldController.init( 4, 2 );
 	setupHeads();
 	setupGUI();
-
-
 }
 
 void NeruSphereApp::setupGUI() {
+
 	using namespace  ci;
 	_gui = new mowa::sgui::SimpleGUI( this );
 	_gui->textColor = ci::ColorA(1,1,1,1);
 	_gui->lightColor = ci::ColorA(1, 0, 1, 1);
 	_gui->darkColor = ci::ColorA(0.05,0.05,0.05, 1);
-	_gui->bgColor = ci::ColorA(0.15, 0.15, 0.15, 1.0);
+	_gui->bgColor = ci::ColorA(0.20, 0.20, 0.20, 0.5);
 	_gui->addColumn();
 	_gui->addLabel("DEFAULTS");
 	_gui->addParam("HEAD_COUNT", &Constants::Defaults::HEAD_COUNT, 1, 300, Constants::Defaults::HEAD_COUNT );
 	_gui->addParam("HEAD_SIZE_MIN", &Constants::Defaults::HEAD_SIZE_MIN, 4, 256, Constants::Defaults::HEAD_SIZE_MIN );
 	_gui->addParam("HEAD_SIZE_MAX", &Constants::Defaults::HEAD_SIZE_MAX, 4, 256, Constants::Defaults::HEAD_SIZE_MAX );
-	_gui->addButton("START");
+	mowa::sgui::ButtonControl* toggle = _gui->addButton("Restart");
+	toggle->registerClick( this, &NeruSphereApp::restart );
+
 	_gui->addColumn();
 	_gui->addLabel("HEADS");
 	_gui->addParam("MIN_LIFETIME", &Constants::Heads::MIN_LIFETIME, 400, 5000, Constants::Heads::MIN_LIFETIME );
 	_gui->addParam("MAX_LIFETIME", &Constants::Heads::MAX_LIFETIME, 400, 5000, Constants::Heads::MAX_LIFETIME );
 	_gui->addParam("MAX_SPEED", &Constants::Heads::MAX_SPEED, 500, 2000, Constants::Heads::MAX_SPEED );
 	_gui->addParam("PERLIN_STRENGTH", &Constants::Heads::PERLIN_STRENGTH, 0, 3, Constants::Heads::PERLIN_STRENGTH );
-	_gui->addParam("MIN_GRAVITY_DISTANCE", &Constants::Heads::MIN_GRAVITY_DISTANCE, 50.0f*50.0f * 0.5, 50.0f*50.0f * 2, Constants::Heads::MIN_GRAVITY_DISTANCE );
+	_gui->addParam("GRAVITY_DISTANCE", &Constants::Heads::MIN_GRAVITY_DISTANCE, 50.0f*50.0f * 0.5, 50.0f*50.0f * 2, Constants::Heads::MIN_GRAVITY_DISTANCE );
 	_gui->addColumn();
 	_gui->addLabel("PLANET");
 	_gui->addParam("GROW_SPEED", &Constants::Planet::EASE_SPEED, 0.01f, 1.0f, Constants::Planet::EASE_SPEED );
 	_gui->addParam("VOLUME_RANGE", &Constants::Planet::VOLUME_RANGE, 15, 30, Constants::Planet::VOLUME_RANGE );
 	_gui->addParam("MIN_SIZE", &Constants::Planet::MIN_SIZE, 5, 300, Constants::Planet::MIN_SIZE );
+
+	std::cout << "setupGUI-POST MAX LIFE" << Constants::Heads::MIN_LIFETIME << std::endl;
+
 	//_gui->addSeparator();
 	//_toggle = _gui->addButton("START");
 	//_toggle->registerClick( this, &UserStreamRecorder::onToggleRecordingClicked );
@@ -140,8 +150,13 @@ void NeruSphereApp::update() {
 
 
 	static float lastSize = 1;
-	lastSize -= (lastSize - Conversions::toPhysics( Constants::Planet::MIN_SIZE + _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE ) ) * Constants::Planet::EASE_SPEED;
+	float newSize = Conversions::toPhysics( Constants::Planet::MIN_SIZE + _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE );
+	float maxSize = getWindowWidth() < getWindowHeight() ? getWindowWidth()*0.49 : getWindowHeight()*0.49;
+	newSize = ci::math<float>::min( newSize, Conversions::toPhysics( maxSize ) );
+
+	lastSize -= (lastSize - newSize) * Constants::Planet::EASE_SPEED;
 	aShape.m_radius = lastSize;
+
 
 	// Fixture definition
 	b2FixtureDef mFixtureDef;
@@ -173,12 +188,29 @@ void NeruSphereApp::draw() {
 	ci::gl::clear( ci::Color(0,0,0) );
 	ci::gl::color( ColorA(1.0f, 1.0f, 1.0f, 1.0f ) );
 
-	ci::gl::enableAlphaBlending();
+
 	_worldController.draw();
 	_audioAnalyzer.draw();
 	_gui->draw();
+
+	gl::enableAlphaBlending();
+	gl::disableDepthRead();
+	gl::disableDepthWrite();
+	if( _planetPhysicsObject ) _planetPhysicsObject->drawImp();
 }
 
+bool NeruSphereApp::restart( ci::app::MouseEvent event ) {
+	std::cout << "Hello" << std::endl;
+
+	_worldController.clear();
+	setupHeads();
+	setupGUI();
+
+	_planetBody = NULL;
+	_planetPhysicsObject = NULL;
+
+	return true;
+}
 void NeruSphereApp::shutdown() {
 	std::cout << "Shutdown..." << std::endl;
 	AppBasic::shutdown();
