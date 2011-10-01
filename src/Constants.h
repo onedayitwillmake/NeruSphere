@@ -18,18 +18,18 @@ namespace Constants {
 		}
 	};
 
-	struct Forces {
+	namespace Forces {
 		static float GRAVITY_FORCE;
 	};
 
-	struct Defaults {
+	namespace Defaults {
 		static int HEAD_COUNT;
 		static int HEAD_SIZE_MIN;
 		static int HEAD_SIZE_MAX;
 		static bool DEBUG_DRAW;
 	};
 
-	struct Heads {
+	namespace Heads {
 		static int MIN_LIFETIME;
 		static int MAX_LIFETIME;
 
@@ -39,7 +39,7 @@ namespace Constants {
 		static float MIN_GRAVITY_DISTANCE;
 	};
 
-	struct Planet {
+	namespace Planet {
 		static float EASE_SPEED;
 		static float VOLUME_RANGE;
 		static float MIN_SIZE;

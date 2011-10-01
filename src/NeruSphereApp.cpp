@@ -64,6 +64,7 @@ void NeruSphereApp::setup() {
 	std::cout << "Setting application path: " << getAppPath() << std::endl;
 	chdir( getAppPath().c_str( ) );
 
+	Constants::init();
 	Constants::Textures::loadTextures();
 
 	_planetBody = NULL;
@@ -83,8 +84,24 @@ void NeruSphereApp::setupGUI() {
 	_gui->lightColor = ci::ColorA(1, 0, 1, 1);
 	_gui->darkColor = ci::ColorA(0.05,0.05,0.05, 1);
 	_gui->bgColor = ci::ColorA(0.15, 0.15, 0.15, 1.0);
-	_gui->addSeparator();
-	_gui->addParam("HeadCount", &Constants::Defaults::HEAD_COUNT, 1, 300 );
+	_gui->addColumn();
+	_gui->addLabel("DEFAULTS");
+	_gui->addParam("HEAD_COUNT", &Constants::Defaults::HEAD_COUNT, 1, 300, Constants::Defaults::HEAD_COUNT );
+	_gui->addParam("HEAD_SIZE_MIN", &Constants::Defaults::HEAD_SIZE_MIN, 4, 256, Constants::Defaults::HEAD_SIZE_MIN );
+	_gui->addParam("HEAD_SIZE_MAX", &Constants::Defaults::HEAD_SIZE_MAX, 4, 256, Constants::Defaults::HEAD_SIZE_MAX );
+	_gui->addButton("START");
+	_gui->addColumn();
+	_gui->addLabel("HEADS");
+	_gui->addParam("MIN_LIFETIME", &Constants::Heads::MIN_LIFETIME, 400, 5000, Constants::Heads::MIN_LIFETIME );
+	_gui->addParam("MAX_LIFETIME", &Constants::Heads::MAX_LIFETIME, 400, 5000, Constants::Heads::MAX_LIFETIME );
+	_gui->addParam("MAX_SPEED", &Constants::Heads::MAX_SPEED, 500, 2000, Constants::Heads::MAX_SPEED );
+	_gui->addParam("PERLIN_STRENGTH", &Constants::Heads::PERLIN_STRENGTH, 0, 3, Constants::Heads::PERLIN_STRENGTH );
+	_gui->addParam("MIN_GRAVITY_DISTANCE", &Constants::Heads::MIN_GRAVITY_DISTANCE, 50.0f*50.0f * 0.5, 50.0f*50.0f * 2, Constants::Heads::MIN_GRAVITY_DISTANCE );
+	_gui->addColumn();
+	_gui->addLabel("PLANET");
+	_gui->addParam("GROW_SPEED", &Constants::Planet::EASE_SPEED, 0.01f, 1.0f, Constants::Planet::EASE_SPEED );
+	_gui->addParam("VOLUME_RANGE", &Constants::Planet::VOLUME_RANGE, 15, 30, Constants::Planet::VOLUME_RANGE );
+	_gui->addParam("MIN_SIZE", &Constants::Planet::MIN_SIZE, 5, 300, Constants::Planet::MIN_SIZE );
 	//_gui->addSeparator();
 	//_toggle = _gui->addButton("START");
 	//_toggle->registerClick( this, &UserStreamRecorder::onToggleRecordingClicked );
