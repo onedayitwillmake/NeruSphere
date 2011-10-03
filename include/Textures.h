@@ -57,14 +57,14 @@ namespace Constants {
 			 * Naive texture loader for app - circle_x_.png
 			 */
 			static void loadTextures() {
-				for( int i = 0; i <= 12; i++ ) {
+				for( int i = 1; i <= 4; i++ ) {
 					ci::gl::Texture::Format format;
 					format.enableMipmapping( false );
 					format.setMinFilter( GL_NEAREST );
 					format.setMagFilter( GL_NEAREST );
 
 					std::stringstream path;
-					path << "../resources/circle-" << i << ".png";
+					path << "../resources/heads_" << i << ".png";
 					ci::gl::Texture texture = ci::gl::Texture( ci::loadImage( ci::app::App::get()->loadResource( path.str() ) ), format );
 
 					cache()->push_back( texture );
@@ -75,7 +75,7 @@ namespace Constants {
 			 * Retrieves a random head texture from the cache
 			 */
 			static ci::gl::Texture* getRandomHeadTexture() {
-				int index = ci::Rand::randInt( cache()->size() - 1 );
+				int index = ci::Rand::randInt( cache()->size() );
 				return &cache()->at( index );
 			}
 	};

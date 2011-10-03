@@ -37,12 +37,26 @@ PhysicsObject::~PhysicsObject() {
 
 void PhysicsObject::setupTexture() {
 	texture = *Constants::Textures::getRandomHeadTexture();
+
+	// Total sprites per row / column
+	int rowCount = texture.getCleanWidth() / Constants::Heads::SINGLE_SPRITE_SIZE;
+	int columnCount = texture.getCleanHeight() / Constants::Heads::SINGLE_SPRITE_SIZE;
+
+	// Random sprite between [0, Constants::Heads::NUM_SPRITES]
+	int spriteIndex = ci::Rand::randInt( Constants::Heads::NUM_SPRITES );
+	int ix = spriteIndex / rowCount;
+	int iy = spriteIndex % columnCount;
+
+	// Determin sprite coords by using index, and adding 1 Constants::Heads::SINGLE_SPRITE_SIZE to the bounds X and then Y
+	float ss = Constants::Heads::SINGLE_SPRITE_SIZE;
+	_spriteSheetArea = ci::Area( ci::Vec2i(ix*ss, iy*ss), ci::Vec2i(ix*ss+ss, iy*ss+ss) );
+//	std::cout << _spriteSheetArea << std::endl;
 }
 
 void PhysicsObject::update() {
 
-	if(++_age > _lifetime) {
-		reset();
+	if(++_age == _lifetime) {
+		beginDeath();
 		return;
 	}
 
@@ -50,6 +64,10 @@ void PhysicsObject::update() {
 	applyNoise();
 	limitSpeed();
 	faceCenter();
+}
+
+void PhysicsObject::beginDeath() {
+	//reset();
 }
 
 void PhysicsObject::applyRadialGravity( b2Vec2 center ) {
@@ -95,20 +113,21 @@ void PhysicsObject::limitSpeed() {
 
 void PhysicsObject::draw() {
 
-	if( !texture || ci::app::App::get()->getElapsedFrames() < 60 ) return;
+	if( !texture || ci::app::App::get()->getElapsedFrames() < 30 ) return;
 
+
+	float desiredRadius = _radius;
+	ci::Vec2f pos = ci::box2d::Conversions::toScreen( _body->GetPosition() ) ;
+	ci::Rectf rect = Rectf(-desiredRadius,
+			-desiredRadius,
+			desiredRadius,
+			desiredRadius);
 
 	gl::color( ColorA(1.0f, 1.0f, 1.0f, 1.0f) );
 	gl::pushMatrices();
 		gl::translate( ci::box2d::Conversions::toScreen( _body->GetPosition() ) );
 			gl::rotate( ci::box2d::Conversions::radiansToDegrees( _body->GetAngle() ) );
-				float desiredRadius = _radius;
-				ci::Vec2f pos = ci::box2d::Conversions::toScreen( _body->GetPosition() ) ;
-				ci::Rectf rect = Rectf(-desiredRadius,
-						-desiredRadius,
-						desiredRadius,
-						desiredRadius);
-				gl::draw( texture, rect );
+				gl::draw( texture, _spriteSheetArea, rect );
 	gl::popMatrices();
 }
 

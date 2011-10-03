@@ -29,10 +29,7 @@
 #include "Planet.h"
 #include "SimpleGUI.h"
 
-#include <map>
 #include <vector>
-
-
 
 using namespace ci::box2d;
 using namespace ci;
@@ -63,7 +60,7 @@ public:
 void NeruSphereApp::prepareSettings( ci::app::AppBasic::Settings *settings ) {
 //
 	settings->setWindowSize( 800, 600);
-	settings->setDisplay( Display::getDisplays().at(1) );
+//	settings->setDisplay( Display::getDisplays().at(1) );
 //	settings->setFrameRate( 30 );
 }
 

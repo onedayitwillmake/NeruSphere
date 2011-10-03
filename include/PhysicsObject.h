@@ -41,6 +41,9 @@ class PhysicsObject
 		void faceCenter();
 		void reset();
 
+		// Death
+		void beginDeath();
+
 		b2Body * _body;
 		float _radius;
 		int	_lifetime;
@@ -48,6 +51,7 @@ class PhysicsObject
 		float _agePer;
 
 		ci::gl::Texture texture;
+		ci::Area _spriteSheetArea;
 };
 
 #endif /* PHYSICSOBJECT_H_ */

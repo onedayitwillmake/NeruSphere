@@ -37,6 +37,9 @@ namespace Constants {
 		extern float PERLIN_STRENGTH;
 
 		extern float MIN_GRAVITY_DISTANCE;
+
+		extern int SINGLE_SPRITE_SIZE;
+		extern int NUM_SPRITES;
 	};
 
 	namespace Planet {

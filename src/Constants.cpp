@@ -25,6 +25,9 @@ namespace Constants {
 		float PERLIN_STRENGTH;
 
 		float MIN_GRAVITY_DISTANCE;
+
+		int SINGLE_SPRITE_SIZE = 72;
+		int NUM_SPRITES = 13;
 	};
 
 	namespace Planet {
