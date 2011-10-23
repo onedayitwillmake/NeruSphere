@@ -49,18 +49,19 @@ public:
 	void setupGUI();
 	void prepareSettings( ci::app::AppBasic::Settings *settings );
 	void mouseDown( ci::app::MouseEvent event );
+	void keyDown( ci::app::KeyEvent event );
 	void update();
 	void shutdown();
 	void draw();
+	void drawParticles();
 
 	bool restart( ci::app::MouseEvent event );
 };
 
 
 void NeruSphereApp::prepareSettings( ci::app::AppBasic::Settings *settings ) {
-//
 	settings->setWindowSize( 800, 600);
-//	settings->setDisplay( Display::getDisplays().at(1) );
+	settings->setDisplay( Display::getDisplays().at(1) );
 //	settings->setFrameRate( 30 );
 }
 
@@ -141,6 +142,11 @@ void NeruSphereApp::setupHeads() {
 void NeruSphereApp::mouseDown( ci::app::MouseEvent event ) {
 }
 
+void NeruSphereApp::keyDown( ci::app::KeyEvent event ) {
+	if( event.getChar() == ci::app::KeyEvent::KEY_h ) {
+		_gui->setEnabled( !_gui->isEnabled() );
+	}
+}
 
 void NeruSphereApp::update() {
 	_worldController.update();
@@ -204,26 +210,28 @@ void NeruSphereApp::draw() {
 	gl::disableDepthWrite();
 	if( _planetPhysicsObject ) _planetPhysicsObject->drawImp();
 
+	drawParticles();
+}
 
-	glEnableClientState( GL_VERTEX_ARRAY );
-	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-	glEnableClientState( GL_COLOR_ARRAY );
-	b2Body* node = _worldController.getWorld()->GetBodyList();
-	while( node ) {
-		PhysicsObject* physicsObject = (PhysicsObject*) node->GetUserData();
-		if( physicsObject ) {
-			glVertexPointer( 2, GL_FLOAT, 0, &(physicsObject->emitter->verts)[0] );
-			glTexCoordPointer( 2, GL_FLOAT, 0, &(physicsObject->emitter->texCoords)[0] );
-			glColorPointer( 4, GL_FLOAT, 0, &(physicsObject->emitter->colors)[0].r );
-			glDrawArrays( GL_TRIANGLES, 0, physicsObject->emitter->verts.size() / 2 );
-		}
-		node = node->GetNext();
-	}
-	glDisableClientState( GL_VERTEX_ARRAY );
-	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
-	glDisableClientState( GL_COLOR_ARRAY );
+void NeruSphereApp::drawParticles() {
 //	texture.enableAndBind();
-
+		glEnableClientState( GL_VERTEX_ARRAY );
+//		glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+		glEnableClientState( GL_COLOR_ARRAY );
+		b2Body* node = _worldController.getWorld()->GetBodyList();
+		while( node ) {
+			PhysicsObject* physicsObject = (PhysicsObject*) node->GetUserData();
+			if( physicsObject ) {
+				glVertexPointer( 2, GL_FLOAT, 0, &(physicsObject->emitter->verts)[0] );
+				glTexCoordPointer( 2, GL_FLOAT, 0, &(physicsObject->emitter->texCoords)[0] );
+				glColorPointer( 4, GL_FLOAT, 0, &(physicsObject->emitter->colors)[0].r );
+				glDrawArrays( GL_TRIANGLES, 0, physicsObject->emitter->verts.size() / 2 );
+			}
+			node = node->GetNext();
+		}
+		glDisableClientState( GL_VERTEX_ARRAY );
+//		glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+		glDisableClientState( GL_COLOR_ARRAY );
 //	texture.disable();
 }
 
