@@ -69,7 +69,24 @@ void PhysicsObject::update() {
 }
 
 void PhysicsObject::beginDeath() {
-	//reset();
+	reset();
+
+	const float scale = ci::Rand::randFloat(0.1, 1.5);
+	const float halfWidth = 10 / 2.0f * scale;
+	const float halfHeight = 10 / 2.0f * scale;
+
+	for(size_t i = 0; i < 5; i++) {
+		ci::Vec2f pos = ci::box2d::Conversions::toScreen( _body->GetPosition() );
+		pos += ci::Vec2f( ci::Rand::randFloat(-_radius, _radius), ci::Rand::randFloat(-_radius, _radius) );
+
+		const ci::Area srcArea = Area( 0, 0, halfWidth*2, halfHeight*2 );
+		ci::Rectf destRect = ci::Rectf( pos.x-halfWidth, pos.y-halfHeight, pos.x + halfWidth, pos.y + halfHeight);
+		const ci::Rectf srcCoords = ci::Rectf( srcArea );
+
+//		texture.
+		// Add a particle to any random emitter
+		emitter->add( pos, ci::Rand::randVec2f() * 1.5, srcCoords, destRect );
+	}
 }
 
 void PhysicsObject::applyRadialGravity( b2Vec2 center ) {
@@ -136,10 +153,6 @@ void PhysicsObject::draw() {
 }
 
 void PhysicsObject::debugDraw() {
-
-
-
-
 	glMatrixMode( GL_MODELVIEW );
 	glPushMatrix();
 		gl::translate( ci::box2d::Conversions::toScreen( _body->GetPosition() ) );
@@ -187,6 +200,8 @@ void PhysicsObject::reset() {
 
 	_lifetime = ci::Rand::randInt( Constants::Heads::MIN_LIFETIME, Constants::Heads::MAX_LIFETIME );
 	_age = 0;
+
+	emitter->clear();
 }
 
 ///// ACCESSORS

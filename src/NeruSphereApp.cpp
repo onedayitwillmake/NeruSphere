@@ -120,22 +120,6 @@ void NeruSphereApp::setupHeads() {
 		PhysicsObject* physicsObject = new PhysicsObject( body );
 		physicsObject->setupTexture();
 		body->SetUserData( physicsObject );
-
-
-		const float scale = ci::Rand::randFloat(0.1, 1.5);
-		const float halfWidth = 10 / 2.0f * scale;
-		const float halfHeight = 10 / 2.0f * scale;
-
-		for(size_t i = 0; i < 5; i++) {
-			ci::Vec2f pos = ci::Vec2f( ci::Rand::randFloat( getWindowWidth() ), ci::Rand::randFloat( getWindowHeight() ) );
-			const ci::Area srcArea = Area( 0, 0, halfWidth*2, halfHeight*2 );
-			ci::Rectf destRect = ci::Rectf( pos.x-halfWidth, pos.y-halfHeight, pos.x + halfWidth, pos.y + halfHeight);
-			const ci::Rectf srcCoords = ci::Rectf( srcArea );
-
-
-			// Add a particle to any random emitter
-			physicsObject->emitter->add( pos, ci::Rand::randVec2f() * 1.5, srcCoords, destRect );
-		}
 	}
 }
 
@@ -214,6 +198,7 @@ void NeruSphereApp::draw() {
 }
 
 void NeruSphereApp::drawParticles() {
+	ci::gl::color( ColorA(1.0f, 1.0f, 1.0f, 1.0f ) );
 //	texture.enableAndBind();
 		glEnableClientState( GL_VERTEX_ARRAY );
 //		glEnableClientState( GL_TEXTURE_COORD_ARRAY );
