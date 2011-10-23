@@ -81,6 +81,7 @@ void AudioAnalyzer::drawWaveForm( float height )
 
 void AudioAnalyzer::drawFft()
 {
+	return;
 	uint16_t bandCount = 512;
 	float ht = 1000.0f;
 	float bottom = 150.0f;
@@ -97,13 +98,14 @@ void AudioAnalyzer::drawFft()
 	glTranslatef( 0.0f, 0.0f, 0.0f );
 
 
+//	int counter = 0;
 	for( int i = 0; i < ( bandCount ); i++ ) {
 		float barY = fftBuffer[i] / bandCount * ht;
 		average += barY;
 		float delta = bottom - barY;
 
 
-		gl::rotate( i/(float)bandCount/360 );
+	//	gl::rotate( i/(float)bandCount/360 );
 		float size = 10;
 		glBegin( GL_QUADS );
 			glColor3f( 255.0f, 255.0f, 0.0f );

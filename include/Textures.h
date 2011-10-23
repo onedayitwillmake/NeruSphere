@@ -57,7 +57,7 @@ namespace Constants {
 			 * Naive texture loader for app - circle_x_.png
 			 */
 			static void loadTextures() {
-				for( int i = 1; i <= 4; i++ ) {
+				for( int i = 1; i <= 1; i++ ) {
 					ci::gl::Texture::Format format;
 					format.enableMipmapping( false );
 					format.setMinFilter( GL_NEAREST );

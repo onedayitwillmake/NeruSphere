@@ -69,7 +69,6 @@ void NeruSphereApp::setup() {
 	Constants::Textures::loadTextures();
 	Constants::init();
 
-	std::cout << "setup-PRE  LIFE" << Constants::Heads::MIN_LIFETIME << std::endl;
 	_planetBody = NULL;
 	_planetPhysicsObject = NULL;
 
@@ -106,12 +105,6 @@ void NeruSphereApp::setupGUI() {
 	_gui->addParam("GROW_SPEED", &Constants::Planet::EASE_SPEED, 0.01f, 1.0f, Constants::Planet::EASE_SPEED );
 	_gui->addParam("VOLUME_RANGE", &Constants::Planet::VOLUME_RANGE, 15, 30, Constants::Planet::VOLUME_RANGE );
 	_gui->addParam("MIN_SIZE", &Constants::Planet::MIN_SIZE, 5, 300, Constants::Planet::MIN_SIZE );
-
-	std::cout << "setupGUI-POST MAX LIFE" << Constants::Heads::MIN_LIFETIME << std::endl;
-
-	//_gui->addSeparator();
-	//_toggle = _gui->addButton("START");
-	//_toggle->registerClick( this, &UserStreamRecorder::onToggleRecordingClicked );
 }
 
 void NeruSphereApp::setupHeads() {
@@ -126,6 +119,22 @@ void NeruSphereApp::setupHeads() {
 		PhysicsObject* physicsObject = new PhysicsObject( body );
 		physicsObject->setupTexture();
 		body->SetUserData( physicsObject );
+
+
+		const float scale = ci::Rand::randFloat(0.1, 1.5);
+		const float halfWidth = 10 / 2.0f * scale;
+		const float halfHeight = 10 / 2.0f * scale;
+
+		for(size_t i = 0; i < 5; i++) {
+			ci::Vec2f pos = ci::Vec2f( ci::Rand::randFloat( getWindowWidth() ), ci::Rand::randFloat( getWindowHeight() ) );
+			const ci::Area srcArea = Area( 0, 0, halfWidth*2, halfHeight*2 );
+			ci::Rectf destRect = ci::Rectf( pos.x-halfWidth, pos.y-halfHeight, pos.x + halfWidth, pos.y + halfHeight);
+			const ci::Rectf srcCoords = ci::Rectf( srcArea );
+
+
+			// Add a particle to any random emitter
+			physicsObject->emitter->add( pos, ci::Rand::randVec2f() * 1.5, srcCoords, destRect );
+		}
 	}
 }
 
@@ -194,6 +203,28 @@ void NeruSphereApp::draw() {
 	gl::disableDepthRead();
 	gl::disableDepthWrite();
 	if( _planetPhysicsObject ) _planetPhysicsObject->drawImp();
+
+
+	glEnableClientState( GL_VERTEX_ARRAY );
+	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+	glEnableClientState( GL_COLOR_ARRAY );
+	b2Body* node = _worldController.getWorld()->GetBodyList();
+	while( node ) {
+		PhysicsObject* physicsObject = (PhysicsObject*) node->GetUserData();
+		if( physicsObject ) {
+			glVertexPointer( 2, GL_FLOAT, 0, &(physicsObject->emitter->verts)[0] );
+			glTexCoordPointer( 2, GL_FLOAT, 0, &(physicsObject->emitter->texCoords)[0] );
+			glColorPointer( 4, GL_FLOAT, 0, &(physicsObject->emitter->colors)[0].r );
+			glDrawArrays( GL_TRIANGLES, 0, physicsObject->emitter->verts.size() / 2 );
+		}
+		node = node->GetNext();
+	}
+	glDisableClientState( GL_VERTEX_ARRAY );
+	glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+	glDisableClientState( GL_COLOR_ARRAY );
+//	texture.enableAndBind();
+
+//	texture.disable();
 }
 
 bool NeruSphereApp::restart( ci::app::MouseEvent event ) {
@@ -214,4 +245,4 @@ void NeruSphereApp::shutdown() {
 }
 
 
-CINDER_APP_BASIC( NeruSphereApp, ci::app::RendererGl )
+CINDER_APP_BASIC( NeruSphereApp, ci::app::RendererGl(0) )

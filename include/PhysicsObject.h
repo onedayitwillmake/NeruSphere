@@ -9,6 +9,7 @@
 #define PHYSICSOBJECT_H_
 #include <Box2D/Box2D.h>
 #include "cinder/gl/Texture.h"
+#include "ParticleSystem.h"
 
 class PhysicsObject
 {
@@ -16,6 +17,9 @@ class PhysicsObject
 		PhysicsObject( b2Body* aBody );
 		virtual ~PhysicsObject();
 
+
+		// Particles
+		particle::ParticleSystem* emitter;
 
 		// Updates thebody
 		virtual void update();

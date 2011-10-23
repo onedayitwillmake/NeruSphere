@@ -24,5 +24,4 @@ void Planet::update() {}
 void Planet::setupTexture() {
 	texture = *Constants::Textures::HEAD();
 	_spriteSheetArea = texture.getBounds();
-	_spriteSheetArea.expand( -texture.getWidth()*2 - 1, -texture.getHeight()*2 - 1 );
 }

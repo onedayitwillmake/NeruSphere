@@ -8,3 +8,4 @@
 resources/*circle*.png
 Release/
 Debug/
+CINDER_PATH_LINK

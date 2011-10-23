@@ -26,7 +26,7 @@ namespace Constants {
 
 		float MIN_GRAVITY_DISTANCE;
 
-		int SINGLE_SPRITE_SIZE = 72;
+		int SINGLE_SPRITE_SIZE = 74;
 		int NUM_SPRITES = 13;
 	};
 

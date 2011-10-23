@@ -27,12 +27,13 @@ PhysicsObject::PhysicsObject( b2Body* aBody ) {
 	setBody( aBody );
 	_body->SetAngularDamping(0.5);
 	_body->SetLinearDamping(0.5);
-	std::cout << "PhysicsObject- MAX LIFE" << Constants::Heads::MIN_LIFETIME << std::endl;
+
+	emitter = new particle::ParticleSystem();
 }
 
 PhysicsObject::~PhysicsObject() {
-//	std::cout << "PhysicsObject destructor!" << std::endl;
 	_body = NULL;
+	delete emitter; emitter = NULL;
 }
 
 void PhysicsObject::setupTexture() {
@@ -64,6 +65,7 @@ void PhysicsObject::update() {
 	applyNoise();
 	limitSpeed();
 	faceCenter();
+	emitter->update();
 }
 
 void PhysicsObject::beginDeath() {
@@ -129,9 +131,14 @@ void PhysicsObject::draw() {
 			gl::rotate( ci::box2d::Conversions::radiansToDegrees( _body->GetAngle() ) );
 				gl::draw( texture, _spriteSheetArea, rect );
 	gl::popMatrices();
+
+//	debugDraw();
 }
 
 void PhysicsObject::debugDraw() {
+
+
+
 
 	glMatrixMode( GL_MODELVIEW );
 	glPushMatrix();
@@ -151,7 +158,7 @@ void PhysicsObject::debugDraw() {
 				break;
 				case b2Shape::e_circle: {
 					b2CircleShape* shape = (b2CircleShape*) fixture->GetShape();
-					gl::drawSolidCircle( ci::box2d::Conversions::toScreen( shape->m_p ), ci::box2d::Conversions::toScreen( shape->m_radius ) );
+					gl::drawStrokedCircle( ci::box2d::Conversions::toScreen( shape->m_p ), ci::box2d::Conversions::toScreen( shape->m_radius ), 12 );
 				}
 				break;
 				default:
