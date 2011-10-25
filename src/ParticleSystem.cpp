@@ -56,7 +56,7 @@ void ParticleSystem::update() {
 		for(size_t y = 1; y < 12; y += 2)
 			verts[ itr->index+y ] += delta.y;
 
-		itr->speed *= 0.998f;
+		itr->speed *= 0.99f;
 	}
 }
 

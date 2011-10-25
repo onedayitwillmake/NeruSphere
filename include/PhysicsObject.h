@@ -11,8 +11,16 @@
 #include "cinder/gl/Texture.h"
 #include "ParticleSystem.h"
 
+#include "boost/function.hpp"
+#include "boost/bind.hpp"
+
 class PhysicsObject
 {
+	enum PhsyicsObjectState {
+		ACTIVE,
+		EXPLODING
+	};
+
 	public:
 		PhysicsObject( b2Body* aBody );
 		virtual ~PhysicsObject();
@@ -23,6 +31,7 @@ class PhysicsObject
 
 		// Updates thebody
 		virtual void update();
+
 		// Draws the body
 		virtual void draw();
 		virtual void setupTexture();
@@ -31,11 +40,12 @@ class PhysicsObject
 		///// ACCESSORS
 		b2Body*getBody() const { return _body; }
 		void setBody( b2Body* aBody );
+
+		void setState( PhsyicsObjectState aState, boost::function<void()>& updateFunction );
 		bool isDead() { return false; /*_age > _lifetime;*/ };
 
+
 	protected:
-
-
 		// Applies radial gravity - assumes center is in physics units
 		void applyRadialGravity( b2Vec2 center );
 		// Applies perlin noise to the bodies motion
@@ -56,6 +66,11 @@ class PhysicsObject
 
 		ci::gl::Texture texture;
 		ci::Area _spriteSheetArea;
+
+		PhsyicsObjectState _state;
+		boost::function<void()> updateState;
+		void updateActive();
+		void updateExploding();
 };
 
 #endif /* PHYSICSOBJECT_H_ */

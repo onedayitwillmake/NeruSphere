@@ -44,8 +44,8 @@ namespace Constants {
 		Constants::Defaults::HEAD_SIZE_MAX = 36;
 		Constants::Defaults::DEBUG_DRAW = false;
 
-		Constants::Heads::MIN_LIFETIME = 650;
-		Constants::Heads::MAX_LIFETIME = 300;
+		Constants::Heads::MIN_LIFETIME = 250;
+		Constants::Heads::MAX_LIFETIME = 600;
 		Constants::Heads::MAX_SPEED = 1616.0f;
 		Constants::Heads::PERLIN_STRENGTH = 2.088f;
 		Constants::Heads::MIN_GRAVITY_DISTANCE = 51.0f * 51.0f; // min distance Squared

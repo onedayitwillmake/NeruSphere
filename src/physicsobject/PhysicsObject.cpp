@@ -17,6 +17,9 @@
 #include "Constants.h"
 #include "Textures.h"
 #include "cinder/Rect.h"
+
+#include "boost/function.hpp"
+
 using namespace ci;
 using namespace ci::box2d;
 
@@ -29,6 +32,7 @@ PhysicsObject::PhysicsObject( b2Body* aBody ) {
 	_body->SetLinearDamping(0.5);
 
 	emitter = new particle::ParticleSystem();
+	setState( ACTIVE, updateState );
 }
 
 PhysicsObject::~PhysicsObject() {
@@ -55,7 +59,11 @@ void PhysicsObject::setupTexture() {
 }
 
 void PhysicsObject::update() {
+	updateState();
+}
 
+
+void PhysicsObject::updateActive() {
 	if(++_age == _lifetime) {
 		beginDeath();
 		return;
@@ -65,25 +73,32 @@ void PhysicsObject::update() {
 	applyNoise();
 	limitSpeed();
 	faceCenter();
+}
+
+void PhysicsObject::updateExploding() {
 	emitter->update();
 }
 
 void PhysicsObject::beginDeath() {
+
+	ci::Vec2f screenPosition = ci::box2d::Conversions::toScreen( _body->GetPosition() ); // Store before resetting
+
+	setState( EXPLODING, updateState );
 	reset();
 
-	const float scale = ci::Rand::randFloat(0.1, 1.5);
-	const float halfWidth = 10 / 2.0f * scale;
-	const float halfHeight = 10 / 2.0f * scale;
+	const float scale = 2;//ci::Rand::randFloat(0.1, 1.5);
+	const float halfWidth = 1;
+	const float halfHeight = 1;
+
+
 
 	for(size_t i = 0; i < 5; i++) {
-		ci::Vec2f pos = ci::box2d::Conversions::toScreen( _body->GetPosition() );
-		pos += ci::Vec2f( ci::Rand::randFloat(-_radius, _radius), ci::Rand::randFloat(-_radius, _radius) );
+		ci::Vec2f pos = screenPosition + ci::Vec2f( ci::Rand::randFloat(-_radius, _radius), ci::Rand::randFloat(-_radius, _radius) );
 
 		const ci::Area srcArea = Area( 0, 0, halfWidth*2, halfHeight*2 );
 		ci::Rectf destRect = ci::Rectf( pos.x-halfWidth, pos.y-halfHeight, pos.x + halfWidth, pos.y + halfHeight);
 		const ci::Rectf srcCoords = ci::Rectf( srcArea );
 
-//		texture.
 		// Add a particle to any random emitter
 		emitter->add( pos, ci::Rand::randVec2f() * 1.5, srcCoords, destRect );
 	}
@@ -190,7 +205,7 @@ void PhysicsObject::reset() {
 
 	float appWidth = (float)ci::app::App::get()->getWindowWidth();
 	float appHeight = (float)ci::app::App::get()->getWindowHeight();
-	float radius = ci::math<float>::sqrt( appWidth*appWidth + appHeight*appHeight );
+	float radius = ci::math<float>::sqrt( appWidth*appWidth + appHeight*appHeight ) + _radius;
 	float angle = ci::Rand::randFloat(M_PI*2);
 
 	float x = ci::app::App::get()->getWindowCenter().x + ci::math<float>::cos( angle ) * radius*0.5;
@@ -209,4 +224,14 @@ void PhysicsObject::setBody( b2Body* aBody ) {
 	_body = aBody;
 	_body->SetFixedRotation( true );
 	_radius = ci::box2d::Conversions::toScreen( _body->GetFixtureList()->GetShape()->m_radius );
+}
+
+void PhysicsObject::setState( PhsyicsObjectState aState, boost::function<void()>& updateFunction ) {
+
+	_state = aState;
+	if( _state == ACTIVE ) {
+		updateFunction = boost::bind( &PhysicsObject::updateActive, this );
+	} else {
+		updateFunction = boost::bind( &PhysicsObject::updateExploding, this );
+	}
 }
