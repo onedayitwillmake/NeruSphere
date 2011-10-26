@@ -41,7 +41,8 @@ PhysicsObject::~PhysicsObject() {
 }
 
 void PhysicsObject::setupTexture() {
-	texture = *Constants::Textures::getRandomHeadTexture();
+	_textureId = Constants::Textures::getRandomHeadTextureId();
+	texture = *Constants::Textures::getHeadTextureAtIndex( _textureId );
 
 	// Total sprites per row / column
 	int rowCount = texture.getCleanWidth() / Constants::Heads::SINGLE_SPRITE_SIZE;
@@ -97,17 +98,29 @@ void PhysicsObject::beginDeath() {
 
 
 
+
+	const ci::Area srcArea = Area( 0, 0, halfWidth*2, halfHeight*2 );
+	const ci::Rectf srcCoords = ci::Rectf( srcArea );
+
 	int count = ci::Rand::randInt( Constants::Particles::MIN, Constants::Particles::MAX );
 	for(size_t i = 0; i < count; ++i) {
 		ci::Vec2f pos = screenPosition + ci::Vec2f( ci::Rand::randFloat(-_radius, _radius), ci::Rand::randFloat(-_radius, _radius) );
+		const ci::Rectf destRect = ci::Rectf( pos.x-halfWidth, pos.y-halfHeight, pos.x + halfWidth, pos.y + halfHeight);
 
-		const ci::Area srcArea = Area( 0, 0, halfWidth*2, halfHeight*2 );
-		ci::Rectf destRect = ci::Rectf( pos.x-halfWidth, pos.y-halfHeight, pos.x + halfWidth, pos.y + halfHeight);
-		const ci::Rectf srcCoords = ci::Rectf( srcArea );
+
+		// Retrieve a color from the spriteSheetArea of this head in the texture
+		ci::Surface8u* surfacePtr = Constants::Textures::getSurfaceForTextureId( _textureId );
+		// Grab a random color from 1/4 the width of the texture in any direction from the CENTER
+		ci::Vec2i spriteSheetCenter( _spriteSheetArea.getX1() + _spriteSheetArea.getWidth() / 2, _spriteSheetArea.getY1() + _spriteSheetArea.getHeight() /2 );
+		const int colorAreaDivisor = 4;
+		ci::Vec2i colorPos( ci::Vec2i( spriteSheetCenter.x + ci::Rand::randInt( _spriteSheetArea.getWidth()/-colorAreaDivisor,  _spriteSheetArea.getWidth()/colorAreaDivisor),
+				spriteSheetCenter.y + ci::Rand::randInt( _spriteSheetArea.getHeight()/-colorAreaDivisor, _spriteSheetArea.getHeight()/colorAreaDivisor ) ) );
+
+		ci::ColorA color = surfacePtr->getPixel( colorPos );
 
 		// Add a particle to any random emitter
 		ci::Vec2f velocity = ci::Rand::randVec2f() * ci::Rand::randFloat( Constants::Particles::MAX_INITIAL_SPEED, Constants::Particles::MAX_INITIAL_SPEED );
-		emitter->add( pos, velocity, srcCoords, destRect );
+		emitter->add( pos, velocity, color, srcCoords, destRect );
 	}
 }
 

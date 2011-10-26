@@ -12,14 +12,12 @@
 namespace particle {
 
 ParticleSystem::ParticleSystem() {
-	_debugColor = ci::Rand::randFloat();
 }
 
 ParticleSystem::~ParticleSystem() {
-	// TODO Auto-generated destructor stub
 }
 
-void ParticleSystem::add( ci::Vec2f pos, ci::Vec2f velocity, ci::Rectf srcCoords, ci::Rectf destRect ) {
+void ParticleSystem::add( ci::Vec2f pos, ci::Vec2f velocity, ci::ColorA color, ci::Rectf srcCoords, ci::Rectf destRect ) {
 	Particle p = { verts.size(), velocity, pos, pos };
 	particles.push_back( p );
 
@@ -40,7 +38,7 @@ void ParticleSystem::add( ci::Vec2f pos, ci::Vec2f velocity, ci::Rectf srcCoords
 	texCoords.push_back( srcCoords.getX1() ); texCoords.push_back( srcCoords.getY1() );
 
 	// Colors
-	ci::ColorA color = ci::ColorA(ci::CM_HSV, _debugColor, 1.0, 1.0, 1.0);
+//	ci::ColorA color = ci::ColorA(ci::CM_HSV, _debugColor, 1.0, 1.0, 1.0);
 	colors.push_back( color ); colors.push_back( color );
 	colors.push_back( color ); colors.push_back( color );
 	colors.push_back( color ); colors.push_back( color );
@@ -61,7 +59,7 @@ void ParticleSystem::update() {
 			verts[ itr->index+y ] += delta.y;
 
 		itr->speed *= Constants::Particles::SPEED_DECAY;
-		actualSpeed += itr->speed.x + itr->speed.y;
+		actualSpeed += fabs(itr->speed.x) + fabs(itr->speed.y);
 	}
 
 	if( actualSpeed < 1 ) {

@@ -12,16 +12,26 @@ using namespace ci;
 AudioAnalyzer::AudioAnalyzer() {
 	// TODO Auto-generated constructor stub
 	//iterate input devices and print their names to the console
-	using namespace ci;
+	// Data:
+	/**
+Built-in Microphone
+Built-in Input
+BoomDevice
+	 */
+	std::string inputDeviceNames[] = {"Built-in Microphone", "Built-in Input"};
+
+
 	const std::vector<audio::InputDeviceRef>& devices = audio::Input::getDevices();
 	for( std::vector<audio::InputDeviceRef>::const_iterator iter = devices.begin(); iter != devices.end(); ++iter ) {
 		std::cout << (*iter)->getName() << std::endl;
+
+		// Initialize audio input if its the one we want
+		if( (*iter)->getName() == inputDeviceNames[1] ) {
+			mInput = audio::Input(*iter);
+		}
 	}
 
-	//initialize the audio Input, using the default input device
-	mInput = audio::Input();
-
-//	std::cout <<  mInput.getDefaultDevice() << std::endl;
+	std::cout <<  mInput.getDefaultDevice()->getName() << std::endl;
 
 
 
@@ -81,7 +91,6 @@ void AudioAnalyzer::drawWaveForm( float height )
 
 void AudioAnalyzer::drawFft()
 {
-	return;
 	uint16_t bandCount = 512;
 	float ht = 1000.0f;
 	float bottom = 150.0f;

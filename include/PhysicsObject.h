@@ -64,6 +64,7 @@ class PhysicsObject
 		int _age;
 		float _agePer;
 
+		int _textureId;
 		ci::gl::Texture texture;
 		ci::Area _spriteSheetArea;
 

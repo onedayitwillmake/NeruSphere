@@ -114,7 +114,7 @@ void NeruSphereApp::setupGUI() {
 	_gui->addSeparator();
 	_gui->addParam("SPEED_MIN", &Constants::Particles::MIN_INITIAL_SPEED, 1, 5, Constants::Particles::MIN_INITIAL_SPEED );
 	_gui->addParam("SPEED_MAX", &Constants::Particles::MAX_INITIAL_SPEED, 1, 5, Constants::Particles::MAX_INITIAL_SPEED );
-	_gui->addParam("PARTICLE_DECAY", &Constants::Particles::SPEED_DECAY, 0.5, 0.999, Constants::Particles::SPEED_DECAY );
+	_gui->addParam("PARTICLE_DECAY", &Constants::Particles::SPEED_DECAY, 0.85, 0.999, Constants::Particles::SPEED_DECAY );
 }
 
 void NeruSphereApp::setupHeads() {
@@ -163,6 +163,7 @@ void NeruSphereApp::update() {
 	aShape.m_radius = lastSize;
 
 
+	std::cout << _audioAnalyzer.getAverageVolume() << std::endl;
 	// Fixture definition
 	b2FixtureDef mFixtureDef;
 	mFixtureDef.shape = &aShape;

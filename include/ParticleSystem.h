@@ -30,7 +30,7 @@ public:
 	ParticleSystem();
 	~ParticleSystem();
 
-	void add( ci::Vec2f pos, ci::Vec2f velocity, ci::Rectf srcCoords, ci::Rectf destRect );
+	void add( ci::Vec2f pos, ci::Vec2f velocity, ci::ColorA color, ci::Rectf srcCoords, ci::Rectf destRect );
 	void draw();
 	void update();
 	void clear();
@@ -40,8 +40,6 @@ public:
 	std::vector<ci::ColorA> colors;
 	std::vector<Particle> particles;
 
-	// DEBUG
-	float _debugColor;
 	bool isDead;
 };
 
