@@ -5,6 +5,7 @@
  *      Author: onedayitwillmake
  */
 
+#include "Constants.h"
 #include "ParticleSystem.h"
 #include "cinder/Rand.h"
 
@@ -48,6 +49,9 @@ void ParticleSystem::add( ci::Vec2f pos, ci::Vec2f velocity, ci::Rectf srcCoords
 	colors.push_back( color ); colors.push_back( color );
 }
 void ParticleSystem::update() {
+
+	float maximumSpeed = particles.size();
+	float actualSpeed = 0;
 	for( std::vector<Particle>::iterator itr = particles.begin(); itr != particles.end(); ++itr ) {
 		ci::Vec2f delta = itr->speed;//itr->originalPosition - itr->currentPosition;
 
@@ -56,7 +60,12 @@ void ParticleSystem::update() {
 		for(size_t y = 1; y < 12; y += 2)
 			verts[ itr->index+y ] += delta.y;
 
-		itr->speed *= 0.99f;
+		itr->speed *= Constants::Particles::SPEED_DECAY;
+		actualSpeed += itr->speed.x + itr->speed.y;
+	}
+
+	if( actualSpeed < 1 ) {
+		isDead = true;
 	}
 }
 

@@ -77,6 +77,10 @@ void PhysicsObject::updateActive() {
 
 void PhysicsObject::updateExploding() {
 	emitter->update();
+	if( emitter->isDead ) {
+		setState( ACTIVE, updateState );
+		emitter->clear();
+	}
 }
 
 void PhysicsObject::beginDeath() {
@@ -85,14 +89,16 @@ void PhysicsObject::beginDeath() {
 
 	setState( EXPLODING, updateState );
 	reset();
+	emitter->isDead = false;
 
-	const float scale = 2;//ci::Rand::randFloat(0.1, 1.5);
-	const float halfWidth = 1;
-	const float halfHeight = 1;
+	const float scale = Constants::Particles::SIZE;//ci::Rand::randFloat(0.1, 1.5);
+	const float halfWidth = 1 * scale;
+	const float halfHeight = 1 * scale;
 
 
 
-	for(size_t i = 0; i < 5; i++) {
+	int count = ci::Rand::randInt( Constants::Particles::MIN, Constants::Particles::MAX );
+	for(size_t i = 0; i < count; ++i) {
 		ci::Vec2f pos = screenPosition + ci::Vec2f( ci::Rand::randFloat(-_radius, _radius), ci::Rand::randFloat(-_radius, _radius) );
 
 		const ci::Area srcArea = Area( 0, 0, halfWidth*2, halfHeight*2 );
@@ -100,7 +106,8 @@ void PhysicsObject::beginDeath() {
 		const ci::Rectf srcCoords = ci::Rectf( srcArea );
 
 		// Add a particle to any random emitter
-		emitter->add( pos, ci::Rand::randVec2f() * 1.5, srcCoords, destRect );
+		ci::Vec2f velocity = ci::Rand::randVec2f() * ci::Rand::randFloat( Constants::Particles::MAX_INITIAL_SPEED, Constants::Particles::MAX_INITIAL_SPEED );
+		emitter->add( pos, velocity, srcCoords, destRect );
 	}
 }
 

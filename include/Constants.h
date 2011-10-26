@@ -48,6 +48,16 @@ namespace Constants {
 		extern float MIN_SIZE;
 	};
 
+	namespace Particles {
+		extern float SIZE;
+		extern int MIN;
+		extern int MAX;
+
+		extern float MIN_INITIAL_SPEED;
+		extern float MAX_INITIAL_SPEED;
+		extern float SPEED_DECAY;
+	}
+
 	void init();
 }
 #endif /* CONSTANTS_H_ */

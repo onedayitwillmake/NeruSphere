@@ -61,7 +61,7 @@ public:
 
 void NeruSphereApp::prepareSettings( ci::app::AppBasic::Settings *settings ) {
 	settings->setWindowSize( 800, 600);
-	settings->setDisplay( Display::getDisplays().at(1) );
+//	settings->setDisplay( Display::getDisplays().at(1) );
 //	settings->setFrameRate( 30 );
 }
 
@@ -106,6 +106,15 @@ void NeruSphereApp::setupGUI() {
 	_gui->addParam("GROW_SPEED", &Constants::Planet::EASE_SPEED, 0.01f, 1.0f, Constants::Planet::EASE_SPEED );
 	_gui->addParam("VOLUME_RANGE", &Constants::Planet::VOLUME_RANGE, 15, 30, Constants::Planet::VOLUME_RANGE );
 	_gui->addParam("MIN_SIZE", &Constants::Planet::MIN_SIZE, 5, 300, Constants::Planet::MIN_SIZE );
+	_gui->addColumn();
+	_gui->addLabel("PARTICLES");
+	_gui->addParam("SIZE", &Constants::Particles::SIZE, 1, 10, Constants::Particles::SIZE );
+	_gui->addParam("MIN", &Constants::Particles::MIN, 1, 10, Constants::Particles::MIN );
+	_gui->addParam("MAX", &Constants::Particles::MAX, 1, 10, Constants::Particles::MAX );
+	_gui->addSeparator();
+	_gui->addParam("SPEED_MIN", &Constants::Particles::MIN_INITIAL_SPEED, 1, 5, Constants::Particles::MIN_INITIAL_SPEED );
+	_gui->addParam("SPEED_MAX", &Constants::Particles::MAX_INITIAL_SPEED, 1, 5, Constants::Particles::MAX_INITIAL_SPEED );
+	_gui->addParam("PARTICLE_DECAY", &Constants::Particles::SPEED_DECAY, 0.5, 0.999, Constants::Particles::SPEED_DECAY );
 }
 
 void NeruSphereApp::setupHeads() {

@@ -42,6 +42,7 @@ public:
 
 	// DEBUG
 	float _debugColor;
+	bool isDead;
 };
 
 } /* namespace particle */
