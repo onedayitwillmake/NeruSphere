@@ -84,7 +84,7 @@ void AudioAnalyzer::drawFft()
 	glTranslatef( 0.0f, 0.0f, 0.0f );
 
 
-	float bandColor = 255.0f / 8;
+	float bandColor = 1.0 / 6.0f;
 	float halfBandColor = bandColor * 0.5f;
 
 	for( int i = 0; i < ( bandCount ); i++ ) {

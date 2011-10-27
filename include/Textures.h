@@ -20,9 +20,9 @@ namespace Constants {
 					initialized = true;
 
 					ci::gl::Texture::Format format;
-					format.enableMipmapping( false );
-					format.setMinFilter( GL_NEAREST );
-					format.setMagFilter( GL_NEAREST );
+					format.enableMipmapping( true );
+//					format.setMinFilter( GL_NEAREST );
+//					format.setMagFilter( GL_NEAREST );
 
 					texture = ci::gl::Texture( ci::loadImage( ci::app::App::get()->loadResource( RES_HEAD ) ), format );
 					std::cout << "Loaded texture RES_HEAD " << std::endl;

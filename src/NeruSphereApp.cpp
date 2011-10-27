@@ -36,6 +36,7 @@
 #include "PhysicsObject.h"
 #include "Planet.h"
 #include "SimpleGUI.h"
+#include "ListenerSimple.h"
 
 #include <vector>
 
@@ -53,9 +54,11 @@ public:
 	mowa::sgui::SimpleGUI* _gui;
 
 
+	ListenerSimple		_oscListener;
+
 	gl::Fbo				mFbo;
 	static const int	FBO_WIDTH = 3000, FBO_HEIGHT = 3000 * (15.75/11.75);
-	bool			useFBO;
+	bool				useFBO;
 
 	//11.75/15.75
 	void setup();
@@ -89,6 +92,8 @@ void NeruSphereApp::setup() {
 
 	Constants::Textures::loadTextures();
 	Constants::init();
+
+	_oscListener.setup();
 
 	_planetBody = NULL;
 	_planetPhysicsObject = NULL;
@@ -130,7 +135,7 @@ void NeruSphereApp::setupGUI() {
 	_gui->addParam("MAX_LIFETIME", &Constants::Heads::MAX_LIFETIME, 400, 5000, Constants::Heads::MAX_LIFETIME );
 	_gui->addParam("MAX_SPEED", &Constants::Heads::MAX_SPEED, 500, 2000, Constants::Heads::MAX_SPEED );
 	_gui->addParam("PERLIN_STRENGTH", &Constants::Heads::PERLIN_STRENGTH, 0, 8, Constants::Heads::PERLIN_STRENGTH );
-	_gui->addParam("GRAVITY_DISTANCE", &Constants::Heads::MIN_GRAVITY_DISTANCE, 50.0f*50.0f * 0.5, 50.0f*50.0f * 2, Constants::Heads::MIN_GRAVITY_DISTANCE );
+	_gui->addParam("GRAVITY_DISTANCE", &Constants::Heads::MIN_GRAVITY_DISTANCE, ci::math<float>::pow(50,2), ci::math<float>::pow(50.0,3), Constants::Heads::MIN_GRAVITY_DISTANCE );
 	_gui->addParam("ANTI_GRAVITY", &Constants::Heads::ANTI_GRAVITY, 0, 20, Constants::Heads::ANTI_GRAVITY );
 	_gui->addColumn();
 	_gui->addLabel("PLANET");
@@ -142,20 +147,20 @@ void NeruSphereApp::setupGUI() {
 	_gui->addParam("SIZE_MIN", &Constants::Particles::PARTICLE_SIZE_MIN, 1, 10, Constants::Particles::PARTICLE_SIZE_MIN );
 	_gui->addParam("SIZE_MAX", &Constants::Particles::PARTICLE_SIZE_MAX, 1, 10, Constants::Particles::PARTICLE_SIZE_MAX );
 	_gui->addSeparator();
-	_gui->addParam("COUNT_MIN", &Constants::Particles::MIN, 1, 10, Constants::Particles::MIN );
-	_gui->addParam("COUNT_MAX", &Constants::Particles::MAX, 1, 64, Constants::Particles::MAX );
+	_gui->addParam("COUNT_MIN", &Constants::Particles::MIN, 1, 32, Constants::Particles::MIN );
+	_gui->addParam("COUNT_MAX", &Constants::Particles::MAX, 1, 32, Constants::Particles::MAX );
 	_gui->addSeparator();
 	_gui->addParam("SPEED_MIN", &Constants::Particles::MIN_INITIAL_SPEED, 1, 10, Constants::Particles::MIN_INITIAL_SPEED );
 	_gui->addParam("SPEED_MAX", &Constants::Particles::MAX_INITIAL_SPEED, 1, 10, Constants::Particles::MAX_INITIAL_SPEED );
 	_gui->addParam("SPEED_DECAY", &Constants::Particles::SPEED_DECAY, 0.85, 0.999, Constants::Particles::SPEED_DECAY );
-	_gui->addParam("ALPHA", &Constants::Particles::ALPHA, 0, 1.0, 0.6 );
+	_gui->addParam("ALPHA", &Constants::Particles::ALPHA, 0, 1.0, Constants::Particles::ALPHA);
 }
 
 void NeruSphereApp::setupHeads() {
 
 
 	int count = Constants::Defaults::HEAD_COUNT;
-	float spread = 0.2f;
+	float spread = 0.4f;
 	for(int i = 1; i <= count; i++) {
 		ci::Vec2f pos = Constants::Defaults::getWindowCenter();
 		pos.x += ci::Rand::randFloat(-Constants::Defaults::windowWidth*spread, Constants::Defaults::windowWidth*spread);
@@ -193,6 +198,7 @@ void NeruSphereApp::saveImage() {
 void NeruSphereApp::update() {
 	_worldController.update();
 	_audioAnalyzer.update();
+	_oscListener.update();
 
 	using namespace ci::box2d;
 	if(_planetBody) {

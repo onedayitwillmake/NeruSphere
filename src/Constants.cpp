@@ -63,20 +63,20 @@ namespace Constants {
 		Constants::Forces::DIRECTION = 1;
 
 		Constants::Defaults::HEAD_COUNT = 300;
-		Constants::Defaults::HEAD_SIZE_MIN = 6;
-		Constants::Defaults::HEAD_SIZE_MAX = 42;
+		Constants::Defaults::HEAD_SIZE_MIN = 8;
+		Constants::Defaults::HEAD_SIZE_MAX = 48;
 		Constants::Defaults::DEBUG_DRAW = false;
 
-		Constants::Heads::MIN_LIFETIME = 10;
-		Constants::Heads::MAX_LIFETIME = 100;
+		Constants::Heads::MIN_LIFETIME = 1000;
+		Constants::Heads::MAX_LIFETIME = 3500;
 		Constants::Heads::MAX_SPEED = 1616.0f;
-		Constants::Heads::PERLIN_STRENGTH = 4.1f;
-		Constants::Heads::ANTI_GRAVITY = 5;
-		Constants::Heads::MIN_GRAVITY_DISTANCE = 51.0f * 51.0f; // min distance Squared
+		Constants::Heads::PERLIN_STRENGTH = 5.1f;
+		Constants::Heads::ANTI_GRAVITY = 2.1;
+		Constants::Heads::MIN_GRAVITY_DISTANCE = 3000; // min distance Squared
 
-		Constants::Planet::EASE_SPEED = 0.38f;
+		Constants::Planet::EASE_SPEED = 0.57f;
 		Constants::Planet::VOLUME_RANGE = 28.0f;
-		Constants::Planet::MIN_SIZE = 64.0f;
+		Constants::Planet::MIN_SIZE = 16.0f;
 
 		Constants::Particles::MIN = 5;
 		Constants::Particles::MAX = 6;
@@ -84,11 +84,11 @@ namespace Constants {
 		Constants::Particles::PARTICLE_SIZE_MIN = 1.2;
 		Constants::Particles::PARTICLE_SIZE_MAX = 3.4;
 
-		Constants::Particles::MIN_INITIAL_SPEED = 5;
-		Constants::Particles::MAX_INITIAL_SPEED = 5;
+		Constants::Particles::MIN_INITIAL_SPEED = 1.5;
+		Constants::Particles::MAX_INITIAL_SPEED = 9;
 		Constants::Particles::SPEED_DECAY = 0.93;
 
-		Constants::Particles::ALPHA = 0.99;
+		Constants::Particles::ALPHA = 1.0;
 
 	}
 }
