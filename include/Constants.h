@@ -20,6 +20,7 @@ namespace Constants {
 
 	namespace Forces {
 		extern float GRAVITY_FORCE;
+		extern float DIRECTION;
 	};
 
 	namespace Defaults {
@@ -37,6 +38,7 @@ namespace Constants {
 		extern float PERLIN_STRENGTH;
 
 		extern float MIN_GRAVITY_DISTANCE;
+		extern float ANTI_GRAVITY;
 
 		extern int SINGLE_SPRITE_SIZE;
 		extern int NUM_SPRITES;
@@ -49,13 +51,17 @@ namespace Constants {
 	};
 
 	namespace Particles {
-		extern float SIZE;
 		extern int MIN;
 		extern int MAX;
+
+		extern float PARTICLE_SIZE_MIN;
+		extern float PARTICLE_SIZE_MAX;
 
 		extern float MIN_INITIAL_SPEED;
 		extern float MAX_INITIAL_SPEED;
 		extern float SPEED_DECAY;
+
+		extern float ALPHA;
 	}
 
 	void init();

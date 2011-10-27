@@ -12,12 +12,6 @@ using namespace ci;
 AudioAnalyzer::AudioAnalyzer() {
 	// TODO Auto-generated constructor stub
 	//iterate input devices and print their names to the console
-	// Data:
-	/**
-Built-in Microphone
-Built-in Input
-BoomDevice
-	 */
 	std::string inputDeviceNames[] = {"Built-in Microphone", "Built-in Input"};
 
 
@@ -26,7 +20,7 @@ BoomDevice
 		std::cout << (*iter)->getName() << std::endl;
 
 		// Initialize audio input if its the one we want
-		if( (*iter)->getName() == inputDeviceNames[1] ) {
+		if( (*iter)->getName() == inputDeviceNames[0] ) {
 			mInput = audio::Input(*iter);
 		}
 	}
@@ -47,46 +41,29 @@ void AudioAnalyzer::update()
 	if( ! mPcmBuffer ) {
 		return;
 	}
+
 	uint16_t bandCount = 512;
 	//presently FFT only works on OS X, not iOS
 	mFftDataRef = audio::calculateFft( mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_LEFT ), bandCount );
+	if( ! mFftDataRef ) {
+		return;
+	}
+
+	float * fftBuffer = mFftDataRef.get();
+
+	float average = 0;
+	float ht = 1000.0f;
+	for( int i = 0; i < ( bandCount ); i++ ) {
+		average += fftBuffer[i] / bandCount * ht;
+	}
+	_averageVolume = average/(bandCount/2);
 }
 
-void AudioAnalyzer::draw()
-{
+void AudioAnalyzer::draw() {
 	glPushMatrix();
 		glTranslatef( 0.0f, ci::app::App::get()->getWindowHeight() -150, 0.0f );
 		drawFft();
 	glPopMatrix();
-}
-
-void AudioAnalyzer::drawWaveForm( float height )
-{
-	if( ! mPcmBuffer ) {
-		return;
-	}
-
-	uint32_t bufferSamples = mPcmBuffer->getSampleCount();
-	audio::Buffer32fRef leftBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_LEFT );
-	//audio::Buffer32fRef rightBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_RIGHT );
-
-	int displaySize = ci::app::App::get()->getWindowWidth();
-	int endIdx = bufferSamples;
-
-	//only draw the last 1024 samples or less
-	int32_t startIdx = ( endIdx - 1024 );
-	startIdx = math<int32_t>::clamp( startIdx, 0, endIdx );
-
-	float scale = displaySize / (float)( endIdx - startIdx );
-
-	PolyLine<Vec2f>	line;
-
-	gl::color( Color( 1.0f, 0.5f, 0.25f ) );
-	for( uint32_t i = startIdx, c = 0; i < endIdx; i++, c++ ) {
-		float y = ( ( leftBuffer->mData[i] - 1 ) * - 100 );
-		line.push_back( Vec2f( ( c * scale ), y ) );
-	}
-	gl::draw( line );
 }
 
 void AudioAnalyzer::drawFft()
@@ -102,31 +79,29 @@ void AudioAnalyzer::drawFft()
 	float * fftBuffer = mFftDataRef.get();
 
 
-	float average = 0;
+
 	glPushMatrix();
 	glTranslatef( 0.0f, 0.0f, 0.0f );
 
 
-//	int counter = 0;
+	float bandColor = 255.0f / 8;
+	float halfBandColor = bandColor * 0.5f;
+
 	for( int i = 0; i < ( bandCount ); i++ ) {
 		float barY = fftBuffer[i] / bandCount * ht;
-		average += barY;
 		float delta = bottom - barY;
 
-
-	//	gl::rotate( i/(float)bandCount/360 );
 		float size = 10;
 		glBegin( GL_QUADS );
-			glColor3f( 255.0f, 255.0f, 0.0f );
+			glColor3f( halfBandColor, halfBandColor, halfBandColor );
 			glVertex2f( i * size, bottom );
 			glVertex2f( i * size + size/2, bottom );
-			glColor3f( 0.0f, 255.0f, 0.0f );
+			glColor3f( bandColor, bandColor, bandColor );
 			glVertex2f( i * size + size/2, bottom - barY );
 			glVertex2f( i * size, bottom - barY );
 		glEnd();
 	}
 	glPopMatrix();
-	_averageVolume = average/(bandCount/2);
 }
 
 AudioAnalyzer::~AudioAnalyzer() {

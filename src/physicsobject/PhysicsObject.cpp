@@ -92,7 +92,7 @@ void PhysicsObject::beginDeath() {
 	reset();
 	emitter->isDead = false;
 
-	const float scale = Constants::Particles::SIZE;//ci::Rand::randFloat(0.1, 1.5);
+	const float scale = ci::Rand::randFloat( Constants::Particles::PARTICLE_SIZE_MIN, Constants::Particles::PARTICLE_SIZE_MAX );
 	const float halfWidth = 1 * scale;
 	const float halfHeight = 1 * scale;
 
@@ -135,6 +135,8 @@ void PhysicsObject::applyRadialGravity( b2Vec2 center ) {
 
 	delta.Normalize();
 	b2Vec2 force = forceScale * delta;
+	force *= Constants::Forces::DIRECTION;
+
 	_body->ApplyForce( _body->GetMass() * force, _body->GetWorldCenter() );
 }
 

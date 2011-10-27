@@ -41,6 +41,7 @@ public:
 	b2Body* _planetBody;
 	Planet* _planetPhysicsObject;
 	AudioAnalyzer _audioAnalyzer;
+	bool _shouldDrawSpectrum;
 	mowa::sgui::SimpleGUI* _gui;
 
 
@@ -50,6 +51,7 @@ public:
 	void prepareSettings( ci::app::AppBasic::Settings *settings );
 	void mouseDown( ci::app::MouseEvent event );
 	void keyDown( ci::app::KeyEvent event );
+	void resize( ci::app::ResizeEvent event );
 	void update();
 	void shutdown();
 	void draw();
@@ -61,6 +63,7 @@ public:
 
 void NeruSphereApp::prepareSettings( ci::app::AppBasic::Settings *settings ) {
 	settings->setWindowSize( 800, 600);
+//	settings->set
 //	settings->setDisplay( Display::getDisplays().at(1) );
 //	settings->setFrameRate( 30 );
 }
@@ -72,6 +75,7 @@ void NeruSphereApp::setup() {
 
 	_planetBody = NULL;
 	_planetPhysicsObject = NULL;
+	_shouldDrawSpectrum = true;
 
 	_worldController.init( 4, 2 );
 	setupHeads();
@@ -88,6 +92,7 @@ void NeruSphereApp::setupGUI() {
 	_gui->bgColor = ci::ColorA(0.20, 0.20, 0.20, 0.5);
 	_gui->addColumn();
 	_gui->addLabel("DEFAULTS");
+	_gui->addParam("DRAW_SPECTRUM", &_shouldDrawSpectrum, _shouldDrawSpectrum);
 	_gui->addParam("HEAD_COUNT", &Constants::Defaults::HEAD_COUNT, 1, 300, Constants::Defaults::HEAD_COUNT );
 	_gui->addParam("HEAD_SIZE_MIN", &Constants::Defaults::HEAD_SIZE_MIN, 4, 256, Constants::Defaults::HEAD_SIZE_MIN );
 	_gui->addParam("HEAD_SIZE_MAX", &Constants::Defaults::HEAD_SIZE_MAX, 4, 256, Constants::Defaults::HEAD_SIZE_MAX );
@@ -99,8 +104,9 @@ void NeruSphereApp::setupGUI() {
 	_gui->addParam("MIN_LIFETIME", &Constants::Heads::MIN_LIFETIME, 400, 5000, Constants::Heads::MIN_LIFETIME );
 	_gui->addParam("MAX_LIFETIME", &Constants::Heads::MAX_LIFETIME, 400, 5000, Constants::Heads::MAX_LIFETIME );
 	_gui->addParam("MAX_SPEED", &Constants::Heads::MAX_SPEED, 500, 2000, Constants::Heads::MAX_SPEED );
-	_gui->addParam("PERLIN_STRENGTH", &Constants::Heads::PERLIN_STRENGTH, 0, 3, Constants::Heads::PERLIN_STRENGTH );
+	_gui->addParam("PERLIN_STRENGTH", &Constants::Heads::PERLIN_STRENGTH, 0, 8, Constants::Heads::PERLIN_STRENGTH );
 	_gui->addParam("GRAVITY_DISTANCE", &Constants::Heads::MIN_GRAVITY_DISTANCE, 50.0f*50.0f * 0.5, 50.0f*50.0f * 2, Constants::Heads::MIN_GRAVITY_DISTANCE );
+	_gui->addParam("ANTI_GRAVITY", &Constants::Heads::ANTI_GRAVITY, 0, 10, Constants::Heads::ANTI_GRAVITY );
 	_gui->addColumn();
 	_gui->addLabel("PLANET");
 	_gui->addParam("GROW_SPEED", &Constants::Planet::EASE_SPEED, 0.01f, 1.0f, Constants::Planet::EASE_SPEED );
@@ -108,13 +114,16 @@ void NeruSphereApp::setupGUI() {
 	_gui->addParam("MIN_SIZE", &Constants::Planet::MIN_SIZE, 5, 300, Constants::Planet::MIN_SIZE );
 	_gui->addColumn();
 	_gui->addLabel("PARTICLES");
-	_gui->addParam("SIZE", &Constants::Particles::SIZE, 1, 10, Constants::Particles::SIZE );
-	_gui->addParam("MIN", &Constants::Particles::MIN, 1, 10, Constants::Particles::MIN );
-	_gui->addParam("MAX", &Constants::Particles::MAX, 1, 10, Constants::Particles::MAX );
+	_gui->addParam("SIZE_MIN", &Constants::Particles::PARTICLE_SIZE_MIN, 1, 10, Constants::Particles::PARTICLE_SIZE_MIN );
+	_gui->addParam("SIZE_MAX", &Constants::Particles::PARTICLE_SIZE_MAX, 1, 10, Constants::Particles::PARTICLE_SIZE_MAX );
 	_gui->addSeparator();
-	_gui->addParam("SPEED_MIN", &Constants::Particles::MIN_INITIAL_SPEED, 1, 5, Constants::Particles::MIN_INITIAL_SPEED );
-	_gui->addParam("SPEED_MAX", &Constants::Particles::MAX_INITIAL_SPEED, 1, 5, Constants::Particles::MAX_INITIAL_SPEED );
-	_gui->addParam("PARTICLE_DECAY", &Constants::Particles::SPEED_DECAY, 0.85, 0.999, Constants::Particles::SPEED_DECAY );
+	_gui->addParam("COUNT_MIN", &Constants::Particles::MIN, 1, 10, Constants::Particles::MIN );
+	_gui->addParam("COUNT_MAX", &Constants::Particles::MAX, 1, 64, Constants::Particles::MAX );
+	_gui->addSeparator();
+	_gui->addParam("SPEED_MIN", &Constants::Particles::MIN_INITIAL_SPEED, 1, 10, Constants::Particles::MIN_INITIAL_SPEED );
+	_gui->addParam("SPEED_MAX", &Constants::Particles::MAX_INITIAL_SPEED, 1, 10, Constants::Particles::MAX_INITIAL_SPEED );
+	_gui->addParam("SPEED_DECAY", &Constants::Particles::SPEED_DECAY, 0.85, 0.999, Constants::Particles::SPEED_DECAY );
+	_gui->addParam("ALPHA", &Constants::Particles::ALPHA, 0, 1.0, 0.6 );
 }
 
 void NeruSphereApp::setupHeads() {
@@ -136,7 +145,7 @@ void NeruSphereApp::mouseDown( ci::app::MouseEvent event ) {
 }
 
 void NeruSphereApp::keyDown( ci::app::KeyEvent event ) {
-	if( event.getChar() == ci::app::KeyEvent::KEY_h ) {
+	if( event.getChar() == ci::app::KeyEvent::KEY_o ) {
 		_gui->setEnabled( !_gui->isEnabled() );
 	}
 }
@@ -159,11 +168,19 @@ void NeruSphereApp::update() {
 	float maxSize = getWindowWidth() < getWindowHeight() ? getWindowWidth()*0.49 : getWindowHeight()*0.49;
 	newSize = ci::math<float>::min( newSize, Conversions::toPhysics( maxSize ) );
 
+
+	// When the volume increases by a significant amount - push outward
+	if( fabsf( lastSize - newSize ) > 2 + Constants::Planet::EASE_SPEED && lastSize - newSize < 0 ) {
+		Constants::Forces::DIRECTION = -Constants::Heads::ANTI_GRAVITY;
+	} else {
+		Constants::Forces::DIRECTION = 1;
+	}
+
 	lastSize -= (lastSize - newSize) * Constants::Planet::EASE_SPEED;
 	aShape.m_radius = lastSize;
 
 
-	std::cout << _audioAnalyzer.getAverageVolume() << std::endl;
+//	std::cout << _audioAnalyzer.getAverageVolume() << std::endl;
 	// Fixture definition
 	b2FixtureDef mFixtureDef;
 	mFixtureDef.shape = &aShape;
@@ -191,12 +208,12 @@ void NeruSphereApp::update() {
 }
 
 void NeruSphereApp::draw() {
-	ci::gl::clear( ci::Color(0,0,0) );
+	ci::gl::clear( ci::Color(1.0, 1.0, 1.0) );
 	ci::gl::color( ColorA(1.0f, 1.0f, 1.0f, 1.0f ) );
 
 
+	if( _shouldDrawSpectrum ) _audioAnalyzer.draw();
 	_worldController.draw();
-	_audioAnalyzer.draw();
 	_gui->draw();
 
 	gl::enableAlphaBlending();
@@ -231,8 +248,6 @@ void NeruSphereApp::drawParticles() {
 }
 
 bool NeruSphereApp::restart( ci::app::MouseEvent event ) {
-	std::cout << "Hello" << std::endl;
-
 	_worldController.clear();
 	setupHeads();
 	setupGUI();
@@ -242,10 +257,29 @@ bool NeruSphereApp::restart( ci::app::MouseEvent event ) {
 
 	return true;
 }
+
+void NeruSphereApp::resize( ci::app::ResizeEvent event ) {
+
+	static bool didJustResize = false;
+	static float lastWidth;
+	static float lastHeight;
+	static float ratio = 1;
+
+	if( !didJustResize ) {
+		lastWidth = event.getWidth();
+		lastHeight = event.getHeight() * ratio;
+		didJustResize = true;
+	} else {
+		didJustResize = false;
+	}
+
+	ci::app::setWindowSize( lastWidth, lastHeight );
+}
+
 void NeruSphereApp::shutdown() {
 	std::cout << "Shutdown..." << std::endl;
 	AppBasic::shutdown();
 }
 
 
-CINDER_APP_BASIC( NeruSphereApp, ci::app::RendererGl(0) )
+	CINDER_APP_BASIC( NeruSphereApp, ci::app::RendererGl(0) )

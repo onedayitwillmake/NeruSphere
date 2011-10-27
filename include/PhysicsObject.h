@@ -42,6 +42,8 @@ class PhysicsObject
 		void setBody( b2Body* aBody );
 
 		void setState( PhsyicsObjectState aState, boost::function<void()>& updateFunction );
+		PhsyicsObjectState getState() { return _state; };
+
 		bool isDead() { return false; /*_age > _lifetime;*/ };
 
 

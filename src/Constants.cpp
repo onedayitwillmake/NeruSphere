@@ -7,8 +7,8 @@
 #include "Constants.h"
 namespace Constants {
 	namespace Forces {
-		float PARTICLE_SPEED_DECAY;
 		float GRAVITY_FORCE;
+		float DIRECTION;
 	};
 
 	namespace Defaults {
@@ -26,6 +26,7 @@ namespace Constants {
 		float PERLIN_STRENGTH;
 
 		float MIN_GRAVITY_DISTANCE;
+		float ANTI_GRAVITY;
 
 		int SINGLE_SPRITE_SIZE = 74;
 		int NUM_SPRITES = 13;
@@ -44,38 +45,47 @@ namespace Constants {
 		int MIN;
 		int MAX;
 
-		float SIZE;
+		float PARTICLE_SIZE_MIN;
+		float PARTICLE_SIZE_MAX;
 
 		float MIN_INITIAL_SPEED;
 		float MAX_INITIAL_SPEED;
 		float SPEED_DECAY;
+
+		float ALPHA;
 	}
 
 	void init() {
 		Constants::Forces::GRAVITY_FORCE = 40000.0f;
+		Constants::Forces::DIRECTION = 1;
 
-		Constants::Defaults::HEAD_COUNT = 210;
+		Constants::Defaults::HEAD_COUNT = 300;
 		Constants::Defaults::HEAD_SIZE_MIN = 6;
-		Constants::Defaults::HEAD_SIZE_MAX = 36;
+		Constants::Defaults::HEAD_SIZE_MAX = 42;
 		Constants::Defaults::DEBUG_DRAW = false;
 
-		Constants::Heads::MIN_LIFETIME = 250;
-		Constants::Heads::MAX_LIFETIME = 600;
+		Constants::Heads::MIN_LIFETIME = 1000;
+		Constants::Heads::MAX_LIFETIME = 3300;
 		Constants::Heads::MAX_SPEED = 1616.0f;
-		Constants::Heads::PERLIN_STRENGTH = 2.088f;
+		Constants::Heads::PERLIN_STRENGTH = 4.1f;
+		Constants::Heads::ANTI_GRAVITY = -5;
 		Constants::Heads::MIN_GRAVITY_DISTANCE = 51.0f * 51.0f; // min distance Squared
 
 		Constants::Planet::EASE_SPEED = 0.38f;
 		Constants::Planet::VOLUME_RANGE = 28.0f;
 		Constants::Planet::MIN_SIZE = 64.0f;
 
-		Constants::Particles::MIN = 2;
-		Constants::Particles::MAX = 10;
-		Constants::Particles::SIZE = 1;
+		Constants::Particles::MIN = 5;
+		Constants::Particles::MAX = 6;
 
-		Constants::Particles::MIN_INITIAL_SPEED = 1;
-		Constants::Particles::MAX_INITIAL_SPEED = 3;
-		Constants::Particles::SPEED_DECAY = 0.99;
+		Constants::Particles::PARTICLE_SIZE_MIN = 1.2;
+		Constants::Particles::PARTICLE_SIZE_MAX = 3.4;
+
+		Constants::Particles::MIN_INITIAL_SPEED = 5;
+		Constants::Particles::MAX_INITIAL_SPEED = 5;
+		Constants::Particles::SPEED_DECAY = 0.93;
+
+		Constants::Particles::ALPHA = 0.99;
 
 	}
 }

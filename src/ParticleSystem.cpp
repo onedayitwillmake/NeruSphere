@@ -30,6 +30,7 @@ void ParticleSystem::add( ci::Vec2f pos, ci::Vec2f velocity, ci::ColorA color, c
 	verts.push_back( destRect.getX1() ); verts.push_back( destRect.getY1() );;
 
 	// Texture coords
+	color.a = Constants::Particles::ALPHA;
 	texCoords.push_back( srcCoords.getX1() ); texCoords.push_back( srcCoords.getY2() );
 	texCoords.push_back( srcCoords.getX2() ); texCoords.push_back( srcCoords.getY2() );
 	texCoords.push_back( srcCoords.getX2() ); texCoords.push_back( srcCoords.getY1() );
