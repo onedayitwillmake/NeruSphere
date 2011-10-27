@@ -94,7 +94,7 @@ void NeruSphereApp::setup() {
 	_planetPhysicsObject = NULL;
 	_shouldDrawSpectrum = false;
 
-	useFBO = true;
+	useFBO = false;
 	if( useFBO ) {
 		gl::Fbo::Format format;
 		mFbo = gl::Fbo( FBO_WIDTH, FBO_HEIGHT, format );
@@ -250,7 +250,7 @@ void NeruSphereApp::update() {
 }
 
 void NeruSphereApp::render() {
-	ci::gl::clear( ci::Color(1.0, 1.0, 1.0) );
+	ci::gl::clear( ci::Color(0.05,0.05,0.05) );
 	ci::gl::color( ColorA(1.0f, 1.0f, 1.0f, 1.0f ) );
 
 
@@ -319,27 +319,6 @@ void NeruSphereApp::resize( ci::app::ResizeEvent event ) {
 		Constants::Defaults::windowWidth = event.getWidth();
 		Constants::Defaults::windowHeight = event.getHeight();
 	}
-//
-//	static bool didJustResize = false;
-//	static float ratio = 15.75/11.75;
-//	static float lastWidth = event.getWidth();
-//	static float lastHeight = event.getHeight() * ratio;
-//	ci::app::setWindowSize( lastWidth, lastHeight );
-//
-////	float desiredRatio = (11.75f/15.75f);
-////	std::cout << _audioAnalyzer.getAverageVolume() << std::endl;
-//	std::cout << getWindowAspectRatio() << " | " << ratio << std::endl;
-//
-//	static int itr = 0;
-//	if( ++itr < 10 && fabs(getWindowAspectRatio() - ratio) > 0.01 ) {
-//		lastWidth = event.getWidth();
-//		lastHeight = event.getHeight() * ratio;
-//
-//		if( lastWidth > Display::getDisplays().at(0)->getWidth() || lastHeight > Display::getDisplays().at(0)->getHeight() ) {
-//			lastWidth = Display::getDisplays().at(0)->getWidth();
-//			lastHeight = Display::getDisplays().at(0)->getWidth() * ratio;
-//		}
-//	}
 }
 
 void NeruSphereApp::shutdown() {
