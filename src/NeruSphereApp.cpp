@@ -217,7 +217,7 @@ void NeruSphereApp::update() {
 		Constants::Forces::DIRECTION = 1;
 	}
 
-	std::cout << Constants::Forces::DIRECTION << " | " << lastSize - newSize  << std:: endl;
+//	std::cout << Constants::Forces::DIRECTION << " | " << lastSize - newSize  << std:: endl;
 	lastSize -= (lastSize - newSize) * Constants::Planet::EASE_SPEED;
 	aShape.m_radius = lastSize;
 
@@ -262,6 +262,8 @@ void NeruSphereApp::render() {
 	_worldController.draw();
 	if( _planetPhysicsObject ) _planetPhysicsObject->drawImp();
 
+	gl::enableDepthRead();
+	gl::enableDepthWrite();
 	drawParticles();
 }
 void NeruSphereApp::draw() {
@@ -289,8 +291,8 @@ void NeruSphereApp::drawParticles() {
 		b2Body* node = _worldController.getWorld()->GetBodyList();
 		while( node ) {
 			PhysicsObject* physicsObject = (PhysicsObject*) node->GetUserData();
-			if( physicsObject ) {
-				glVertexPointer( 2, GL_FLOAT, 0, &(physicsObject->emitter->verts)[0] );
+			if( physicsObject && physicsObject->getState() == PhysicsObject::EXPLODING ) {
+				glVertexPointer( 3, GL_FLOAT, 0, &(physicsObject->emitter->verts)[0] );
 				glTexCoordPointer( 2, GL_FLOAT, 0, &(physicsObject->emitter->texCoords)[0] );
 				glColorPointer( 4, GL_FLOAT, 0, &(physicsObject->emitter->colors)[0].r );
 				glDrawArrays( GL_TRIANGLES, 0, physicsObject->emitter->verts.size() / 2 );

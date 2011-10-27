@@ -67,8 +67,8 @@ namespace Constants {
 		Constants::Defaults::HEAD_SIZE_MAX = 42;
 		Constants::Defaults::DEBUG_DRAW = false;
 
-		Constants::Heads::MIN_LIFETIME = 1000;
-		Constants::Heads::MAX_LIFETIME = 3300;
+		Constants::Heads::MIN_LIFETIME = 10;
+		Constants::Heads::MAX_LIFETIME = 100;
 		Constants::Heads::MAX_SPEED = 1616.0f;
 		Constants::Heads::PERLIN_STRENGTH = 4.1f;
 		Constants::Heads::ANTI_GRAVITY = 5;

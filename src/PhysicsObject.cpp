@@ -82,6 +82,7 @@ void PhysicsObject::updateExploding() {
 		setState( ACTIVE, updateState );
 		emitter->clear();
 	}
+	faceCenter();
 }
 
 void PhysicsObject::beginDeath() {

@@ -16,12 +16,12 @@
 
 class PhysicsObject
 {
-	enum PhsyicsObjectState {
-		ACTIVE,
-		EXPLODING
-	};
-
 	public:
+		enum PhsyicsObjectState {
+			ACTIVE,
+			EXPLODING
+		}
+		;
 		PhysicsObject( b2Body* aBody );
 		virtual ~PhysicsObject();
 
