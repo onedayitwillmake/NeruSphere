@@ -18,10 +18,18 @@
 #include "cinder/Rand.h"
 #include "cinder/Color.h"
 #include "cinder/Display.h"
+#include "cinder/Filesystem.h"
+#include "cinder/Utilities.h"
+#include "cinder/ImageIo.h"
+#include "cinder/Surface.h"
+#include "cinder/DataTarget.h"
+#include "cinder/gl/Texture.h"
+
 #include "WorldController.h"
 #include "Conversions.h"
 #include "cinder/CinderMath.h"
 #include "cinder/Perlin.h"
+#include "cinder/gl/Fbo.h"
 #include "AudioAnalyzer.h"
 #include "Constants.h"
 #include "Textures.h"
@@ -45,6 +53,11 @@ public:
 	mowa::sgui::SimpleGUI* _gui;
 
 
+	gl::Fbo				mFbo;
+	static const int	FBO_WIDTH = 3000, FBO_HEIGHT = 3000 * (15.75/11.75);
+	bool			useFBO;
+
+	//11.75/15.75
 	void setup();
 	void setupHeads();
 	void setupGUI();
@@ -54,10 +67,14 @@ public:
 	void resize( ci::app::ResizeEvent event );
 	void update();
 	void shutdown();
+
+	void render();
 	void draw();
 	void drawParticles();
 
 	bool restart( ci::app::MouseEvent event );
+
+	void saveImage();
 };
 
 
@@ -75,7 +92,15 @@ void NeruSphereApp::setup() {
 
 	_planetBody = NULL;
 	_planetPhysicsObject = NULL;
-	_shouldDrawSpectrum = true;
+	_shouldDrawSpectrum = false;
+
+	useFBO = true;
+	if( useFBO ) {
+		gl::Fbo::Format format;
+		mFbo = gl::Fbo( FBO_WIDTH, FBO_HEIGHT, format );
+		Constants::Defaults::windowWidth = FBO_WIDTH;
+		Constants::Defaults::windowHeight = FBO_HEIGHT;
+	}
 
 	_worldController.init( 4, 2 );
 	setupHeads();
@@ -106,7 +131,7 @@ void NeruSphereApp::setupGUI() {
 	_gui->addParam("MAX_SPEED", &Constants::Heads::MAX_SPEED, 500, 2000, Constants::Heads::MAX_SPEED );
 	_gui->addParam("PERLIN_STRENGTH", &Constants::Heads::PERLIN_STRENGTH, 0, 8, Constants::Heads::PERLIN_STRENGTH );
 	_gui->addParam("GRAVITY_DISTANCE", &Constants::Heads::MIN_GRAVITY_DISTANCE, 50.0f*50.0f * 0.5, 50.0f*50.0f * 2, Constants::Heads::MIN_GRAVITY_DISTANCE );
-	_gui->addParam("ANTI_GRAVITY", &Constants::Heads::ANTI_GRAVITY, 0, 10, Constants::Heads::ANTI_GRAVITY );
+	_gui->addParam("ANTI_GRAVITY", &Constants::Heads::ANTI_GRAVITY, 0, 20, Constants::Heads::ANTI_GRAVITY );
 	_gui->addColumn();
 	_gui->addLabel("PLANET");
 	_gui->addParam("GROW_SPEED", &Constants::Planet::EASE_SPEED, 0.01f, 1.0f, Constants::Planet::EASE_SPEED );
@@ -127,12 +152,14 @@ void NeruSphereApp::setupGUI() {
 }
 
 void NeruSphereApp::setupHeads() {
-	ci::Vec2f pos = getWindowCenter();
+
 
 	int count = Constants::Defaults::HEAD_COUNT;
+	float spread = 0.2f;
 	for(int i = 1; i <= count; i++) {
-		pos.x = i * (float)getWindowSize().x/ (float)count;
-		pos.y = ci::Rand::randFloat(-1000, 1000);
+		ci::Vec2f pos = Constants::Defaults::getWindowCenter();
+		pos.x += ci::Rand::randFloat(-Constants::Defaults::windowWidth*spread, Constants::Defaults::windowWidth*spread);
+		pos.y += ci::Rand::randFloat(-Constants::Defaults::windowHeight*spread, Constants::Defaults::windowHeight*spread);
 
 		b2Body* body = _worldController.createCircle( ci::Rand::randFloat(Constants::Defaults::HEAD_SIZE_MIN, Constants::Defaults::HEAD_SIZE_MAX), pos );
 		PhysicsObject* physicsObject = new PhysicsObject( body );
@@ -147,9 +174,22 @@ void NeruSphereApp::mouseDown( ci::app::MouseEvent event ) {
 void NeruSphereApp::keyDown( ci::app::KeyEvent event ) {
 	if( event.getChar() == ci::app::KeyEvent::KEY_o ) {
 		_gui->setEnabled( !_gui->isEnabled() );
+	} else if( event.getChar() == ci::app::KeyEvent::KEY_s) {
+		saveImage();
+	} else if ( event.getChar() == ci::app::KeyEvent::KEY_f ) {
+		setFullScreen( !isFullScreen() );
 	}
 }
 
+void NeruSphereApp::saveImage() {
+	std::string _saveDirectory = ci::getHomeDirectory() + "Desktop/NeruSphere/";
+	ci::createDirectories( _saveDirectory );
+
+	std::stringstream filename;
+	filename << _saveDirectory << "Image_" << ci::Rand::randInt( 100000000 ) << ".png";
+
+	ci::writeImage( filename.str(), useFBO ? mFbo.getTexture(0) : copyWindowSurface() );
+}
 void NeruSphereApp::update() {
 	_worldController.update();
 	_audioAnalyzer.update();
@@ -170,12 +210,14 @@ void NeruSphereApp::update() {
 
 
 	// When the volume increases by a significant amount - push outward
-	if( fabsf( lastSize - newSize ) > 2 + Constants::Planet::EASE_SPEED && lastSize - newSize < 0 ) {
-		Constants::Forces::DIRECTION = -Constants::Heads::ANTI_GRAVITY;
+	if( lastSize - newSize < -0.7 ) {
+
+		Constants::Forces::DIRECTION = Constants::Heads::ANTI_GRAVITY * -1;
 	} else {
 		Constants::Forces::DIRECTION = 1;
 	}
 
+	std::cout << Constants::Forces::DIRECTION << " | " << lastSize - newSize  << std:: endl;
 	lastSize -= (lastSize - newSize) * Constants::Planet::EASE_SPEED;
 	aShape.m_radius = lastSize;
 
@@ -191,7 +233,7 @@ void NeruSphereApp::update() {
 	// Body definition
 	b2BodyDef mBodyDef;
 	mBodyDef.type = b2_staticBody;
-	mBodyDef.position = Conversions::toPhysics( getWindowCenter() );
+	mBodyDef.position = Conversions::toPhysics( Constants::Defaults::getWindowCenter() );
 	b2Body* body = _worldController.getWorld()->CreateBody( &mBodyDef );
 	body->CreateFixture( &mFixtureDef );
 
@@ -207,21 +249,35 @@ void NeruSphereApp::update() {
 	body->SetUserData( _planetPhysicsObject );
 }
 
-void NeruSphereApp::draw() {
+void NeruSphereApp::render() {
 	ci::gl::clear( ci::Color(1.0, 1.0, 1.0) );
 	ci::gl::color( ColorA(1.0f, 1.0f, 1.0f, 1.0f ) );
 
 
-	if( _shouldDrawSpectrum ) _audioAnalyzer.draw();
-	_worldController.draw();
-	_gui->draw();
-
 	gl::enableAlphaBlending();
 	gl::disableDepthRead();
 	gl::disableDepthWrite();
+
+	if( _shouldDrawSpectrum ) _audioAnalyzer.draw();
+	_worldController.draw();
 	if( _planetPhysicsObject ) _planetPhysicsObject->drawImp();
 
 	drawParticles();
+}
+void NeruSphereApp::draw() {
+	if( useFBO ) {
+		mFbo.bindFramebuffer();
+		gl::setViewport( mFbo.getBounds() );
+		gl::setMatricesWindow( mFbo.getWidth(), mFbo.getHeight() );
+			render();
+		mFbo.unbindFramebuffer();
+
+		gl::setMatricesWindow( getWindowSize() );
+		gl::draw( mFbo.getTexture(0), Rectf( 0, 0, getWindowWidth(), getWindowHeight() ) );
+	} else {
+		render();
+	}
+	_gui->draw();
 }
 
 void NeruSphereApp::drawParticles() {
@@ -259,21 +315,31 @@ bool NeruSphereApp::restart( ci::app::MouseEvent event ) {
 }
 
 void NeruSphereApp::resize( ci::app::ResizeEvent event ) {
-
-	static bool didJustResize = false;
-	static float lastWidth;
-	static float lastHeight;
-	static float ratio = 1;
-
-	if( !didJustResize ) {
-		lastWidth = event.getWidth();
-		lastHeight = event.getHeight() * ratio;
-		didJustResize = true;
-	} else {
-		didJustResize = false;
+	if( !useFBO ) {
+		Constants::Defaults::windowWidth = event.getWidth();
+		Constants::Defaults::windowHeight = event.getHeight();
 	}
-
-	ci::app::setWindowSize( lastWidth, lastHeight );
+//
+//	static bool didJustResize = false;
+//	static float ratio = 15.75/11.75;
+//	static float lastWidth = event.getWidth();
+//	static float lastHeight = event.getHeight() * ratio;
+//	ci::app::setWindowSize( lastWidth, lastHeight );
+//
+////	float desiredRatio = (11.75f/15.75f);
+////	std::cout << _audioAnalyzer.getAverageVolume() << std::endl;
+//	std::cout << getWindowAspectRatio() << " | " << ratio << std::endl;
+//
+//	static int itr = 0;
+//	if( ++itr < 10 && fabs(getWindowAspectRatio() - ratio) > 0.01 ) {
+//		lastWidth = event.getWidth();
+//		lastHeight = event.getHeight() * ratio;
+//
+//		if( lastWidth > Display::getDisplays().at(0)->getWidth() || lastHeight > Display::getDisplays().at(0)->getHeight() ) {
+//			lastWidth = Display::getDisplays().at(0)->getWidth();
+//			lastHeight = Display::getDisplays().at(0)->getWidth() * ratio;
+//		}
+//	}
 }
 
 void NeruSphereApp::shutdown() {
@@ -282,4 +348,4 @@ void NeruSphereApp::shutdown() {
 }
 
 
-	CINDER_APP_BASIC( NeruSphereApp, ci::app::RendererGl(0) )
+CINDER_APP_BASIC( NeruSphereApp, ci::app::RendererGl(0) )

@@ -15,6 +15,9 @@ namespace Constants {
 		int HEAD_COUNT;
 		int HEAD_SIZE_MIN;
 		int HEAD_SIZE_MAX;
+
+		int windowWidth;
+		int windowHeight;
 		bool DEBUG_DRAW = true;
 	};
 
@@ -68,7 +71,7 @@ namespace Constants {
 		Constants::Heads::MAX_LIFETIME = 3300;
 		Constants::Heads::MAX_SPEED = 1616.0f;
 		Constants::Heads::PERLIN_STRENGTH = 4.1f;
-		Constants::Heads::ANTI_GRAVITY = -5;
+		Constants::Heads::ANTI_GRAVITY = 5;
 		Constants::Heads::MIN_GRAVITY_DISTANCE = 51.0f * 51.0f; // min distance Squared
 
 		Constants::Planet::EASE_SPEED = 0.38f;

@@ -70,7 +70,7 @@ void PhysicsObject::updateActive() {
 		return;
 	}
 
-	applyRadialGravity( ci::box2d::Conversions::toPhysics( ci::app::App::get()->getWindowCenter() ) );
+	applyRadialGravity( ci::box2d::Conversions::toPhysics( Constants::Defaults::getWindowCenter() ) );
 	applyNoise();
 	limitSpeed();
 	faceCenter();
@@ -150,7 +150,7 @@ void PhysicsObject::applyNoise( ) {
 }
 
 void PhysicsObject::faceCenter() {
-	b2Vec2 center = ci::box2d::Conversions::toPhysics( ci::app::App::get()->getWindowCenter() );
+	b2Vec2 center = ci::box2d::Conversions::toPhysics( Constants::Defaults::getWindowCenter() );
 	b2Vec2 pos = _body->GetPosition();
 	float angle = ci::math<float>::atan2( center.y - pos.y, center.x - pos.x ) - M_PI_2;
 	_body->SetTransform( pos, angle );
@@ -225,13 +225,13 @@ void PhysicsObject::reset() {
 	_body->SetLinearVelocity( b2Vec2(0,0) );
 	_body->SetAngularVelocity( 0 );
 
-	float appWidth = (float)ci::app::App::get()->getWindowWidth();
-	float appHeight = (float)ci::app::App::get()->getWindowHeight();
+	float appWidth = (float)Constants::Defaults::windowWidth;
+	float appHeight = (float)Constants::Defaults::windowHeight;
 	float radius = ci::math<float>::sqrt( appWidth*appWidth + appHeight*appHeight ) + _radius;
 	float angle = ci::Rand::randFloat(M_PI*2);
 
-	float x = ci::app::App::get()->getWindowCenter().x + ci::math<float>::cos( angle ) * radius*0.5;
-	float y = ci::app::App::get()->getWindowCenter().y + ci::math<float>::sin( angle ) * radius*0.5;
+	float x = Constants::Defaults::getWindowCenter().x + ci::math<float>::cos( angle ) * radius*0.5;
+	float y = Constants::Defaults::getWindowCenter().y + ci::math<float>::sin( angle ) * radius*0.5;
 	ci::Vec2f position = ci::Vec2f(x, y);
 	_body->SetTransform( Conversions::toPhysics(position), 0);
 

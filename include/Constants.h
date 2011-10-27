@@ -8,6 +8,7 @@
 #ifndef CONSTANTS_H_
 #define CONSTANTS_H_
 #include "cinder/Perlin.h"
+#include "cinder/Vector.h"
 #include "cinder/app/App.h"
 
 namespace Constants {
@@ -28,6 +29,10 @@ namespace Constants {
 		extern int HEAD_SIZE_MIN;
 		extern int HEAD_SIZE_MAX;
 		extern bool DEBUG_DRAW;
+
+		extern int windowWidth;
+		extern int windowHeight;
+		static ci::Vec2f getWindowCenter() { return ci::Vec2f( (float)windowWidth, (float)windowHeight ) * 0.5f; };
 	};
 
 	namespace Heads {
