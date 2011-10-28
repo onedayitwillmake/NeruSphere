@@ -12,7 +12,7 @@ using namespace ci;
 AudioAnalyzer::AudioAnalyzer() {
 	// TODO Auto-generated constructor stub
 	//iterate input devices and print their names to the console
-	std::string inputDeviceNames[] = {"Built-in Microphone", "Built-in Input"};
+	std::string inputDeviceNames[] = {"4PR909", "Built-in Microphone", "Built-in Input"};
 
 
 	const std::vector<audio::InputDeviceRef>& devices = audio::Input::getDevices();
@@ -20,7 +20,7 @@ AudioAnalyzer::AudioAnalyzer() {
 		std::cout << (*iter)->getName() << std::endl;
 
 		// Initialize audio input if its the one we want
-		if( (*iter)->getName() == inputDeviceNames[0] ) {
+		if( (*iter)->getName() == inputDeviceNames[1 	] ) {
 			mInput = audio::Input(*iter);
 		}
 	}

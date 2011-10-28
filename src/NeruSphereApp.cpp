@@ -140,7 +140,7 @@ void NeruSphereApp::setupGUI() {
 	_gui->addColumn();
 	_gui->addLabel("PLANET");
 	_gui->addParam("GROW_SPEED", &Constants::Planet::EASE_SPEED, 0.01f, 1.0f, Constants::Planet::EASE_SPEED );
-	_gui->addParam("VOLUME_RANGE", &Constants::Planet::VOLUME_RANGE, 15, 30, Constants::Planet::VOLUME_RANGE );
+	_gui->addParam("VOLUME_RANGE", &Constants::Planet::VOLUME_RANGE, 15, 60, Constants::Planet::VOLUME_RANGE );
 	_gui->addParam("MIN_SIZE", &Constants::Planet::MIN_SIZE, 5, 300, Constants::Planet::MIN_SIZE );
 	_gui->addColumn();
 	_gui->addLabel("PARTICLES");
@@ -270,6 +270,7 @@ void NeruSphereApp::render() {
 
 	gl::enableDepthRead();
 	gl::enableDepthWrite();
+	gl::enableWireframe();
 	drawParticles();
 }
 void NeruSphereApp::draw() {

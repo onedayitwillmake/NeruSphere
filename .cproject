@@ -37,7 +37,7 @@
 									<listOptionValue builtIn="false" value="gl"/>
 									<listOptionValue builtIn="false" value="cinder_d"/>
 								</option>
-								<option id="macosx.cpp.link.option.other.93030701" name="Other options (-Xlinker [option])" superClass="macosx.cpp.link.option.other" valueType="stringList"/>
+								<option id="macosx.cpp.link.option.other.93030701" name="Other options (-Xlinker [option])" superClass="macosx.cpp.link.option.other"/>
 								<option id="macosx.cpp.link.option.userobjs.442770415" name="Other objects" superClass="macosx.cpp.link.option.userobjs" valueType="userObjs">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib/osc.a}&quot;"/>
 								</option>
@@ -60,9 +60,11 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NeruSphere/include}&quot;"/>
 									<listOptionValue builtIn="false" value="/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/OpenGL.framework/Headers"/>
 									<listOptionValue builtIn="false" value="/System/Library/Frameworks/Cocoa.framework/Headers/"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NeruSphere/thirdparty/OSC/include}&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.optimization.level.960717740" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.other.other.1735799906" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -arch i386" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.optimization.flags.2055545832" name="Other optimization flags" superClass="gnu.cpp.compiler.option.optimization.flags" value="-ffast-math" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.20011343" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.macosx.base.1908464243" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.macosx.base">
@@ -156,7 +158,9 @@
 								<option id="macosx.cpp.link.option.other.251685323" name="Other options (-Xlinker [option])" superClass="macosx.cpp.link.option.other" valueType="stringList">
 									<listOptionValue builtIn="false" value=""/>
 								</option>
-								<option id="macosx.cpp.link.option.userobjs.1960672153" name="Other objects" superClass="macosx.cpp.link.option.userobjs"/>
+								<option id="macosx.cpp.link.option.userobjs.1960672153" name="Other objects" superClass="macosx.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib/osc.a}&quot;"/>
+								</option>
 								<option id="macosx.cpp.link.option.flags.1414824315" name="Linker flags" superClass="macosx.cpp.link.option.flags" value="-arch i386 -framework Cocoa -framework OpenGL -framework Carbon -framework CoreVideo -framework QTKit -framework QuickTime -framework Accelerate -framework AudioToolbox -framework AudioUnit -framework CoreAudio" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.macosx.cpp.linker.input.1013563184" superClass="cdt.managedbuild.tool.macosx.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -172,10 +176,11 @@
 								<option id="gnu.cpp.compiler.option.include.paths.1192214293" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="${CINDER_PATH}/boost"/>
 									<listOptionValue builtIn="false" value="${CINDER_PATH}/include"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NeruSphere/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NeruSphere/thirdparty}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NeruSphere/include}&quot;"/>
 									<listOptionValue builtIn="false" value="/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/OpenGL.framework/Headers"/>
 									<listOptionValue builtIn="false" value="/System/Library/Frameworks/Cocoa.framework/Headers/"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NeruSphere/thirdparty/OSC/include}&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.optimization.level.483634675" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.other.other.1928456890" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -arch i386" valueType="string"/>
