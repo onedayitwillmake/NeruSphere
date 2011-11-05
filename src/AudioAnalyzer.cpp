@@ -20,7 +20,7 @@ AudioAnalyzer::AudioAnalyzer() {
 		std::cout << (*iter)->getName() << std::endl;
 
 		// Initialize audio input if its the one we want
-		if( (*iter)->getName() == inputDeviceNames[1 	] ) {
+		if( (*iter)->getName() == inputDeviceNames[0] ) {
 			mInput = audio::Input(*iter);
 		}
 	}

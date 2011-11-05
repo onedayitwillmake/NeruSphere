@@ -50,7 +50,6 @@ public:
 	b2Body* _planetBody;
 	Planet* _planetPhysicsObject;
 	AudioAnalyzer _audioAnalyzer;
-	bool _shouldDrawSpectrum;
 	mowa::sgui::SimpleGUI* _gui;
 
 
@@ -97,7 +96,6 @@ void NeruSphereApp::setup() {
 
 	_planetBody = NULL;
 	_planetPhysicsObject = NULL;
-	_shouldDrawSpectrum = false;
 
 	useFBO = false;
 	if( useFBO ) {
@@ -122,7 +120,7 @@ void NeruSphereApp::setupGUI() {
 	_gui->bgColor = ci::ColorA(0.20, 0.20, 0.20, 0.5);
 	_gui->addColumn();
 	_gui->addLabel("DEFAULTS");
-	_gui->addParam("DRAW_SPECTRUM", &_shouldDrawSpectrum, _shouldDrawSpectrum);
+	_gui->addParam("DRAW_SPECTRUM", &Constants::Defaults::DRAW_AUDIO_ANALYZER, Constants::Defaults::DRAW_AUDIO_ANALYZER);
 	_gui->addParam("HEAD_COUNT", &Constants::Defaults::HEAD_COUNT, 1, 300, Constants::Defaults::HEAD_COUNT );
 	_gui->addParam("HEAD_SIZE_MIN", &Constants::Defaults::HEAD_SIZE_MIN, 4, 256, Constants::Defaults::HEAD_SIZE_MIN );
 	_gui->addParam("HEAD_SIZE_MAX", &Constants::Defaults::HEAD_SIZE_MAX, 4, 256, Constants::Defaults::HEAD_SIZE_MAX );
@@ -264,13 +262,13 @@ void NeruSphereApp::render() {
 	gl::disableDepthRead();
 	gl::disableDepthWrite();
 
-	if( _shouldDrawSpectrum ) _audioAnalyzer.draw();
+	if( Constants::Defaults::DRAW_AUDIO_ANALYZER ) _audioAnalyzer.draw();
 	_worldController.draw();
 	if( _planetPhysicsObject ) _planetPhysicsObject->drawImp();
 
 	gl::enableDepthRead();
 	gl::enableDepthWrite();
-	gl::enableWireframe();
+//	gl::enableWireframe();
 	drawParticles();
 }
 void NeruSphereApp::draw() {
@@ -302,7 +300,7 @@ void NeruSphereApp::drawParticles() {
 				glVertexPointer( 3, GL_FLOAT, 0, &(physicsObject->emitter->verts)[0] );
 				glTexCoordPointer( 2, GL_FLOAT, 0, &(physicsObject->emitter->texCoords)[0] );
 				glColorPointer( 4, GL_FLOAT, 0, &(physicsObject->emitter->colors)[0].r );
-				glDrawArrays( GL_TRIANGLES, 0, physicsObject->emitter->verts.size() / 2 );
+				glDrawArrays( GL_TRIANGLES, 0, physicsObject->emitter->verts.size() / 3 );
 			}
 			node = node->GetNext();
 		}

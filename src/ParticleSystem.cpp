@@ -22,12 +22,12 @@ void ParticleSystem::add( ci::Vec2f pos, ci::Vec2f velocity, ci::ColorA color, c
 	particles.push_back( p );
 
 	// Vertices
-	verts.push_back( destRect.getX1() ); verts.push_back( destRect.getY2() ); verts.push_back( ci::randFloat() );
-	verts.push_back( destRect.getX2() ); verts.push_back( destRect.getY2() ); verts.push_back( ci::randFloat() );
-	verts.push_back( destRect.getX2() ); verts.push_back( destRect.getY1() ); verts.push_back( ci::randFloat() );
-	verts.push_back( destRect.getX1() ); verts.push_back( destRect.getY2() ); verts.push_back( ci::randFloat() );
-	verts.push_back( destRect.getX2() ); verts.push_back( destRect.getY1() ); verts.push_back( ci::randFloat() );
-	verts.push_back( destRect.getX1() ); verts.push_back( destRect.getY1() ); verts.push_back( ci::randFloat() );
+	verts.push_back( destRect.getX1() ); verts.push_back( destRect.getY2() ); verts.push_back(0);
+	verts.push_back( destRect.getX2() ); verts.push_back( destRect.getY2() ); verts.push_back(0);
+	verts.push_back( destRect.getX2() ); verts.push_back( destRect.getY1() ); verts.push_back(0);
+	verts.push_back( destRect.getX1() ); verts.push_back( destRect.getY2() ); verts.push_back(0);
+	verts.push_back( destRect.getX2() ); verts.push_back( destRect.getY1() ); verts.push_back(0);
+	verts.push_back( destRect.getX1() ); verts.push_back( destRect.getY1() ); verts.push_back(0);
 
 	// Texture coords
 	color.a = Constants::Particles::ALPHA;
@@ -67,7 +67,7 @@ void ParticleSystem::update() {
 
 
 		for( std::vector<ci::ColorA>::iterator colorItr = colors.begin(); colorItr != colors.end(); ++colorItr ) {
-			colorItr->a *= 0.997;
+			colorItr->a *= 0.998;
 		}
 
 		itr->speed *= Constants::Particles::SPEED_DECAY;

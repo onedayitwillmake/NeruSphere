@@ -18,7 +18,9 @@ namespace Constants {
 
 		int windowWidth;
 		int windowHeight;
-		bool DEBUG_DRAW = true;
+
+		bool DEBUG_DRAW;
+		bool DRAW_AUDIO_ANALYZER;
 	};
 
 	namespace Heads {
@@ -66,6 +68,7 @@ namespace Constants {
 		Constants::Defaults::HEAD_SIZE_MIN = 8;
 		Constants::Defaults::HEAD_SIZE_MAX = 48;
 		Constants::Defaults::DEBUG_DRAW = false;
+		Constants::Defaults::DRAW_AUDIO_ANALYZER = true;
 
 		Constants::Heads::MIN_LIFETIME = 1000;
 		Constants::Heads::MAX_LIFETIME = 3500;
@@ -74,12 +77,12 @@ namespace Constants {
 		Constants::Heads::ANTI_GRAVITY = 2.1;
 		Constants::Heads::MIN_GRAVITY_DISTANCE = 3000; // min distance Squared
 
-		Constants::Planet::EASE_SPEED = 0.57f;
-		Constants::Planet::VOLUME_RANGE = 28.0f;
-		Constants::Planet::MIN_SIZE = 16.0f;
+		Constants::Planet::EASE_SPEED = 0.47f;
+		Constants::Planet::VOLUME_RANGE = 30.0f;
+		Constants::Planet::MIN_SIZE = 32.0f;
 
 		Constants::Particles::MIN = 5;
-		Constants::Particles::MAX = 6;
+		Constants::Particles::MAX = 10;
 
 		Constants::Particles::PARTICLE_SIZE_MIN = 1.2;
 		Constants::Particles::PARTICLE_SIZE_MAX = 3.4;

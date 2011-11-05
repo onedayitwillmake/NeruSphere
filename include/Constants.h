@@ -29,6 +29,7 @@ namespace Constants {
 		extern int HEAD_SIZE_MIN;
 		extern int HEAD_SIZE_MAX;
 		extern bool DEBUG_DRAW;
+		extern bool DRAW_AUDIO_ANALYZER;
 
 		extern int windowWidth;
 		extern int windowHeight;
