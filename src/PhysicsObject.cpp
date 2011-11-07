@@ -70,6 +70,7 @@ void PhysicsObject::updateActive() {
 		return;
 	}
 
+	_agePer = (float)_age/(float)_lifetime;
 	applyRadialGravity( ci::box2d::Conversions::toPhysics( Constants::Defaults::getWindowCenter() ) );
 	applyNoise();
 	limitSpeed();
@@ -136,14 +137,14 @@ void PhysicsObject::applyRadialGravity( b2Vec2 center ) {
 
 	delta.Normalize();
 	b2Vec2 force = forceScale * delta;
-	force *= Constants::Forces::DIRECTION;
+	force *= Constants::Forces::DIRECTION * ci::math<float>::max(0.5, _agePer);
 
 	_body->ApplyForce( _body->GetMass() * force, _body->GetWorldCenter() );
 }
 
 void PhysicsObject::applyNoise( ) {
 	b2Vec2 pos = _body->GetPosition();
-	ci::Vec3f noise = Constants::Instances::PERLIN_NOISE()->dfBm( ci::Vec3f( pos.x, pos.y, (float)ci::app::App::get()->getElapsedFrames() * 0.001) ) * Constants::Heads::PERLIN_STRENGTH;
+	ci::Vec3f noise = Constants::Instances::PERLIN_NOISE()->dfBm( ci::Vec3f( pos.x, pos.y, (float)ci::app::App::get()->getElapsedFrames() * 0.001) ) * Constants::Heads::PERLIN_STRENGTH * (1.0-_agePer);
 	b2Vec2 force = b2Vec2( noise.x, noise.y );
 
 

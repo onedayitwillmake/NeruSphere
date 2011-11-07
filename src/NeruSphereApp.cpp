@@ -132,7 +132,7 @@ void NeruSphereApp::setupGUI() {
 	_gui->addParam("MIN_LIFETIME", &Constants::Heads::MIN_LIFETIME, 400, 5000, Constants::Heads::MIN_LIFETIME );
 	_gui->addParam("MAX_LIFETIME", &Constants::Heads::MAX_LIFETIME, 400, 5000, Constants::Heads::MAX_LIFETIME );
 	_gui->addParam("MAX_SPEED", &Constants::Heads::MAX_SPEED, 500, 2000, Constants::Heads::MAX_SPEED );
-	_gui->addParam("PERLIN_STRENGTH", &Constants::Heads::PERLIN_STRENGTH, 0, 8, Constants::Heads::PERLIN_STRENGTH );
+	_gui->addParam("PERLIN_STRENGTH", &Constants::Heads::PERLIN_STRENGTH, 0, 20, Constants::Heads::PERLIN_STRENGTH );
 	_gui->addParam("GRAVITY_DISTANCE", &Constants::Heads::MIN_GRAVITY_DISTANCE, ci::math<float>::pow(50,2), ci::math<float>::pow(50.0,3), Constants::Heads::MIN_GRAVITY_DISTANCE );
 	_gui->addParam("ANTI_GRAVITY", &Constants::Heads::ANTI_GRAVITY, 0, 20, Constants::Heads::ANTI_GRAVITY );
 	_gui->addColumn();
@@ -300,7 +300,7 @@ void NeruSphereApp::drawParticles() {
 				glVertexPointer( 3, GL_FLOAT, 0, &(physicsObject->emitter->verts)[0] );
 				glTexCoordPointer( 2, GL_FLOAT, 0, &(physicsObject->emitter->texCoords)[0] );
 				glColorPointer( 4, GL_FLOAT, 0, &(physicsObject->emitter->colors)[0].r );
-				glDrawArrays( GL_TRIANGLES, 0, physicsObject->emitter->verts.size() / 3 );
+				glDrawArrays( GL_TRIANGLES, 0, physicsObject->emitter->verts.size() / 2 );
 			}
 			node = node->GetNext();
 		}

@@ -65,8 +65,8 @@ namespace Constants {
 		Constants::Forces::DIRECTION = 1;
 
 		Constants::Defaults::HEAD_COUNT = 300;
-		Constants::Defaults::HEAD_SIZE_MIN = 8;
-		Constants::Defaults::HEAD_SIZE_MAX = 48;
+		Constants::Defaults::HEAD_SIZE_MIN = 5;
+		Constants::Defaults::HEAD_SIZE_MAX = 32;
 		Constants::Defaults::DEBUG_DRAW = false;
 		Constants::Defaults::DRAW_AUDIO_ANALYZER = true;
 
