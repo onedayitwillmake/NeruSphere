@@ -1,4 +1,3 @@
-
 #include "cinder/ImageIo.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/Rand.h"
@@ -70,10 +69,15 @@ namespace Constants {
 					format.setMinFilter( GL_NEAREST );
 					format.setMagFilter( GL_NEAREST );
 
-					std::stringstream path;
-					path << "../resources/heads_" << (i+1) << ".png";
+					std::stringstream path; // create a new 'string stream' so we can append to a string
+					path << "../resources/heads_" << (i+1) << ".png"; // Build out a string that has the file path, assumes images are called head_#.png
 
+					// Create a 'surface' - key part is
+					// ci::loadImage( ci::app::App::get()->loadResource( path.str() ) )
+					// Passes the file path, to a function loadResource which returns whatever loadImage wants
 					ci::Surface8u* surface = new ci::Surface8u( ci::loadImage( ci::app::App::get()->loadResource( path.str() ) ) );
+					
+					
 					ci::gl::Texture texture = ci::gl::Texture( *surface , format );
 
 					surfaceMap()->insert( TintSurfacePair( i, surface) );
