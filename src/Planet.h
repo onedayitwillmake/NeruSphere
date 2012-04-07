@@ -16,7 +16,7 @@ class Planet : public PhysicsObject
 		Planet( b2Body* aBody ): PhysicsObject( aBody ) {};
 		virtual ~Planet();
 		void draw(){};
-		void drawImp();
+		void drawImp( float volumeScale );
 		void update();
 		virtual void setupTexture();
 };

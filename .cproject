@@ -24,8 +24,8 @@
 						<toolChain id="cdt.managedbuild.toolchain.gnu.macosx.base.2126172436" name="cdt.managedbuild.toolchain.gnu.macosx.base" superClass="cdt.managedbuild.toolchain.gnu.macosx.base">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.MachO64" id="cdt.managedbuild.target.gnu.platform.macosx.base.97162131" name="Debug Platform" osList="macosx" superClass="cdt.managedbuild.target.gnu.platform.macosx.base"/>
 							<builder buildPath="${workspace_loc:/HelloEclipse/Default}" id="cdt.managedbuild.target.gnu.builder.macosx.base.1899808044" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="-19" superClass="cdt.managedbuild.target.gnu.builder.macosx.base"/>
-							<tool id="cdt.managedbuild.tool.macosx.c.linker.macosx.base.1372902259" name="MacOS X C Linker" superClass="cdt.managedbuild.tool.macosx.c.linker.macosx.base"/>
-							<tool id="cdt.managedbuild.tool.macosx.cpp.linker.macosx.base.293963466" name="MacOS X C++ Linker" superClass="cdt.managedbuild.tool.macosx.cpp.linker.macosx.base">
+							<tool command="clang++" id="cdt.managedbuild.tool.macosx.c.linker.macosx.base.1372902259" name="MacOS X C Linker" superClass="cdt.managedbuild.tool.macosx.c.linker.macosx.base"/>
+							<tool command="clang++" id="cdt.managedbuild.tool.macosx.cpp.linker.macosx.base.293963466" name="MacOS X C++ Linker" superClass="cdt.managedbuild.tool.macosx.cpp.linker.macosx.base">
 								<option id="macosx.cpp.link.option.paths.606959176" name="Library search path (-L)" superClass="macosx.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/lib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${CINDER_PATH}/lib&quot;"/>
@@ -51,8 +51,8 @@
 								<option id="gnu.both.asm.option.include.paths.1027531129" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1687806337" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
-							<tool id="cdt.managedbuild.tool.gnu.archiver.macosx.base.1235337741" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.macosx.base"/>
-							<tool command="g++" id="cdt.managedbuild.tool.gnu.cpp.compiler.macosx.base.1876156651" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.macosx.base">
+							<tool command="clang++" id="cdt.managedbuild.tool.gnu.archiver.macosx.base.1235337741" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.macosx.base"/>
+							<tool command="clang++" id="cdt.managedbuild.tool.gnu.cpp.compiler.macosx.base.1876156651" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.macosx.base">
 								<option id="gnu.cpp.compiler.option.include.paths.522131004" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="${CINDER_PATH}/boost"/>
 									<listOptionValue builtIn="false" value="${CINDER_PATH}/include"/>
@@ -67,7 +67,7 @@
 								<option id="gnu.cpp.compiler.option.optimization.flags.2055545832" name="Other optimization flags" superClass="gnu.cpp.compiler.option.optimization.flags" value="-ffast-math" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.20011343" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
-							<tool id="cdt.managedbuild.tool.gnu.c.compiler.macosx.base.1908464243" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.macosx.base">
+							<tool command="clang" id="cdt.managedbuild.tool.gnu.c.compiler.macosx.base.1908464243" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.macosx.base">
 								<option id="gnu.c.compiler.option.misc.other.1901101210" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -arch i386" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.718522749" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -142,8 +142,8 @@
 						<toolChain id="cdt.managedbuild.toolchain.gnu.macosx.base.376144968" name="cdt.managedbuild.toolchain.gnu.macosx.base" superClass="cdt.managedbuild.toolchain.gnu.macosx.base">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.MachO64" id="cdt.managedbuild.target.gnu.platform.macosx.base.139863155" name="Debug Platform" osList="macosx" superClass="cdt.managedbuild.target.gnu.platform.macosx.base"/>
 							<builder buildPath="${workspace_loc:/HelloEclipse/Default}" id="cdt.managedbuild.target.gnu.builder.macosx.base.73395106" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="-19" superClass="cdt.managedbuild.target.gnu.builder.macosx.base"/>
-							<tool id="cdt.managedbuild.tool.macosx.c.linker.macosx.base.755311361" name="MacOS X C Linker" superClass="cdt.managedbuild.tool.macosx.c.linker.macosx.base"/>
-							<tool id="cdt.managedbuild.tool.macosx.cpp.linker.macosx.base.1933996480" name="MacOS X C++ Linker" superClass="cdt.managedbuild.tool.macosx.cpp.linker.macosx.base">
+							<tool command="clang++" id="cdt.managedbuild.tool.macosx.c.linker.macosx.base.755311361" name="MacOS X C Linker" superClass="cdt.managedbuild.tool.macosx.c.linker.macosx.base"/>
+							<tool command="clang++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="cdt.managedbuild.tool.macosx.cpp.linker.macosx.base.1933996480" name="MacOS X C++ Linker" superClass="cdt.managedbuild.tool.macosx.cpp.linker.macosx.base">
 								<option id="macosx.cpp.link.option.paths.1853276794" name="Library search path (-L)" superClass="macosx.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/lib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${CINDER_PATH}/lib&quot;"/>
@@ -171,8 +171,8 @@
 								<option id="gnu.both.asm.option.include.paths.1390651443" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.2029810939" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
-							<tool id="cdt.managedbuild.tool.gnu.archiver.macosx.base.443956140" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.macosx.base"/>
-							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.macosx.base.539563341" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.macosx.base">
+							<tool command="clang++" id="cdt.managedbuild.tool.gnu.archiver.macosx.base.443956140" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.macosx.base"/>
+							<tool command="clang++" id="cdt.managedbuild.tool.gnu.cpp.compiler.macosx.base.539563341" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.macosx.base">
 								<option id="gnu.cpp.compiler.option.include.paths.1192214293" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="${CINDER_PATH}/boost"/>
 									<listOptionValue builtIn="false" value="${CINDER_PATH}/include"/>
@@ -187,7 +187,7 @@
 								<option id="gnu.cpp.compiler.option.optimization.flags.187548648" name="Other optimization flags" superClass="gnu.cpp.compiler.option.optimization.flags" value="-ffast-math" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.527275410" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
-							<tool id="cdt.managedbuild.tool.gnu.c.compiler.macosx.base.679590689" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.macosx.base">
+							<tool command="clang" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="cdt.managedbuild.tool.gnu.c.compiler.macosx.base.679590689" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.macosx.base">
 								<option id="gnu.c.compiler.option.misc.other.364181773" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -arch i386" valueType="string"/>
 								<option id="gnu.c.compiler.option.optimization.flags.102608058" name="Other optimization flags" superClass="gnu.c.compiler.option.optimization.flags" value="-ffast-math" valueType="string"/>
 								<option id="gnu.c.compiler.option.optimization.level.2004784964" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" value="gnu.c.optimization.level.most" valueType="enumerated"/>
