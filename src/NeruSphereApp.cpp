@@ -36,7 +36,6 @@
 #include "PhysicsObject.h"
 #include "Planet.h"
 #include "SimpleGUI.h"
-#include "ListenerSimple.h"
 
 #include <vector>
 
@@ -51,9 +50,6 @@ public:
 	Planet* _planetPhysicsObject;
 	AudioAnalyzer _audioAnalyzer;
 	mowa::sgui::SimpleGUI* _gui;
-
-
-	ListenerSimple		_oscListener;
 
 	gl::Fbo				mFbo;
 	static const int	FBO_WIDTH = 3000, FBO_HEIGHT = 3000 * (15.75/11.75);
@@ -91,8 +87,8 @@ void NeruSphereApp::setup() {
 
 	Constants::Textures::loadTextures();
 	Constants::init();
+	Constants::Defaults::setGravityPoint( getWindowCenter() );
 
-	_oscListener.setup();
 
 	_planetBody = NULL;
 	_planetPhysicsObject = NULL;
@@ -131,10 +127,10 @@ void NeruSphereApp::setupGUI() {
 	_gui->addLabel("HEADS");
 	_gui->addParam("MIN_LIFETIME", &Constants::Heads::MIN_LIFETIME, 400, 5000, Constants::Heads::MIN_LIFETIME );
 	_gui->addParam("MAX_LIFETIME", &Constants::Heads::MAX_LIFETIME, 400, 5000, Constants::Heads::MAX_LIFETIME );
-	_gui->addParam("MAX_SPEED", &Constants::Heads::MAX_SPEED, 500, 2000, Constants::Heads::MAX_SPEED );
+	_gui->addParam("MAX_SPEED", &Constants::Heads::MAX_SPEED, Constants::Heads::MAX_SPEED * 0.1, Constants::Heads::MAX_SPEED*Constants::Heads::MAX_SPEED, Constants::Heads::MAX_SPEED );
 	_gui->addParam("PERLIN_STRENGTH", &Constants::Heads::PERLIN_STRENGTH, 0, 20, Constants::Heads::PERLIN_STRENGTH );
 	_gui->addParam("GRAVITY_DISTANCE", &Constants::Heads::MIN_GRAVITY_DISTANCE, ci::math<float>::pow(50,2), ci::math<float>::pow(50.0,3), Constants::Heads::MIN_GRAVITY_DISTANCE );
-	_gui->addParam("ANTI_GRAVITY", &Constants::Heads::ANTI_GRAVITY, 0, 20, Constants::Heads::ANTI_GRAVITY );
+	_gui->addParam("ANTI_GRAVITY", &Constants::Heads::ANTI_GRAVITY, 0, 100, Constants::Heads::ANTI_GRAVITY );
 	_gui->addColumn();
 	_gui->addLabel("PLANET");
 	_gui->addParam("GROW_SPEED", &Constants::Planet::EASE_SPEED, 0.01f, 1.0f, Constants::Planet::EASE_SPEED );
@@ -182,6 +178,18 @@ void NeruSphereApp::keyDown( ci::app::KeyEvent event ) {
 	} else if ( event.getChar() == ci::app::KeyEvent::KEY_f ) {
 		setFullScreen( !isFullScreen() );
 	}
+
+
+	if( event.getChar() == ci::app::KeyEvent::KEY_1 ) {
+		ci::Vec2f newGravityLocation( getWindowSize().x * 0.25, getWindowCenter().y );
+		Constants::Defaults::setGravityPoint( newGravityLocation );
+	} else if( event.getChar() == ci::app::KeyEvent::KEY_2 ) {
+		ci::Vec2f newGravityLocation( getWindowSize().x * 0.5, getWindowCenter().y );
+		Constants::Defaults::setGravityPoint( newGravityLocation );
+	} else if( event.getChar() == ci::app::KeyEvent::KEY_3 ) {
+		ci::Vec2f newGravityLocation( getWindowSize().x * 0.75, getWindowCenter().y );
+		Constants::Defaults::setGravityPoint( newGravityLocation );
+	}
 }
 
 void NeruSphereApp::saveImage() {
@@ -196,11 +204,10 @@ void NeruSphereApp::saveImage() {
 void NeruSphereApp::update() {
 	_worldController.update();
 	_audioAnalyzer.update();
-	_oscListener.update();
 
 	using namespace ci::box2d;
 	if(_planetBody) {
-		_worldController.getWorld()->DestroyBody(_planetBody);
+//		_worldController.getWorld()->DestroyBody(_planetBody);
 	}
 
 	// Shape definition
@@ -221,12 +228,10 @@ void NeruSphereApp::update() {
 		Constants::Forces::DIRECTION = 1;
 	}
 
-//	std::cout << Constants::Forces::DIRECTION << " | " << lastSize - newSize  << std:: endl;
 	lastSize -= (lastSize - newSize) * Constants::Planet::EASE_SPEED;
 	aShape.m_radius = lastSize;
 
 
-//	std::cout << _audioAnalyzer.getAverageVolume() << std::endl;
 	// Fixture definition
 	b2FixtureDef mFixtureDef;
 	mFixtureDef.shape = &aShape;
@@ -234,23 +239,36 @@ void NeruSphereApp::update() {
 	mFixtureDef.restitution = 0.0f;
 	mFixtureDef.density = 1.0f;
 
+	//Constants::Defaults::getGravityPoint()
+	static ci::Vec2f currentPosition( 0, getWindowCenter().y * 0.5);
+
+	currentPosition -= (currentPosition - Constants::Defaults::getGravityPoint() ) * 0.2f;
 	// Body definition
 	b2BodyDef mBodyDef;
 	mBodyDef.type = b2_staticBody;
-	mBodyDef.position = Conversions::toPhysics( Constants::Defaults::getWindowCenter() );
-	b2Body* body = _worldController.getWorld()->CreateBody( &mBodyDef );
-	body->CreateFixture( &mFixtureDef );
+	mBodyDef.position = Conversions::toPhysics( currentPosition  );
 
-	_planetBody = body;
+
+//	if( _planetBody )
+
+
 
 	if( _planetPhysicsObject ) {
-		_planetPhysicsObject->setBody( body );
+		_planetBody->DestroyFixture( _planetBody->GetFixtureList() );
+		_planetBody->CreateFixture( &mFixtureDef );
+		_planetBody->SetTransform( mBodyDef.position, 0 );
+		_planetPhysicsObject->setBody( _planetBody );
 	} else {
-		_planetPhysicsObject = new Planet( body );
+		_planetBody = _worldController.getWorld()->CreateBody( &mBodyDef );
+		_planetBody->CreateFixture( &mFixtureDef );
+		_planetBody->SetUserData( _planetPhysicsObject );
+
+		_planetPhysicsObject = new Planet( _planetBody );
 		_planetPhysicsObject->setupTexture();
 	}
 
-	body->SetUserData( _planetPhysicsObject );
+//	body->SetActive( false );
+
 }
 
 void NeruSphereApp::render() {
@@ -264,10 +282,11 @@ void NeruSphereApp::render() {
 
 	if( Constants::Defaults::DRAW_AUDIO_ANALYZER ) _audioAnalyzer.draw();
 	_worldController.draw();
-	if( _planetPhysicsObject ) _planetPhysicsObject->drawImp();
 
 	gl::enableDepthRead();
 	gl::enableDepthWrite();
+	if( _planetPhysicsObject ) _planetPhysicsObject->drawImp( _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE);
+
 //	gl::enableWireframe();
 	drawParticles();
 }
@@ -325,6 +344,9 @@ void NeruSphereApp::resize( ci::app::ResizeEvent event ) {
 	if( !useFBO ) {
 		Constants::Defaults::windowWidth = event.getWidth();
 		Constants::Defaults::windowHeight = event.getHeight();
+
+		ci::Vec2f newGravityLocation( getWindowSize().x * 0.5, getWindowCenter().y );
+		Constants::Defaults::setGravityPoint( newGravityLocation );
 	}
 }
 
@@ -334,4 +356,4 @@ void NeruSphereApp::shutdown() {
 }
 
 
-CINDER_APP_BASIC( NeruSphereApp, ci::app::RendererGl(0) )
+CINDER_APP_BASIC( NeruSphereApp, ci::app::RendererGl(2) )

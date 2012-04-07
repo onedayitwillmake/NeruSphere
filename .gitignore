@@ -5,7 +5,7 @@
 *.o
 # Debug files
 *.d
-resources/*circle*.png
+resources/
 Release/
 Debug/
 CINDER_PATH_LINK

@@ -126,7 +126,13 @@
 				<macros>
 					<stringMacro name="CINDER_PATH" type="VALUE_PATH_DIR" value="${ProjDirPath}/CINDER_PATH_LINK"/>
 				</macros>
-				<externalSettings/>
+				<externalSettings>
+					<externalSetting>
+						<entry flags="RESOLVED" kind="libraryPath" name="/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries"/>
+						<entry flags="RESOLVED" kind="libraryPath" name="/Users/onedayitwillmake/GIT/NeruSphere/CINDER_PATH_LINK/lib/macosx"/>
+						<entry flags="RESOLVED" kind="libraryPath" name="/Users/onedayitwillmake/GIT/NeruSphere/CINDER_PATH_LINK/lib"/>
+					</externalSetting>
+				</externalSettings>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.MachO64" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -181,6 +187,7 @@
 									<listOptionValue builtIn="false" value="/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/OpenGL.framework/Headers"/>
 									<listOptionValue builtIn="false" value="/System/Library/Frameworks/Cocoa.framework/Headers/"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NeruSphere/thirdparty/OSC/include}&quot;"/>
+									<listOptionValue builtIn="false" value="/usr/llvm-gcc-4.2/lib/gcc/i686-apple-darwin11/4.2.1/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.optimization.level.483634675" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.other.other.1928456890" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -arch i386" valueType="string"/>

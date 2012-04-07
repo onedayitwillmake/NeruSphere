@@ -28,8 +28,8 @@ PhysicsObject::PhysicsObject( b2Body* aBody ) {
 	_lifetime = ci::Rand::randInt( Constants::Heads::MIN_LIFETIME, Constants::Heads::MAX_LIFETIME );
 	_age = 0;
 	setBody( aBody );
-	_body->SetAngularDamping(0.5);
-	_body->SetLinearDamping(0.5);
+	_body->SetAngularDamping(0.1);
+	_body->SetLinearDamping(0.1);
 
 	emitter = new particle::ParticleSystem();
 	setState( ACTIVE, updateState );
@@ -71,7 +71,7 @@ void PhysicsObject::updateActive() {
 	}
 
 	_agePer = (float)_age/(float)_lifetime;
-	applyRadialGravity( ci::box2d::Conversions::toPhysics( Constants::Defaults::getWindowCenter() ) );
+	applyRadialGravity( ci::box2d::Conversions::toPhysics( Constants::Defaults::getGravityPoint() ) );
 	applyNoise();
 	limitSpeed();
 	faceCenter();
@@ -137,14 +137,14 @@ void PhysicsObject::applyRadialGravity( b2Vec2 center ) {
 
 	delta.Normalize();
 	b2Vec2 force = forceScale * delta;
-	force *= Constants::Forces::DIRECTION * ci::math<float>::max(0.5, _agePer);
+	force *= Constants::Forces::DIRECTION * ci::math<float>::max(0.2, (1.0-_agePer) );
 
 	_body->ApplyForce( _body->GetMass() * force, _body->GetWorldCenter() );
 }
 
 void PhysicsObject::applyNoise( ) {
 	b2Vec2 pos = _body->GetPosition();
-	ci::Vec3f noise = Constants::Instances::PERLIN_NOISE()->dfBm( ci::Vec3f( pos.x, pos.y, (float)ci::app::App::get()->getElapsedFrames() * 0.001) ) * Constants::Heads::PERLIN_STRENGTH * (1.0-_agePer);
+	ci::Vec3f noise = Constants::Instances::PERLIN_NOISE()->dfBm( ci::Vec3f( pos.x, pos.y, (float)ci::app::App::get()->getElapsedFrames() * 0.001) ) * Constants::Heads::PERLIN_STRENGTH * _agePer;
 	b2Vec2 force = b2Vec2( noise.x, noise.y );
 
 
@@ -152,7 +152,7 @@ void PhysicsObject::applyNoise( ) {
 }
 
 void PhysicsObject::faceCenter() {
-	b2Vec2 center = ci::box2d::Conversions::toPhysics( Constants::Defaults::getWindowCenter() );
+	b2Vec2 center = ci::box2d::Conversions::toPhysics( Constants::Defaults::getGravityPoint() );
 	b2Vec2 pos = _body->GetPosition();
 	float angle = ci::math<float>::atan2( center.y - pos.y, center.x - pos.x ) - M_PI_2;
 	_body->SetTransform( pos, angle );
