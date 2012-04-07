@@ -27,9 +27,8 @@ namespace Constants {
 
 				std::string path = ci::app::App::get()->getResourcePath().string() + "/" + "godofthieves.png"; // TODO: move magic string to variable in constants
 
-				std::cout << "Loaded texture HEAD '" << path << "'" << std::endl;
-
-				texture = ci::gl::Texture( ci::loadImage( ci::app::App::get()->loadResource( path ) ) , format );
+				std::cout << "Attempting to load image @'" << path << "'" << std::endl;
+				texture = ci::gl::Texture( ci::loadImage( path ) , format );
 			}
 			return &texture;
 		}

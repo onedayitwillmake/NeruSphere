@@ -9,10 +9,11 @@
 #define PHYSICSOBJECT_H_
 #include <Box2D/Box2D.h>
 #include "cinder/gl/Texture.h"
+#include "cinder/Timeline.h"
 #include "ParticleSystem.h"
 
+
 #include "boost/function.hpp"
-#include "boost/bind.hpp"
 
 class PhysicsObject
 {
@@ -74,6 +75,9 @@ class PhysicsObject
 		boost::function<void()> updateState;
 		void updateActive();
 		void updateExploding();
+
+		// Death related vars
+		ci::Anim<ci::Vec2f> _deathPosition; // Used to animate
 };
 
 #endif /* PHYSICSOBJECT_H_ */

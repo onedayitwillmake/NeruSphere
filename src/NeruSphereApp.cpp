@@ -179,7 +179,6 @@ void NeruSphereApp::keyDown( ci::app::KeyEvent event ) {
 		setFullScreen( !isFullScreen() );
 	}
 
-
 	if( event.getChar() == ci::app::KeyEvent::KEY_1 ) {
 		ci::Vec2f newGravityLocation( getWindowSize().x * 0.25, getWindowCenter().y );
 		Constants::Defaults::setGravityPoint( newGravityLocation );
@@ -202,6 +201,13 @@ void NeruSphereApp::saveImage() {
 	ci::writeImage( filename.str(), useFBO ? mFbo.getTexture(0) : copyWindowSurface() );
 }
 void NeruSphereApp::update() {
+
+	static bool hasBecomeFirstResponder = false;
+	if( !hasBecomeFirstResponder && getElapsedSeconds() > 2 ) {
+		hasBecomeFirstResponder = true;
+		this->setAlwaysOnTop( false );
+	}
+
 	_worldController.update();
 	_audioAnalyzer.update();
 

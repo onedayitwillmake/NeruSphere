@@ -6,6 +6,7 @@
  */
 
 #include "PhysicsObject.h"
+
 #include <iostream>
 #include "cinder/Vector.h"
 #include "cinder/CinderMath.h"
@@ -18,7 +19,10 @@
 #include "Textures.h"
 #include "cinder/Rect.h"
 
-#include "boost/function.hpp"
+#include "cinder/app/AppBasic.h"
+#include "cinder/Timeline.h"
+
+#include "boost/bind.hpp"
 
 using namespace ci;
 using namespace ci::box2d;
@@ -83,6 +87,7 @@ void PhysicsObject::updateExploding() {
 		setState( ACTIVE, updateState );
 		emitter->clear();
 	}
+	_body->SetTransform( Conversions::toPhysics(_deathPosition), 0);
 	faceCenter();
 }
 
@@ -94,12 +99,12 @@ void PhysicsObject::beginDeath() {
 	reset();
 	emitter->isDead = false;
 
+	////////////////////////////////////////
+	///// Create a bunch of particles colored the same as this object by retrieving the color from the surface
+	////////////////////////////////////////
 	const float scale = ci::Rand::randFloat( Constants::Particles::PARTICLE_SIZE_MIN, Constants::Particles::PARTICLE_SIZE_MAX );
 	const float halfWidth = 1 * scale;
 	const float halfHeight = 1 * scale;
-
-
-
 
 	const ci::Area srcArea = Area( 0, 0, halfWidth*2, halfHeight*2 );
 	const ci::Rectf srcCoords = ci::Rectf( srcArea );
@@ -124,6 +129,13 @@ void PhysicsObject::beginDeath() {
 		ci::Vec2f velocity = ci::Rand::randVec2f() * ci::Rand::randFloat( Constants::Particles::MAX_INITIAL_SPEED, Constants::Particles::MAX_INITIAL_SPEED );
 		emitter->add( pos, velocity, color, srcCoords, destRect );
 	}
+
+
+	//////////////////////////////////////////////////
+	////////// Animate the head to the planet
+	//////////////////////////////////////////////////
+	// X, Y
+	ci::app::App::get()->timeline().apply( &_deathPosition, (ci::Vec2f)ci::app::App::get()->getWindowCenter() , 2.0f, EaseInCubic() );
 }
 
 void PhysicsObject::applyRadialGravity( b2Vec2 center ) {
