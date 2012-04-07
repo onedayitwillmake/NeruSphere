@@ -34,6 +34,10 @@ namespace Constants {
 		extern int windowWidth;
 		extern int windowHeight;
 		static ci::Vec2f getWindowCenter() { return ci::Vec2f( (float)windowWidth, (float)windowHeight ) * 0.5f; };
+
+		extern ci::Vec2f GRAVITY_POINT;
+		extern void setGravityPoint( ci::Vec2f newGravityPoint 	);
+		extern ci::Vec2f getGravityPoint();
 	};
 
 	namespace Heads {

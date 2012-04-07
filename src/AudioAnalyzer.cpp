@@ -7,6 +7,7 @@
 
 #include "AudioAnalyzer.h"
 #include "cinder/app/AppBasic.h"
+#include "cinder/Utilities.h"
 using namespace ci;
 
 AudioAnalyzer::AudioAnalyzer() {
@@ -15,18 +16,19 @@ AudioAnalyzer::AudioAnalyzer() {
 	std::string inputDeviceNames[] = {"4PR909", "Built-in Microphone", "Built-in Input"};
 
 
-	const std::vector<audio::InputDeviceRef>& devices = audio::Input::getDevices();
-	for( std::vector<audio::InputDeviceRef>::const_iterator iter = devices.begin(); iter != devices.end(); ++iter ) {
-		std::cout << (*iter)->getName() << std::endl;
+	//iterate input devices and print their names to the console
+//	const std::vector<audio::InputDeviceRef>& devices = audio::Input::getDevices();
+//	for( std::vector<audio::InputDeviceRef>::const_iterator iter = devices.begin(); iter != devices.end(); ++iter ) {
+//		std::cout << (*iter)->getName() << std::endl;
+//	}
 
-		// Initialize audio input if its the one we want
-		if( (*iter)->getName() == inputDeviceNames[2] ) {
-			mInput = audio::Input(*iter);
-		}
-	}
+	//initialize the audio Input, using the default input device
+	mInput = audio::Input();
+	ci::sleep( 3000 );
 
-	mInput = audio::Input::getDefaultDevice();
-	std::cout <<  mInput.getDefaultDevice()->getName() << std::endl;
+
+//	mInput = audio::Input::getDefaultDevice();
+//	std::cout <<  mInput.getDefaultDevice()->getName() << std::endl;
 
 
 

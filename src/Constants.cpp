@@ -21,6 +21,14 @@ namespace Constants {
 
 		bool DEBUG_DRAW;
 		bool DRAW_AUDIO_ANALYZER;
+
+		ci::Vec2f GRAVITY_POINT;
+		void setGravityPoint( ci::Vec2f newGravityPoint ) {
+			GRAVITY_POINT = newGravityPoint;
+		}
+		ci::Vec2f getGravityPoint() {
+			return GRAVITY_POINT;
+		}
 	};
 
 	namespace Heads {
@@ -64,7 +72,7 @@ namespace Constants {
 		Constants::Forces::GRAVITY_FORCE = 40000.0f;
 		Constants::Forces::DIRECTION = 1;
 
-		Constants::Defaults::HEAD_COUNT = 300;
+		Constants::Defaults::HEAD_COUNT = 100;
 		Constants::Defaults::HEAD_SIZE_MIN = 5;
 		Constants::Defaults::HEAD_SIZE_MAX = 32;
 		Constants::Defaults::DEBUG_DRAW = false;
