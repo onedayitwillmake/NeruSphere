@@ -83,17 +83,32 @@ void PhysicsObject::updateActive() {
 
 void PhysicsObject::updateExploding() {
 	emitter->update();
+
+	// We're done exploding - switch back to normal
 	if( emitter->isDead ) {
 		setState( ACTIVE, updateState );
+		_body->SetActive( true );
+		_radius = ci::box2d::Conversions::toScreen( _body->GetFixtureList()->GetShape()->m_radius );
+		setBody( _body );
+		std::cout << "Resetting radius: " << _radius << std::endl;
 		emitter->clear();
+	} else {
+		_radius = _deathRadius;
 	}
+
 	_body->SetTransform( Conversions::toPhysics(_deathPosition), 0);
 	faceCenter();
 }
 
 void PhysicsObject::beginDeath() {
 
+	// No physics
+	_body->SetActive( false );
+
 	ci::Vec2f screenPosition = ci::box2d::Conversions::toScreen( _body->GetPosition() ); // Store before resetting
+
+	// Store screenpos before its changed
+	_deathPosition = ci::Anim<ci::Vec2f>( screenPosition );
 
 	setState( EXPLODING, updateState );
 	reset();
@@ -134,8 +149,11 @@ void PhysicsObject::beginDeath() {
 	//////////////////////////////////////////////////
 	////////// Animate the head to the planet
 	//////////////////////////////////////////////////
-	// X, Y
-	ci::app::App::get()->timeline().apply( &_deathPosition, (ci::Vec2f)ci::app::App::get()->getWindowCenter() , 2.0f, EaseInCubic() );
+	float timing = ci::Rand::randFloat(0.25f, 1.0f);
+	ci::Vec2f to = (ci::Vec2f)ci::app::App::get()->getWindowCenter();
+	to.y += 50;
+	ci::app::App::get()->timeline().apply( &_deathPosition, to , timing, EaseInBack() );
+	ci::app::App::get()->timeline().apply( &_deathRadius, _radius*0.1f, timing/2.0f, EaseInBack() );
 }
 
 void PhysicsObject::applyRadialGravity( b2Vec2 center ) {

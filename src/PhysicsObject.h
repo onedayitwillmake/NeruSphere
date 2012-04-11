@@ -78,6 +78,7 @@ class PhysicsObject
 
 		// Death related vars
 		ci::Anim<ci::Vec2f> _deathPosition; // Used to animate
+		ci::Anim<float> _deathRadius; // Used to animate
 };
 
 #endif /* PHYSICSOBJECT_H_ */

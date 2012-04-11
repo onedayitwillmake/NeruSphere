@@ -125,8 +125,8 @@ void NeruSphereApp::setupGUI() {
 
 	_gui->addColumn();
 	_gui->addLabel("HEADS");
-	_gui->addParam("MIN_LIFETIME", &Constants::Heads::MIN_LIFETIME, 400, 5000, Constants::Heads::MIN_LIFETIME );
-	_gui->addParam("MAX_LIFETIME", &Constants::Heads::MAX_LIFETIME, 400, 5000, Constants::Heads::MAX_LIFETIME );
+	_gui->addParam("MIN_LIFETIME", &Constants::Heads::MIN_LIFETIME, 50, 5000, Constants::Heads::MIN_LIFETIME );
+	_gui->addParam("MAX_LIFETIME", &Constants::Heads::MAX_LIFETIME, 100, 5000, Constants::Heads::MAX_LIFETIME );
 	_gui->addParam("MAX_SPEED", &Constants::Heads::MAX_SPEED, Constants::Heads::MAX_SPEED * 0.1, Constants::Heads::MAX_SPEED*Constants::Heads::MAX_SPEED, Constants::Heads::MAX_SPEED );
 	_gui->addParam("PERLIN_STRENGTH", &Constants::Heads::PERLIN_STRENGTH, 0, 20, Constants::Heads::PERLIN_STRENGTH );
 	_gui->addParam("GRAVITY_DISTANCE", &Constants::Heads::MIN_GRAVITY_DISTANCE, ci::math<float>::pow(50,2), ci::math<float>::pow(50.0,3), Constants::Heads::MIN_GRAVITY_DISTANCE );
