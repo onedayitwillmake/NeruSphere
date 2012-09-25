@@ -6,6 +6,7 @@
  */
 
 #include "PhysicsObject.h"
+
 #include <iostream>
 #include "cinder/Vector.h"
 #include "cinder/CinderMath.h"
@@ -18,7 +19,10 @@
 #include "Textures.h"
 #include "cinder/Rect.h"
 
-#include "boost/function.hpp"
+#include "cinder/app/AppBasic.h"
+#include "cinder/Timeline.h"
+
+#include "boost/bind.hpp"
 
 using namespace ci;
 using namespace ci::box2d;
@@ -79,27 +83,43 @@ void PhysicsObject::updateActive() {
 
 void PhysicsObject::updateExploding() {
 	emitter->update();
+
+	// We're done exploding - switch back to normal
 	if( emitter->isDead ) {
 		setState( ACTIVE, updateState );
+		_body->SetActive( true );
+		_radius = ci::box2d::Conversions::toScreen( _body->GetFixtureList()->GetShape()->m_radius );
+		setBody( _body );
+		std::cout << "Resetting radius: " << _radius << std::endl;
 		emitter->clear();
+	} else {
+		_radius = _deathRadius;
 	}
+
+	_body->SetTransform( Conversions::toPhysics(_deathPosition), 0);
 	faceCenter();
 }
 
 void PhysicsObject::beginDeath() {
 
+	// No physics
+	_body->SetActive( false );
+
 	ci::Vec2f screenPosition = ci::box2d::Conversions::toScreen( _body->GetPosition() ); // Store before resetting
+
+	// Store screenpos before its changed
+	_deathPosition = ci::Anim<ci::Vec2f>( screenPosition );
 
 	setState( EXPLODING, updateState );
 	reset();
 	emitter->isDead = false;
 
+	////////////////////////////////////////
+	///// Create a bunch of particles colored the same as this object by retrieving the color from the surface
+	////////////////////////////////////////
 	const float scale = ci::Rand::randFloat( Constants::Particles::PARTICLE_SIZE_MIN, Constants::Particles::PARTICLE_SIZE_MAX );
 	const float halfWidth = 1 * scale;
 	const float halfHeight = 1 * scale;
-
-
-
 
 	const ci::Area srcArea = Area( 0, 0, halfWidth*2, halfHeight*2 );
 	const ci::Rectf srcCoords = ci::Rectf( srcArea );
@@ -124,6 +144,16 @@ void PhysicsObject::beginDeath() {
 		ci::Vec2f velocity = ci::Rand::randVec2f() * ci::Rand::randFloat( Constants::Particles::MAX_INITIAL_SPEED, Constants::Particles::MAX_INITIAL_SPEED );
 		emitter->add( pos, velocity, color, srcCoords, destRect );
 	}
+
+
+	//////////////////////////////////////////////////
+	////////// Animate the head to the planet
+	//////////////////////////////////////////////////
+	float timing = ci::Rand::randFloat(0.25f, 1.0f);
+	ci::Vec2f to = (ci::Vec2f)ci::app::App::get()->getWindowCenter();
+	to.y += 50;
+	ci::app::App::get()->timeline().apply( &_deathPosition, to , timing, EaseInBack() );
+	ci::app::App::get()->timeline().apply( &_deathRadius, _radius*0.1f, timing/2.0f, EaseInBack() );
 }
 
 void PhysicsObject::applyRadialGravity( b2Vec2 center ) {

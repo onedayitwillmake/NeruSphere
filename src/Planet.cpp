@@ -25,7 +25,7 @@ void Planet::drawImp( float volumeScale ) {
 
 	ci::gl::color( ci::ColorA(1.0f, 1.0f, 1.0f, 1.0f ) );
 
-	PhysicsObject::draw();
+//	PhysicsObject::draw();
 
 	// Draw 3D wireframe of planet
 	ci::Vec2f pos2d = ci::box2d::Conversions::toScreen( _body->GetPosition() );
@@ -36,11 +36,11 @@ void Planet::drawImp( float volumeScale ) {
 	static float rotationZ = 0;
 
 	float scale = volumeScale * 0.01;
-	rotationX += Constants::Instances::PERLIN_NOISE()->dfBm( ci::app::App::get()->getElapsedFrames() / 100, ci::app::App::get()->getElapsedSeconds() / 10).x * scale;
-	rotationY += Constants::Instances::PERLIN_NOISE()->dfBm( ci::app::App::get()->getElapsedFrames() / 100, ci::app::App::get()->getElapsedSeconds() / 10).y * scale;
-	rotationZ += Constants::Instances::PERLIN_NOISE()->dfBm( ci::app::App::get()->getElapsedFrames() / 100, ci::app::App::get()->getElapsedSeconds() / 10 + 1000).x * scale;
+	rotationX += Constants::Instances::PERLIN_NOISE()->dfBm( (float)ci::app::App::get()->getElapsedFrames() / 100.0f, (float)ci::app::App::get()->getElapsedSeconds() / 10.0f).x * scale;
+	rotationY += Constants::Instances::PERLIN_NOISE()->dfBm( (float)ci::app::App::get()->getElapsedFrames() / 100.0f, (float)ci::app::App::get()->getElapsedSeconds() / 10.0f).y * scale;
+	rotationZ += Constants::Instances::PERLIN_NOISE()->dfBm( (float)ci::app::App::get()->getElapsedFrames() / 100.0f, (float)ci::app::App::get()->getElapsedSeconds() / 10.0f + 1000).x * scale;
 
-	std::cout << Constants::Instances::PERLIN_NOISE()->fBm( ci::app::App::get()->getElapsedFrames() / 10 ) << std::endl;
+//	std::cout << Constants::Instances::PERLIN_NOISE()->fBm( ci::app::App::get()->getElapsedFrames() / 10 ) << std::endl;
 	static float red = 249.0f / 255.0f;
 	static float green = 103.0f / 255.0f;
 	static float blue = 166.0f / 255.0f;
@@ -50,8 +50,12 @@ void Planet::drawImp( float volumeScale ) {
 			ci::gl::translate(pos2d.x, pos2d.y);
 			ci::gl::rotate( ci::Vec3f(rotationX, rotationY, rotationZ) );
 			ci::gl::drawSphere(ci::Vec3f::zero(), this->_radius * 0.99, 10 );
+			ci::gl::color( ci::ColorA(1, 0, 1, 0.5 ) );
+			ci::gl::rotate( ci::Vec3f(-rotationX, -rotationY, -rotationZ) );
+			ci::gl::drawSphere(ci::Vec3f::zero(), this->_radius * 0.6, 10 );
 		ci::gl::popMatrices();
 	ci::gl::disableWireframe();
+	ci::gl::color( ci::ColorA::white() );
 
 
 }

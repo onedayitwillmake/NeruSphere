@@ -94,7 +94,7 @@ void AudioAnalyzer::drawFft()
 		float barY = fftBuffer[i] / bandCount * ht;
 		float delta = bottom - barY;
 
-		float size = 10;
+		float size = 0;
 		glBegin( GL_QUADS );
 			glColor3f( halfBandColor, halfBandColor, halfBandColor );
 			glVertex2f( i * size, bottom );

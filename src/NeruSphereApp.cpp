@@ -104,6 +104,7 @@ void NeruSphereApp::setup() {
 	_worldController.init( 4, 2 );
 	setupHeads();
 	setupGUI();
+	setFullScreen( true );
 }
 
 void NeruSphereApp::setupGUI() {
@@ -125,8 +126,8 @@ void NeruSphereApp::setupGUI() {
 
 	_gui->addColumn();
 	_gui->addLabel("HEADS");
-	_gui->addParam("MIN_LIFETIME", &Constants::Heads::MIN_LIFETIME, 400, 5000, Constants::Heads::MIN_LIFETIME );
-	_gui->addParam("MAX_LIFETIME", &Constants::Heads::MAX_LIFETIME, 400, 5000, Constants::Heads::MAX_LIFETIME );
+	_gui->addParam("MIN_LIFETIME", &Constants::Heads::MIN_LIFETIME, 50, 5000, Constants::Heads::MIN_LIFETIME );
+	_gui->addParam("MAX_LIFETIME", &Constants::Heads::MAX_LIFETIME, 100, 5000, Constants::Heads::MAX_LIFETIME );
 	_gui->addParam("MAX_SPEED", &Constants::Heads::MAX_SPEED, Constants::Heads::MAX_SPEED * 0.1, Constants::Heads::MAX_SPEED*Constants::Heads::MAX_SPEED, Constants::Heads::MAX_SPEED );
 	_gui->addParam("PERLIN_STRENGTH", &Constants::Heads::PERLIN_STRENGTH, 0, 20, Constants::Heads::PERLIN_STRENGTH );
 	_gui->addParam("GRAVITY_DISTANCE", &Constants::Heads::MIN_GRAVITY_DISTANCE, ci::math<float>::pow(50,2), ci::math<float>::pow(50.0,3), Constants::Heads::MIN_GRAVITY_DISTANCE );
@@ -148,6 +149,8 @@ void NeruSphereApp::setupGUI() {
 	_gui->addParam("SPEED_MAX", &Constants::Particles::MAX_INITIAL_SPEED, 1, 10, Constants::Particles::MAX_INITIAL_SPEED );
 	_gui->addParam("SPEED_DECAY", &Constants::Particles::SPEED_DECAY, 0.85, 0.999, Constants::Particles::SPEED_DECAY );
 	_gui->addParam("ALPHA", &Constants::Particles::ALPHA, 0, 1.0, Constants::Particles::ALPHA);
+//	_gui->setEnabled( false );
+	setFullScreen( true );
 }
 
 void NeruSphereApp::setupHeads() {
@@ -179,7 +182,6 @@ void NeruSphereApp::keyDown( ci::app::KeyEvent event ) {
 		setFullScreen( !isFullScreen() );
 	}
 
-
 	if( event.getChar() == ci::app::KeyEvent::KEY_1 ) {
 		ci::Vec2f newGravityLocation( getWindowSize().x * 0.25, getWindowCenter().y );
 		Constants::Defaults::setGravityPoint( newGravityLocation );
@@ -193,7 +195,7 @@ void NeruSphereApp::keyDown( ci::app::KeyEvent event ) {
 }
 
 void NeruSphereApp::saveImage() {
-	std::string _saveDirectory = ci::getHomeDirectory() + "Desktop/NeruSphere/";
+	std::string _saveDirectory = ci::getHomeDirectory().string() + "Desktop/NeruSphere/";
 	ci::createDirectories( _saveDirectory );
 
 	std::stringstream filename;
@@ -202,6 +204,33 @@ void NeruSphereApp::saveImage() {
 	ci::writeImage( filename.str(), useFBO ? mFbo.getTexture(0) : copyWindowSurface() );
 }
 void NeruSphereApp::update() {
+
+	static bool hasBecomeFirstResponder = false;
+	if( !hasBecomeFirstResponder && getElapsedSeconds() > 20 ) {
+		hasBecomeFirstResponder = true;
+		this->setAlwaysOnTop( false );
+
+
+		_worldController.clear();
+		setupHeads();
+		setupGUI();
+
+		_planetBody = NULL;
+		_planetPhysicsObject = NULL;
+
+	}
+
+
+
+	static int counter = 0;
+	if( counter++ == 100 ) {
+		_worldController.clear();
+		setupHeads();
+		setupGUI();
+
+		_planetBody = NULL;
+		_planetPhysicsObject = NULL;
+	}
 	_worldController.update();
 	_audioAnalyzer.update();
 
@@ -225,7 +254,7 @@ void NeruSphereApp::update() {
 
 		Constants::Forces::DIRECTION = Constants::Heads::ANTI_GRAVITY * -1;
 	} else {
-		Constants::Forces::DIRECTION = 1;
+		Constants::Forces::DIRECTION = 2;
 	}
 
 	lastSize -= (lastSize - newSize) * Constants::Planet::EASE_SPEED;
@@ -303,7 +332,7 @@ void NeruSphereApp::draw() {
 	} else {
 		render();
 	}
-	_gui->draw();
+//	_gui->draw();
 }
 
 void NeruSphereApp::drawParticles() {
