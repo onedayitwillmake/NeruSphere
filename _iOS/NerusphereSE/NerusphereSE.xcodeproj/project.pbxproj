@@ -17,7 +17,7 @@
 		EDC55C64166E702400765AED /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EDC55C63166E702400765AED /* Default-568h@2x.png */; };
 		EDC55C67166E702400765AED /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDC55C65166E702400765AED /* MainStoryboard_iPhone.storyboard */; };
 		EDC55C6A166E702400765AED /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDC55C68166E702400765AED /* MainStoryboard_iPad.storyboard */; };
-		EDC55C6D166E702400765AED /* NPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC55C6C166E702400765AED /* NPViewController.m */; };
+		EDC55C6D166E702400765AED /* NPVisualizerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC55C6C166E702400765AED /* NPVisualizerViewController.m */; };
 		EDC55C75166E702400765AED /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC55C74166E702400765AED /* SenTestingKit.framework */; };
 		EDC55C76166E702400765AED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC55C4D166E702400765AED /* UIKit.framework */; };
 		EDC55C77166E702400765AED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC55C4F166E702400765AED /* Foundation.framework */; };
@@ -62,8 +62,8 @@
 		EDC55C63166E702400765AED /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		EDC55C66166E702400765AED /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		EDC55C69166E702400765AED /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		EDC55C6B166E702400765AED /* NPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NPViewController.h; path = Classes/NPViewController.h; sourceTree = "<group>"; };
-		EDC55C6C166E702400765AED /* NPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NPViewController.m; path = Classes/NPViewController.m; sourceTree = "<group>"; };
+		EDC55C6B166E702400765AED /* NPVisualizerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NPVisualizerViewController.h; path = Classes/NPVisualizerViewController.h; sourceTree = "<group>"; };
+		EDC55C6C166E702400765AED /* NPVisualizerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NPVisualizerViewController.m; path = Classes/NPVisualizerViewController.m; sourceTree = "<group>"; };
 		EDC55C73166E702400765AED /* NerusphereSETests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NerusphereSETests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDC55C74166E702400765AED /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		EDC55C7C166E702400765AED /* NerusphereSETests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NerusphereSETests-Info.plist"; sourceTree = "<group>"; };
@@ -162,10 +162,10 @@
 			children = (
 				EDC55C5C166E702400765AED /* NPAppDelegate.h */,
 				EDC55C5D166E702400765AED /* NPAppDelegate.mm */,
+				EDC55C6B166E702400765AED /* NPVisualizerViewController.h */,
+				EDC55C6C166E702400765AED /* NPVisualizerViewController.m */,
 				EDC55C65166E702400765AED /* MainStoryboard_iPhone.storyboard */,
 				EDC55C68166E702400765AED /* MainStoryboard_iPad.storyboard */,
-				EDC55C6B166E702400765AED /* NPViewController.h */,
-				EDC55C6C166E702400765AED /* NPViewController.m */,
 				EDC55C54166E702400765AED /* Supporting Files */,
 				EDC55C8B166E703000765AED /* Thirdparty */,
 			);
@@ -340,7 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDC55C5E166E702400765AED /* NPAppDelegate.mm in Sources */,
-				EDC55C6D166E702400765AED /* NPViewController.m in Sources */,
+				EDC55C6D166E702400765AED /* NPVisualizerViewController.m in Sources */,
 				EDC55C8E166E708C00765AED /* main.m in Sources */,
 				EDC55C9A166E711400765AED /* CCGLTouchAppDelegate.mm in Sources */,
 				EDC55C9B166E711400765AED /* CCGLTouchView.mm in Sources */,

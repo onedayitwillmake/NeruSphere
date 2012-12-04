@@ -6,13 +6,13 @@
 //  Copyright (c) 2012 Mario Gonzalez. All rights reserved.
 //
 
-#import "NPViewController.h"
+#import "NPVisualizerViewController.h"
 
-@interface NPViewController ()
+@interface NPVisualizerViewController ()
 
 @end
 
-@implementation NPViewController
+@implementation NPVisualizerViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

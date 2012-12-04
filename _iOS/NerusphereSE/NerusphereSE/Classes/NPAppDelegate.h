@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "CCGLTouchAppDelegate.h"
 
-@interface NPAppDelegate : UIResponder <UIApplicationDelegate>
+@interface NPAppDelegate : CCGLTouchAppDelegate {
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

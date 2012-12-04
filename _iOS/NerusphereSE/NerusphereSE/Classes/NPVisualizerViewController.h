@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NPViewController : UIViewController
+@interface NPVisualizerViewController : UIViewController
 
 @end
