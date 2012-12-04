@@ -1,7 +1,7 @@
 #include "cinder/ImageIo.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/Rand.h"
-#include "gl.h"
+//#include "gl.h"
 #include "Resources.h"
 #include <vector>
 #include <map>
@@ -25,11 +25,11 @@ namespace Constants {
 				format.setMinFilter( GL_NEAREST );
 				format.setMagFilter( GL_NEAREST );
 
-				std::string path = ci::app::App::get()->getResourcePath().string() + "/" + "godofthieves.png"; // TODO: move magic string to variable in constants
+				std::string path = "godofthieves.png";//ci::app::App::get()->getResourcePath().string() + "/" + "godofthieves.png"; // TODO: move magic string to variable in constants
 
 				std::cout << "Loaded texture HEAD '" << path << "'" << std::endl;
 
-				texture = ci::gl::Texture( ci::loadImage( ci::app::App::get()->loadResource( path ) ) , format );
+				texture = ci::gl::Texture( ci::loadImage( path ) , format );
 			}
 			return &texture;
 		}

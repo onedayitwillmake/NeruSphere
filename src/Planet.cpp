@@ -45,13 +45,13 @@ void Planet::drawImp( float volumeScale ) {
 	static float green = 103.0f / 255.0f;
 	static float blue = 166.0f / 255.0f;
 	ci::gl::color( ci::ColorA(red, green, blue, 0.75 ) );
-	ci::gl::enableWireframe();
+//	ci::gl::enableWireframe();
 		ci::gl::pushMatrices();
 			ci::gl::translate(pos2d.x, pos2d.y);
 			ci::gl::rotate( ci::Vec3f(rotationX, rotationY, rotationZ) );
 			ci::gl::drawSphere(ci::Vec3f::zero(), this->_radius * 0.99, 10 );
 		ci::gl::popMatrices();
-	ci::gl::disableWireframe();
+//	ci::gl::disableWireframe();
 
 
 }

@@ -132,11 +132,11 @@ void WorldController::debugDraw( bool drawBodies, bool drawContacts ) {
 					case b2Shape::e_polygon: {
 						b2PolygonShape* shape = (b2PolygonShape*) fixture->GetShape();
 
-						glBegin(GL_POLYGON);
-						for(int i = 0; i != shape->GetVertexCount(); ++i) {
-							gl::vertex( cinder::box2d::Conversions::toScreen( shape->GetVertex(i) ) );
-						}
-						glEnd();
+//						glBegin(GL_POLYGON);
+//						for(int i = 0; i != shape->GetVertexCount(); ++i) {
+//							gl::vertex( cinder::box2d::Conversions::toScreen( shape->GetVertex(i) ) );
+//						}
+//						glEnd();
 					}
 					break;
 					case b2Shape::e_circle: {

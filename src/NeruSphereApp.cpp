@@ -10,7 +10,7 @@
  * Mario Gonzalez
  * http://onedayitwillmake
  */
-#include "gl.h"
+
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/gl.h"
 #include "cinder/Vector.h"
@@ -35,7 +35,7 @@
 #include "Textures.h"
 #include "PhysicsObject.h"
 #include "Planet.h"
-#include "SimpleGUI.h"
+//#include "SimpleGUI.h"
 
 #include <vector>
 
@@ -48,14 +48,9 @@ public:
 	WorldController _worldController;
 	b2Body* _planetBody;
 	Planet* _planetPhysicsObject;
-	AudioAnalyzer _audioAnalyzer;
-	mowa::sgui::SimpleGUI* _gui;
+//	AudioAnalyzer _audioAnalyzer;
+//	mowa::sgui::SimpleGUI* _gui;
 
-	gl::Fbo				mFbo;
-	static const int	FBO_WIDTH = 3000, FBO_HEIGHT = 3000 * (15.75/11.75);
-	bool				useFBO;
-
-	//11.75/15.75
 	void setup();
 	void setupHeads();
 	void setupGUI();
@@ -92,14 +87,14 @@ void NeruSphereApp::setup() {
 
 	_planetBody = NULL;
 	_planetPhysicsObject = NULL;
-
-	useFBO = false;
-	if( useFBO ) {
-		gl::Fbo::Format format;
-		mFbo = gl::Fbo( FBO_WIDTH, FBO_HEIGHT, format );
-		Constants::Defaults::windowWidth = FBO_WIDTH;
-		Constants::Defaults::windowHeight = FBO_HEIGHT;
-	}
+//
+//	useFBO = false;
+//	if( useFBO ) {
+//		gl::Fbo::Format format;
+//		mFbo = gl::Fbo( FBO_WIDTH, FBO_HEIGHT, format );
+//		Constants::Defaults::windowWidth = FBO_WIDTH;
+//		Constants::Defaults::windowHeight = FBO_HEIGHT;
+//	}
 
 	_worldController.init( 4, 2 );
 	setupHeads();
@@ -107,47 +102,47 @@ void NeruSphereApp::setup() {
 }
 
 void NeruSphereApp::setupGUI() {
-
-	using namespace  ci;
-	_gui = new mowa::sgui::SimpleGUI( this );
-	_gui->textColor = ci::ColorA(1,1,1,1);
-	_gui->lightColor = ci::ColorA(1, 0, 1, 1);
-	_gui->darkColor = ci::ColorA(0.05,0.05,0.05, 1);
-	_gui->bgColor = ci::ColorA(0.20, 0.20, 0.20, 0.5);
-	_gui->addColumn();
-	_gui->addLabel("DEFAULTS");
-	_gui->addParam("DRAW_SPECTRUM", &Constants::Defaults::DRAW_AUDIO_ANALYZER, Constants::Defaults::DRAW_AUDIO_ANALYZER);
-	_gui->addParam("HEAD_COUNT", &Constants::Defaults::HEAD_COUNT, 1, 300, Constants::Defaults::HEAD_COUNT );
-	_gui->addParam("HEAD_SIZE_MIN", &Constants::Defaults::HEAD_SIZE_MIN, 4, 256, Constants::Defaults::HEAD_SIZE_MIN );
-	_gui->addParam("HEAD_SIZE_MAX", &Constants::Defaults::HEAD_SIZE_MAX, 4, 256, Constants::Defaults::HEAD_SIZE_MAX );
-	mowa::sgui::ButtonControl* toggle = _gui->addButton("Restart");
-	toggle->registerClick( this, &NeruSphereApp::restart );
-
-	_gui->addColumn();
-	_gui->addLabel("HEADS");
-	_gui->addParam("MIN_LIFETIME", &Constants::Heads::MIN_LIFETIME, 400, 5000, Constants::Heads::MIN_LIFETIME );
-	_gui->addParam("MAX_LIFETIME", &Constants::Heads::MAX_LIFETIME, 400, 5000, Constants::Heads::MAX_LIFETIME );
-	_gui->addParam("MAX_SPEED", &Constants::Heads::MAX_SPEED, Constants::Heads::MAX_SPEED * 0.1, Constants::Heads::MAX_SPEED*Constants::Heads::MAX_SPEED, Constants::Heads::MAX_SPEED );
-	_gui->addParam("PERLIN_STRENGTH", &Constants::Heads::PERLIN_STRENGTH, 0, 20, Constants::Heads::PERLIN_STRENGTH );
-	_gui->addParam("GRAVITY_DISTANCE", &Constants::Heads::MIN_GRAVITY_DISTANCE, ci::math<float>::pow(50,2), ci::math<float>::pow(50.0,3), Constants::Heads::MIN_GRAVITY_DISTANCE );
-	_gui->addParam("ANTI_GRAVITY", &Constants::Heads::ANTI_GRAVITY, 0, 100, Constants::Heads::ANTI_GRAVITY );
-	_gui->addColumn();
-	_gui->addLabel("PLANET");
-	_gui->addParam("GROW_SPEED", &Constants::Planet::EASE_SPEED, 0.01f, 1.0f, Constants::Planet::EASE_SPEED );
-	_gui->addParam("VOLUME_RANGE", &Constants::Planet::VOLUME_RANGE, 15, 60, Constants::Planet::VOLUME_RANGE );
-	_gui->addParam("MIN_SIZE", &Constants::Planet::MIN_SIZE, 5, 300, Constants::Planet::MIN_SIZE );
-	_gui->addColumn();
-	_gui->addLabel("PARTICLES");
-	_gui->addParam("SIZE_MIN", &Constants::Particles::PARTICLE_SIZE_MIN, 1, 10, Constants::Particles::PARTICLE_SIZE_MIN );
-	_gui->addParam("SIZE_MAX", &Constants::Particles::PARTICLE_SIZE_MAX, 1, 10, Constants::Particles::PARTICLE_SIZE_MAX );
-	_gui->addSeparator();
-	_gui->addParam("COUNT_MIN", &Constants::Particles::MIN, 1, 32, Constants::Particles::MIN );
-	_gui->addParam("COUNT_MAX", &Constants::Particles::MAX, 1, 32, Constants::Particles::MAX );
-	_gui->addSeparator();
-	_gui->addParam("SPEED_MIN", &Constants::Particles::MIN_INITIAL_SPEED, 1, 10, Constants::Particles::MIN_INITIAL_SPEED );
-	_gui->addParam("SPEED_MAX", &Constants::Particles::MAX_INITIAL_SPEED, 1, 10, Constants::Particles::MAX_INITIAL_SPEED );
-	_gui->addParam("SPEED_DECAY", &Constants::Particles::SPEED_DECAY, 0.85, 0.999, Constants::Particles::SPEED_DECAY );
-	_gui->addParam("ALPHA", &Constants::Particles::ALPHA, 0, 1.0, Constants::Particles::ALPHA);
+//
+//	using namespace  ci;
+//	_gui = new mowa::sgui::SimpleGUI( this );
+//	_gui->textColor = ci::ColorA(1,1,1,1);
+//	_gui->lightColor = ci::ColorA(1, 0, 1, 1);
+//	_gui->darkColor = ci::ColorA(0.05,0.05,0.05, 1);
+//	_gui->bgColor = ci::ColorA(0.20, 0.20, 0.20, 0.5);
+//	_gui->addColumn();
+//	_gui->addLabel("DEFAULTS");
+//	_gui->addParam("DRAW_SPECTRUM", &Constants::Defaults::DRAW_AUDIO_ANALYZER, Constants::Defaults::DRAW_AUDIO_ANALYZER);
+//	_gui->addParam("HEAD_COUNT", &Constants::Defaults::HEAD_COUNT, 1, 300, Constants::Defaults::HEAD_COUNT );
+//	_gui->addParam("HEAD_SIZE_MIN", &Constants::Defaults::HEAD_SIZE_MIN, 4, 256, Constants::Defaults::HEAD_SIZE_MIN );
+//	_gui->addParam("HEAD_SIZE_MAX", &Constants::Defaults::HEAD_SIZE_MAX, 4, 256, Constants::Defaults::HEAD_SIZE_MAX );
+//	mowa::sgui::ButtonControl* toggle = _gui->addButton("Restart");
+//	toggle->registerClick( this, &NeruSphereApp::restart );
+//
+//	_gui->addColumn();
+//	_gui->addLabel("HEADS");
+//	_gui->addParam("MIN_LIFETIME", &Constants::Heads::MIN_LIFETIME, 400, 5000, Constants::Heads::MIN_LIFETIME );
+//	_gui->addParam("MAX_LIFETIME", &Constants::Heads::MAX_LIFETIME, 400, 5000, Constants::Heads::MAX_LIFETIME );
+//	_gui->addParam("MAX_SPEED", &Constants::Heads::MAX_SPEED, Constants::Heads::MAX_SPEED * 0.1, Constants::Heads::MAX_SPEED*Constants::Heads::MAX_SPEED, Constants::Heads::MAX_SPEED );
+//	_gui->addParam("PERLIN_STRENGTH", &Constants::Heads::PERLIN_STRENGTH, 0, 20, Constants::Heads::PERLIN_STRENGTH );
+//	_gui->addParam("GRAVITY_DISTANCE", &Constants::Heads::MIN_GRAVITY_DISTANCE, ci::math<float>::pow(50,2), ci::math<float>::pow(50.0,3), Constants::Heads::MIN_GRAVITY_DISTANCE );
+//	_gui->addParam("ANTI_GRAVITY", &Constants::Heads::ANTI_GRAVITY, 0, 100, Constants::Heads::ANTI_GRAVITY );
+//	_gui->addColumn();
+//	_gui->addLabel("PLANET");
+//	_gui->addParam("GROW_SPEED", &Constants::Planet::EASE_SPEED, 0.01f, 1.0f, Constants::Planet::EASE_SPEED );
+//	_gui->addParam("VOLUME_RANGE", &Constants::Planet::VOLUME_RANGE, 15, 60, Constants::Planet::VOLUME_RANGE );
+//	_gui->addParam("MIN_SIZE", &Constants::Planet::MIN_SIZE, 5, 300, Constants::Planet::MIN_SIZE );
+//	_gui->addColumn();
+//	_gui->addLabel("PARTICLES");
+//	_gui->addParam("SIZE_MIN", &Constants::Particles::PARTICLE_SIZE_MIN, 1, 10, Constants::Particles::PARTICLE_SIZE_MIN );
+//	_gui->addParam("SIZE_MAX", &Constants::Particles::PARTICLE_SIZE_MAX, 1, 10, Constants::Particles::PARTICLE_SIZE_MAX );
+//	_gui->addSeparator();
+//	_gui->addParam("COUNT_MIN", &Constants::Particles::MIN, 1, 32, Constants::Particles::MIN );
+//	_gui->addParam("COUNT_MAX", &Constants::Particles::MAX, 1, 32, Constants::Particles::MAX );
+//	_gui->addSeparator();
+//	_gui->addParam("SPEED_MIN", &Constants::Particles::MIN_INITIAL_SPEED, 1, 10, Constants::Particles::MIN_INITIAL_SPEED );
+//	_gui->addParam("SPEED_MAX", &Constants::Particles::MAX_INITIAL_SPEED, 1, 10, Constants::Particles::MAX_INITIAL_SPEED );
+//	_gui->addParam("SPEED_DECAY", &Constants::Particles::SPEED_DECAY, 0.85, 0.999, Constants::Particles::SPEED_DECAY );
+//	_gui->addParam("ALPHA", &Constants::Particles::ALPHA, 0, 1.0, Constants::Particles::ALPHA);
 }
 
 void NeruSphereApp::setupHeads() {
@@ -172,7 +167,7 @@ void NeruSphereApp::mouseDown( ci::app::MouseEvent event ) {
 
 void NeruSphereApp::keyDown( ci::app::KeyEvent event ) {
 	if( event.getChar() == ci::app::KeyEvent::KEY_o ) {
-		_gui->setEnabled( !_gui->isEnabled() );
+//		_gui->setEnabled( !_gui->isEnabled() );
 	} else if( event.getChar() == ci::app::KeyEvent::KEY_s) {
 		saveImage();
 	} else if ( event.getChar() == ci::app::KeyEvent::KEY_f ) {
@@ -193,17 +188,17 @@ void NeruSphereApp::keyDown( ci::app::KeyEvent event ) {
 }
 
 void NeruSphereApp::saveImage() {
-	std::string _saveDirectory = ci::getHomeDirectory() + "Desktop/NeruSphere/";
-	ci::createDirectories( _saveDirectory );
-
-	std::stringstream filename;
-	filename << _saveDirectory << "Image_" << ci::Rand::randInt( 100000000 ) << ".png";
-
-	ci::writeImage( filename.str(), useFBO ? mFbo.getTexture(0) : copyWindowSurface() );
+//	std::string _saveDirectory = ci::getHomeDirectory() + "Desktop/NeruSphere/";
+//	ci::createDirectories( _saveDirectory );
+//
+//	std::stringstream filename;
+//	filename << _saveDirectory << "Image_" << ci::Rand::randInt( 100000000 ) << ".png";
+//
+//	ci::writeImage( filename.str(), useFBO ? mFbo.getTexture(0) : copyWindowSurface() );
 }
 void NeruSphereApp::update() {
 	_worldController.update();
-	_audioAnalyzer.update();
+//	_audioAnalyzer.update();
 
 	using namespace ci::box2d;
 	if(_planetBody) {
@@ -215,9 +210,9 @@ void NeruSphereApp::update() {
 
 
 	static float lastSize = 1;
-	float newSize = Conversions::toPhysics( Constants::Planet::MIN_SIZE + _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE );
+//	float newSize = Conversions::toPhysics( Constants::Planet::MIN_SIZE + _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE );
 	float maxSize = getWindowWidth() < getWindowHeight() ? getWindowWidth()*0.49 : getWindowHeight()*0.49;
-	newSize = ci::math<float>::min( newSize, Conversions::toPhysics( maxSize ) );
+	float newSize = ci::Rand::randFloat() * maxSize;//ci::math<float>::min( newSize, Conversions::toPhysics( maxSize ) );
 
 
 	// When the volume increases by a significant amount - push outward
@@ -280,30 +275,18 @@ void NeruSphereApp::render() {
 	gl::disableDepthRead();
 	gl::disableDepthWrite();
 
-	if( Constants::Defaults::DRAW_AUDIO_ANALYZER ) _audioAnalyzer.draw();
+//	if( Constants::Defaults::DRAW_AUDIO_ANALYZER ) _audioAnalyzer.draw();
 	_worldController.draw();
 
 	gl::enableDepthRead();
 	gl::enableDepthWrite();
-	if( _planetPhysicsObject ) _planetPhysicsObject->drawImp( _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE);
+//	if( _planetPhysicsObject ) _planetPhysicsObject->drawImp( _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE);
 
 //	gl::enableWireframe();
 	drawParticles();
 }
 void NeruSphereApp::draw() {
-	if( useFBO ) {
-		mFbo.bindFramebuffer();
-		gl::setViewport( mFbo.getBounds() );
-		gl::setMatricesWindow( mFbo.getWidth(), mFbo.getHeight() );
-			render();
-		mFbo.unbindFramebuffer();
-
-		gl::setMatricesWindow( getWindowSize() );
-		gl::draw( mFbo.getTexture(0), Rectf( 0, 0, getWindowWidth(), getWindowHeight() ) );
-	} else {
-		render();
-	}
-	_gui->draw();
+	render();
 }
 
 void NeruSphereApp::drawParticles() {
@@ -341,19 +324,16 @@ bool NeruSphereApp::restart( ci::app::MouseEvent event ) {
 }
 
 void NeruSphereApp::resize( ci::app::ResizeEvent event ) {
-	if( !useFBO ) {
-		Constants::Defaults::windowWidth = event.getWidth();
-		Constants::Defaults::windowHeight = event.getHeight();
-
-		ci::Vec2f newGravityLocation( getWindowSize().x * 0.5, getWindowCenter().y );
-		Constants::Defaults::setGravityPoint( newGravityLocation );
-	}
+//	if( !useFBO ) {
+//		Constants::Defaults::windowWidth = event.getWidth();
+//		Constants::Defaults::windowHeight = event.getHeight();
+//
+//		ci::Vec2f newGravityLocation( getWindowSize().x * 0.5, getWindowCenter().y );
+//		Constants::Defaults::setGravityPoint( newGravityLocation );
+//	}
 }
 
 void NeruSphereApp::shutdown() {
 	std::cout << "Shutdown..." << std::endl;
 	AppBasic::shutdown();
 }
-
-
-CINDER_APP_BASIC( NeruSphereApp, ci::app::RendererGl(2) )

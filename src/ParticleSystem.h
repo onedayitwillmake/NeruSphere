@@ -10,7 +10,6 @@
 
 
 #include <vector>
-#include <gl.h>
 #include "cinder/Area.h"
 #include "cinder/Rect.h"
 #include "cinder/Vector.h"
