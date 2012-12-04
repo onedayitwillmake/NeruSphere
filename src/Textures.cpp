@@ -2,7 +2,6 @@
 #include "cinder/gl/Texture.h"
 #include "cinder/Rand.h"
 //#include "gl.h"
-#include "Resources.h"
 #include <vector>
 #include <map>
 #include <iostream>

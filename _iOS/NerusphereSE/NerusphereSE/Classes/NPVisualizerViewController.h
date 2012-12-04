@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NPVisualizerView.h"
 
-@interface NPVisualizerViewController : UIViewController
-
+@interface NPVisualizerViewController : UIViewController {
+	NPVisualizerView* _visualizerView;
+}
 @end

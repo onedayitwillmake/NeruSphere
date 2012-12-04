@@ -7,6 +7,7 @@
 //
 
 #import "NPRootViewController.h"
+#import "NPVisualizerViewController.h"
 
 @interface NPRootViewController ()
 
@@ -24,6 +25,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//	[self.navigationController pushViewController:[[NPVisualizerViewController alloc] init] animated:NO];
+	
 	// Do any additional setup after loading the view.
 }
 

@@ -25,7 +25,7 @@ WorldController::WorldController() {
 }
 
 WorldController::~WorldController() {
-	std::cout << "WorldController Dealloc! " << std::endl;
+	std::cout << "WorldController Destructor! " << std::endl;
 
 	b2Body* node = _world->GetBodyList();
 	while( node ) {

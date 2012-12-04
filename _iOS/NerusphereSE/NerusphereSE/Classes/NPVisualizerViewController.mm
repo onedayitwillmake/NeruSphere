@@ -7,6 +7,7 @@
 //
 
 #import "NPVisualizerViewController.h"
+#import "NPVisualizerView.h"
 
 @interface NPVisualizerViewController ()
 
@@ -16,7 +17,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	
+	_visualizerView = [[NPVisualizerView alloc] initWithFrame: self.view.frame];
+	[self.view addSubview: _visualizerView ];
+	
 	// Do any additional setup after loading the view, typically from a nib.
+	NSLog(@"U");
 }
 
 - (void)didReceiveMemoryWarning {
