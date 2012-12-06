@@ -10,12 +10,11 @@
 #include "PhysicsObject.h"
 #include <Box2D/Box2D.h>
 
-class Planet : public PhysicsObject
-{
+class Planet : public PhysicsObject {
 	public:
 		Planet( b2Body* aBody ): PhysicsObject( aBody ) {};
 		virtual ~Planet();
-		void draw(){};
+//		void draw();
 		void drawImp( float volumeScale );
 		void update();
 		virtual void setupTexture();

@@ -9,13 +9,17 @@
 
 #include "Constants.h"
 #include "Textures.h"
-
+#include "TargetConditionals.h"
 typedef std::pair< int, ci::Surface8u* > TintSurfacePair;
 
 namespace Constants {
-		ci::gl::Texture* Textures::PLANET() {
-			static bool initialized = false;
+		ci::gl::Texture* Textures::getPlanetTexture( ci::gl::Texture* aTexture ) {
 			static ci::gl::Texture texture;
+			if( aTexture ) {
+				texture = *aTexture;
+			}
+#ifndef TARGET_OS_IPHONE
+			static bool initialized = false;
 			if( !initialized ) {
 				initialized = true;
 
@@ -24,12 +28,13 @@ namespace Constants {
 				format.setMinFilter( GL_NEAREST );
 				format.setMagFilter( GL_NEAREST );
 
-				std::string path = "godofthieves.png";//ci::app::App::get()->getResourcePath().string() + "/" + "godofthieves.png"; // TODO: move magic string to variable in constants
+				std::string path = ci::app::App::get()->getResourcePath().string() + "/" + "godofthieves.png"; // TODO: move magic string to variable in constants
 
 				std::cout << "Loaded texture HEAD '" << path << "'" << std::endl;
 
 				texture = ci::gl::Texture( ci::loadImage( path ) , format );
 			}
+#endif
 			return &texture;
 		}
 
@@ -50,6 +55,7 @@ namespace Constants {
 		 * Naive texture loader for app - circle_x_.png
 		 */
 		void Textures::loadTextures() {
+#ifndef TARGET_OS_IPHONE
 			for( int i = 0; i < 3; i++ ) {
 				ci::gl::Texture::Format format;
 				format.enableMipmapping( false );
@@ -57,7 +63,7 @@ namespace Constants {
 				format.setMagFilter( GL_NEAREST );
 
 				std::stringstream path; // create a new 'string stream' so we can append to a string
-				path << "../resources/heads_" << (i+1) << ".png"; // Build out a string that has the file path, assumes images are called head_#.png
+				path << "heads_" << (i+1) << ".png"; // Build out a string that has the file path, assumes images are called head_#.png
 
 				// Create a 'surface' - key part is
 				// ci::loadImage( ci::app::App::get()->loadResource( path.str() ) )
@@ -71,6 +77,7 @@ namespace Constants {
 				surfaceMap()->insert( TintSurfacePair( i, surface) );
 				cache()->push_back( texture );
 			}
+#endif
 		}
 
 		// Retrieves a random index from between 0 and textureCache size

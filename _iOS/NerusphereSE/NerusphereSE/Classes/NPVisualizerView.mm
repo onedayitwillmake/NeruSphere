@@ -10,6 +10,8 @@
 #import "Constants.h"
 #import "Textures.h"
 #import "cinder/Rand.h"
+#import "cinder/ImageIo.h"
+#import "AppInfo.h"
 
 @implementation NPVisualizerView
 
@@ -18,14 +20,14 @@
     if (self) {
         // Initialization code
 		_planetBody = NULL;
-		_planetPhysicsObject = NULL;
+		_planet = NULL;
     }
     return self;
 }
 
 -(void)dealloc {
 	_planetBody = NULL;
-	_planetPhysicsObject = NULL;
+	_planet = NULL;
 }
 
 -(void)prepareSettings {
@@ -33,13 +35,29 @@
 }
 
 -(void)setup {
-	[super setup];
 	
-//	Constants::Textures::loadTextures();
+	
+	_elapsedFrames = 0;
+	AppInfo::getInstance().setWindowSize(self.frame.size.width, self.frame.size.height);
+	
+	
+	DataSourcePathRef ref = [self loadResource:"gromacirclepink.png"];
+	ci::gl::Texture::Format format;
+	format.enableMipmapping( false );
+	format.setMinFilter( GL_NEAREST );
+	format.setMagFilter( GL_NEAREST );
+	ci::gl::Texture* texture = new ci::gl::Texture( ci::loadImage( ref ) , format );
+	Constants::Textures::getPlanetTexture( texture );
+	
+	
 	Constants::init();
 	Constants::Defaults::setGravityPoint( [self getWindowCenter] );
 	
 	_worldController.init( 4, 2 );
+
+	
+	[super setup];
+	
 }
 
 -(void)createHeads {
@@ -58,16 +76,40 @@
 }
 
 -(void)update {
+	
+	// First run
+	if(!_planet) {
+		// Create planet b2Body
+		b2CircleShape shape;
+		shape.m_radius = 3;
+		
+		b2FixtureDef mFixtureDef;
+		mFixtureDef.shape = &shape;
+		b2BodyDef mBodyDef;
+		mBodyDef.type = b2_staticBody;
+		mBodyDef.position = cinder::box2d::Conversions::toPhysics( [self getWindowCenter]  );
+		
+		_planetBody = _worldController.getWorld()->CreateBody( &mBodyDef );
+		_planetBody->CreateFixture( &mFixtureDef );
+		_planet = new Planet( _planetBody );
+		_planet->setupTexture();
+		_planetBody->SetUserData( _planet );
+	}
+	
+	
+	AppInfo::getInstance().setElapsedSeconds([self getElapsedSeconds]);
+	AppInfo::getInstance().setElapsedFrames( ++_elapsedFrames );
+	
 	_worldController.update();
+	return;
 	//	_audioAnalyzer.update();
 	
 	using namespace ci::box2d;
 	if(_planetBody) {
-		//		_worldController.getWorld()->DestroyBody(_planetBody);
+		//_worldController.getWorld()->DestroyBody(_planetBody);
 	}
 	
-	// Shape definition
-	b2CircleShape aShape;
+	
 	
 	
 	static float lastSize = 1;
@@ -85,7 +127,11 @@
 	}
 	
 	lastSize -= (lastSize - newSize) * Constants::Planet::EASE_SPEED;
-	aShape.m_radius = lastSize;
+	static uint32_t i = 0;
+	
+	// Shape definition
+	b2CircleShape aShape;
+	aShape.m_radius = i++;
 	
 	
 	// Fixture definition
@@ -104,48 +150,41 @@
 	mBodyDef.type = b2_staticBody;
 	mBodyDef.position = Conversions::toPhysics( currentPosition  );
 	
-	
-	//	if( _planetBody )
-	
-	
-	
-	if( _planetPhysicsObject ) {
-		_planetBody->DestroyFixture( _planetBody->GetFixtureList() );
-		_planetBody->CreateFixture( &mFixtureDef );
-		_planetBody->SetTransform( mBodyDef.position, 0 );
-		_planetPhysicsObject->setBody( _planetBody );
-	} else {
-		_planetBody = _worldController.getWorld()->CreateBody( &mBodyDef );
-		_planetBody->CreateFixture( &mFixtureDef );
-		_planetBody->SetUserData( _planetPhysicsObject );
-		
-		_planetPhysicsObject = new Planet( _planetBody );
-		_planetPhysicsObject->setupTexture();
-	}
+
+	_planetBody->DestroyFixture( _planetBody->GetFixtureList() );
+	_planetBody->CreateFixture( &mFixtureDef );
+	_planetBody->SetTransform( mBodyDef.position, 0 );
 }
 
 -(void)draw {
+	[self update];
+	ci::gl::clear( ci::Color::black() );
 	
-	ci::gl::clear( ci::Color(ci::Rand::randFloat(),0.05,0.05) );
-	ci::gl::color( ColorA(ci::Rand::randFloat(), 1.0f, 1.0f, 1.0f ) );
-	return;
+//	ci::gl::draw( *(_planetPhysicsObject->getTexture()), [self getWindowCenter] );
+//	return;
+//	ci::gl::color( ColorA(ci::Rand::randFloat(), 1.0f, 1.0f, 1.0f ) );
+//	
+//	gl::setMatricesWindow([self getWindowWidth], [self getWindowHeight]);
 	
-	gl::enableAlphaBlending();
-	gl::disableDepthRead();
-	gl::disableDepthWrite();
+//	gl::enableAlphaBlending();
+//	gl::disableDepthRead();
+//	gl::disableDepthWrite();
 	
 	//	if( Constants::Defaults::DRAW_AUDIO_ANALYZER ) _audioAnalyzer.draw();
 	_worldController.draw();
 	
-	gl::enableDepthRead();
-	gl::enableDepthWrite();
-	//	if( _planetPhysicsObject ) _planetPhysicsObject->drawImp( _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE);
+//	gl::enableDepthRead();
+//	gl::enableDepthWrite();
+//	
+//	if( _planetPhysicsObject )
+//		_planetPhysicsObject->drawImp( cinder::Rand::randFloat() * Constants::Planet::VOLUME_RANGE);
 	
 	//	gl::enableWireframe();
 }
 
 -(void)drawParticles {
 	ci::gl::color( ColorA(1.0f, 1.0f, 1.0f, 1.0f ) );
+
 	//	texture.enableAndBind();
 	glEnableClientState( GL_VERTEX_ARRAY );
 	//		glEnableClientState( GL_TEXTURE_COORD_ARRAY );
@@ -172,7 +211,7 @@
 	[self createHeads];
 	
 	_planetBody = NULL;
-	_planetPhysicsObject = NULL;
+	_planet = NULL;
 }
 
 -(ci::Vec2f)getWindowCenter {

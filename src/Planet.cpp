@@ -8,11 +8,10 @@
 #include "Planet.h"
 #include "cinder/gl/gl.h"
 #include "cinder/Color.h"
-#include "cinder/app/App.h"
 #include "Constants.h"
 #include "Textures.h"
 #include "Conversions.h"
-
+#include "AppInfo.h"
 
 
 Planet::~Planet() {
@@ -21,10 +20,9 @@ Planet::~Planet() {
 
 void Planet::drawImp( float volumeScale ) {
 
-	if( !texture || ci::app::App::get()->getElapsedFrames() < 30 ) return;
+	if( !texture || AppInfo::getInstance().getElapsedFrames() < 30 ) return;
 
 	ci::gl::color( ci::ColorA(1.0f, 1.0f, 1.0f, 1.0f ) );
-
 	PhysicsObject::draw();
 
 	// Draw 3D wireframe of planet
@@ -36,11 +34,10 @@ void Planet::drawImp( float volumeScale ) {
 	static float rotationZ = 0;
 
 	float scale = volumeScale * 0.01;
-	rotationX += Constants::Instances::PERLIN_NOISE()->dfBm( ci::app::App::get()->getElapsedFrames() / 100, ci::app::App::get()->getElapsedSeconds() / 10).x * scale;
-	rotationY += Constants::Instances::PERLIN_NOISE()->dfBm( ci::app::App::get()->getElapsedFrames() / 100, ci::app::App::get()->getElapsedSeconds() / 10).y * scale;
-	rotationZ += Constants::Instances::PERLIN_NOISE()->dfBm( ci::app::App::get()->getElapsedFrames() / 100, ci::app::App::get()->getElapsedSeconds() / 10 + 1000).x * scale;
+	rotationX += Constants::Instances::PERLIN_NOISE()->dfBm( AppInfo::getInstance().getElapsedFrames() / 100, AppInfo::getInstance().getElapsedSeconds() / 10).x * scale;
+	rotationY += Constants::Instances::PERLIN_NOISE()->dfBm( AppInfo::getInstance().getElapsedFrames() / 100, AppInfo::getInstance().getElapsedSeconds() / 10).y * scale;
+	rotationZ += Constants::Instances::PERLIN_NOISE()->dfBm( AppInfo::getInstance().getElapsedFrames() / 100, AppInfo::getInstance().getElapsedSeconds() / 10 + 1000).x * scale;
 
-	std::cout << Constants::Instances::PERLIN_NOISE()->fBm( ci::app::App::get()->getElapsedFrames() / 10 ) << std::endl;
 	static float red = 249.0f / 255.0f;
 	static float green = 103.0f / 255.0f;
 	static float blue = 166.0f / 255.0f;
@@ -49,7 +46,7 @@ void Planet::drawImp( float volumeScale ) {
 		ci::gl::pushMatrices();
 			ci::gl::translate(pos2d.x, pos2d.y);
 			ci::gl::rotate( ci::Vec3f(rotationX, rotationY, rotationZ) );
-			ci::gl::drawSphere(ci::Vec3f::zero(), this->_radius * 0.99, 10 );
+			ci::gl::drawSphere(ci::Vec3f::zero(), _radius * 0.99, 10 );
 		ci::gl::popMatrices();
 //	ci::gl::disableWireframe();
 
@@ -57,6 +54,6 @@ void Planet::drawImp( float volumeScale ) {
 }
 void Planet::update() {}
 void Planet::setupTexture() {
-	texture = *Constants::Textures::PLANET();
+	texture = *Constants::Textures::getPlanetTexture();
 	_spriteSheetArea = texture.getBounds();
 }

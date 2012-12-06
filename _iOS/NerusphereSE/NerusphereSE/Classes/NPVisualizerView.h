@@ -15,9 +15,10 @@
 
 
 @interface NPVisualizerView : CCGLTouchView {
+	uint32_t _elapsedFrames;
 	WorldController _worldController;
 	b2Body* _planetBody;
-	Planet* _planetPhysicsObject;
+	Planet* _planet;
 }
 
 

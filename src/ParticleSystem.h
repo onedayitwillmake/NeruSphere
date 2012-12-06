@@ -34,8 +34,8 @@ public:
 	void update();
 	void clear();
 
-	std::vector<GLfloat> verts;
-	std::vector<GLfloat> texCoords;
+	std::vector<float> verts;
+	std::vector<float> texCoords;
 	std::vector<ci::ColorA> colors;
 	std::vector<Particle> particles;
 

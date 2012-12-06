@@ -8,6 +8,7 @@
 #include "Constants.h"
 #include "ParticleSystem.h"
 #include "cinder/Rand.h"
+#include "AppInfo.h"
 
 namespace particle {
 
@@ -52,7 +53,7 @@ void ParticleSystem::update() {
 	float maximumSpeed = particles.size();
 	float actualSpeed = 0;
 
-	float zspeed = fabs( Constants::Instances::PERLIN_NOISE()->noise( (verts[0] + ci::app::getElapsedFrames()) * 0.0001 ) ) * 30 + 1;
+	float zspeed = fabs( Constants::Instances::PERLIN_NOISE()->noise( (verts[0] + AppInfo::getInstance().getElapsedFrames() ) * 0.0001 ) ) * 30 + 1;
 	for( std::vector<Particle>::iterator itr = particles.begin(); itr != particles.end(); ++itr ) {
 		ci::Vec2f delta = itr->speed * 2;//itr->originalPosition - itr->currentPosition;
 

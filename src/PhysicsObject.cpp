@@ -17,7 +17,7 @@
 #include "Constants.h"
 #include "Textures.h"
 #include "cinder/Rect.h"
-
+#include "AppInfo.h"
 #include "boost/function.hpp"
 
 using namespace ci;
@@ -171,7 +171,8 @@ void PhysicsObject::limitSpeed() {
 
 void PhysicsObject::draw() {
 
-	if( !texture || ci::app::App::get()->getElapsedFrames() < 30 ) return;
+	std::cout << AppInfo::getInstance().getElapsedFrames() << std::endl;
+	if( !texture || AppInfo::getInstance().getElapsedFrames() < 30 ) return;
 
 
 	float desiredRadius = _radius;

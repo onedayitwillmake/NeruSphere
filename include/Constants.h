@@ -9,7 +9,6 @@
 #define CONSTANTS_H_
 #include "cinder/Perlin.h"
 #include "cinder/Vector.h"
-#include "cinder/app/App.h"
 
 namespace Constants {
 	struct Instances {

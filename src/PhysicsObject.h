@@ -41,6 +41,7 @@ class PhysicsObject
 		b2Body*getBody() const { return _body; }
 		void setBody( b2Body* aBody );
 
+		ci::gl::Texture* getTexture() { return &texture; };
 		void setState( PhsyicsObjectState aState, boost::function<void()>& updateFunction );
 		PhsyicsObjectState getState() { return _state; };
 
