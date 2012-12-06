@@ -35,23 +35,15 @@
 }
 
 -(void)setup {
-	
-	
 	_elapsedFrames = 0;
+	
 	AppInfo::getInstance().setWindowSize(self.frame.size.width, self.frame.size.height);
-	
-	
-	DataSourcePathRef ref = [self loadResource:"gromacirclepink.png"];
-	ci::gl::Texture::Format format;
-	format.enableMipmapping( false );
-	format.setMinFilter( GL_NEAREST );
-	format.setMagFilter( GL_NEAREST );
-	ci::gl::Texture* texture = new ci::gl::Texture( ci::loadImage( ref ) , format );
-	Constants::Textures::getPlanetTexture( texture );
-	
 	
 	Constants::init();
 	Constants::Defaults::setGravityPoint( [self getWindowCenter] );
+	Constants::Textures::loadTextures( string([[[NSBundle mainBundle] bundlePath] cStringUsingEncoding:NSUTF8StringEncoding]) );
+	
+	
 	
 	_worldController.init( 4, 2 );
 
@@ -76,12 +68,11 @@
 }
 
 -(void)update {
-	
 	// First run
 	if(!_planet) {
 		// Create planet b2Body
 		b2CircleShape shape;
-		shape.m_radius = 3;
+		shape.m_radius = 1;
 		
 		b2FixtureDef mFixtureDef;
 		mFixtureDef.shape = &shape;
@@ -101,37 +92,28 @@
 	AppInfo::getInstance().setElapsedFrames( ++_elapsedFrames );
 	
 	_worldController.update();
-	return;
+	
 	//	_audioAnalyzer.update();
 	
 	using namespace ci::box2d;
-	if(_planetBody) {
-		//_worldController.getWorld()->DestroyBody(_planetBody);
-	}
-	
-	
-	
-	
 	static float lastSize = 1;
-	//	float newSize = Conversions::toPhysics( Constants::Planet::MIN_SIZE + _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE );
+	float newSize = fabs( Conversions::toPhysics( Constants::Instances::PERLIN_NOISE()->noise( [self getWindowCenter].x, _elapsedFrames * 0.01) ) * 300 );//Conversions::toPhysics( Constants::Planet::MIN_SIZE + _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE );
 	float maxSize = [self getWindowWidth] < [self getWindowHeight] ? [self getWindowWidth]*0.49 : [self getWindowHeight]*0.49;
-	float newSize = ci::Rand::randFloat() * maxSize;//ci::math<float>::min( newSize, Conversions::toPhysics( maxSize ) );
+	newSize = ci::math<float>::min( newSize, Conversions::toPhysics( maxSize ) );
 	
 	
 	// When the volume increases by a significant amount - push outward
-	if( lastSize - newSize < -0.7 ) {
-		
-		Constants::Forces::DIRECTION = Constants::Heads::ANTI_GRAVITY * -1;
-	} else {
-		Constants::Forces::DIRECTION = 1;
-	}
-	
-	lastSize -= (lastSize - newSize) * Constants::Planet::EASE_SPEED;
-	static uint32_t i = 0;
+//	if( lastSize - newSize < -0.7 ) {
+//		
+//		Constants::Forces::DIRECTION = Constants::Heads::ANTI_GRAVITY * -1;
+//	} else {
+//		Constants::Forces::DIRECTION = 1;
+//	}
+//	
 	
 	// Shape definition
 	b2CircleShape aShape;
-	aShape.m_radius = i++;
+	aShape.m_radius = lastSize - (lastSize - newSize) * Constants::Planet::EASE_SPEED;
 	
 	
 	// Fixture definition

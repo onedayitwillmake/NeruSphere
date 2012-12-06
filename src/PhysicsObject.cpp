@@ -175,12 +175,9 @@ void PhysicsObject::draw() {
 	if( !texture || AppInfo::getInstance().getElapsedFrames() < 30 ) return;
 
 
-	float desiredRadius = _radius;
+	float desiredRadius = ci::box2d::Conversions::toScreen( _body->GetFixtureList()->GetShape()->m_radius );
 	ci::Vec2f pos = ci::box2d::Conversions::toScreen( _body->GetPosition() ) ;
-	ci::Rectf rect = Rectf(-desiredRadius,
-			-desiredRadius,
-			desiredRadius,
-			desiredRadius);
+	ci::Rectf rect = Rectf(-desiredRadius, -desiredRadius, desiredRadius, desiredRadius);
 
 	gl::color( ColorA(1.0f, 1.0f, 1.0f, 1.0f) );
 	gl::pushMatrices();
