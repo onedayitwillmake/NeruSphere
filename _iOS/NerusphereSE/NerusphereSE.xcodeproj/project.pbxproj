@@ -397,7 +397,6 @@
 		EDC55C53166E702400765AED /* NerusphereSE */ = {
 			isa = PBXGroup;
 			children = (
-				ED3686F8166FD3520019F726 /* Resources */,
 				EDC55DEB166E86E100765AED /* Visualizer */,
 				EDC55C5C166E702400765AED /* NPAppDelegate.h */,
 				EDC55C5D166E702400765AED /* NPAppDelegate.mm */,
@@ -408,6 +407,7 @@
 				EDC55C65166E702400765AED /* MainStoryboard_iPhone.storyboard */,
 				EDC55C68166E702400765AED /* MainStoryboard_iPad.storyboard */,
 				EDC55C54166E702400765AED /* Supporting Files */,
+				ED3686F8166FD3520019F726 /* Resources */,
 				EDC55C8B166E703000765AED /* Thirdparty */,
 			);
 			path = NerusphereSE;
@@ -966,6 +966,7 @@
 		EDC55C86166E702400765AED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = armv7;
 				CINDER_PATH = ../../../LIBRARY/Cinder;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
@@ -976,6 +977,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NerusphereSE/NerusphereSE-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(CINDER_PATH)/boost",
 					../../thirdparty,
@@ -1004,6 +1006,7 @@
 		EDC55C87166E702400765AED /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = armv7;
 				CINDER_PATH = ../../../LIBRARY/Cinder;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
@@ -1014,6 +1017,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NerusphereSE/NerusphereSE-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(CINDER_PATH)/boost",
 					../../thirdparty,

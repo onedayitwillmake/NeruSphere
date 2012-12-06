@@ -37,6 +37,7 @@
 -(void)setup {
 	_elapsedFrames = 0;
 	
+	// Initialize contants
 	AppInfo::getInstance().setWindowSize(self.frame.size.width, self.frame.size.height);
 	
 	Constants::init();
@@ -44,7 +45,7 @@
 	Constants::Textures::loadTextures( string([[[NSBundle mainBundle] bundlePath] cStringUsingEncoding:NSUTF8StringEncoding]) );
 	
 	
-	
+	// Start Box2D
 	_worldController.init( 4, 2 );
 
 	

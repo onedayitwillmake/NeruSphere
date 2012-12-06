@@ -131,12 +131,12 @@ void WorldController::debugDraw( bool drawBodies, bool drawContacts ) {
 				switch( fixture->GetType() ) {
 					case b2Shape::e_polygon: {
 						b2PolygonShape* shape = (b2PolygonShape*) fixture->GetShape();
-
-//						glBegin(GL_POLYGON);
-//						for(int i = 0; i != shape->GetVertexCount(); ++i) {
-//							gl::vertex( cinder::box2d::Conversions::toScreen( shape->GetVertex(i) ) );
-//						}
-//						glEnd();
+						
+						ci::PolyLine<Vec2f> polyLine;
+						for(int i = 0; i != shape->GetVertexCount(); ++i) {
+							polyLine.push_back( cinder::box2d::Conversions::toScreen( shape->GetVertex(i) ) );
+						}
+						gl::draw(polyLine);
 					}
 					break;
 					case b2Shape::e_circle: {

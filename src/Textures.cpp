@@ -57,7 +57,7 @@ namespace Constants {
 			}
 			
 			// Load the head texture
-			std::string path = resourcePath + "/" + "godofthieves.png";
+			std::string path = resourcePath + "/" + "gromacirclepink.png";
 			std::cout << "Loaded texture HEAD '" << path << "'" << std::endl;
 			Textures::_planetTexture = ci::gl::Texture( ci::loadImage( path ) , format );
 		}

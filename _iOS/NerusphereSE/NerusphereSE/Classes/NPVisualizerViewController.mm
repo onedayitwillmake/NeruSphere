@@ -22,9 +22,6 @@
 	self.view.frame = CGRectMake(0, 0, 768, 1024);
 	_visualizerView = [[NPVisualizerView alloc] initWithFrame: self.view.frame];
 	[self.view addSubview: _visualizerView ];
-	
-	// Do any additional setup after loading the view, typically from a nib.
-	NSLog(@"U");
 }
 
 - (void)didReceiveMemoryWarning {

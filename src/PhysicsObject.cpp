@@ -170,10 +170,7 @@ void PhysicsObject::limitSpeed() {
 }
 
 void PhysicsObject::draw() {
-
-	std::cout << AppInfo::getInstance().getElapsedFrames() << std::endl;
-	if( !texture || AppInfo::getInstance().getElapsedFrames() < 30 ) return;
-
+	if( !texture ) return;
 
 	float desiredRadius = ci::box2d::Conversions::toScreen( _body->GetFixtureList()->GetShape()->m_radius );
 	ci::Vec2f pos = ci::box2d::Conversions::toScreen( _body->GetPosition() ) ;
