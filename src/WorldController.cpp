@@ -26,17 +26,18 @@ WorldController::WorldController() {
 
 WorldController::~WorldController() {
 	std::cout << "WorldController Destructor! " << std::endl;
-
-	b2Body* node = _world->GetBodyList();
-	while( node ) {
-		PhysicsObject* physicsObject = (PhysicsObject*) node->GetUserData();
-		if( physicsObject ) {
-			delete physicsObject;
+	if( _world) {
+		b2Body* node = _world->GetBodyList();
+		while( node ) {
+			PhysicsObject* physicsObject = (PhysicsObject*) node->GetUserData();
+			if( physicsObject ) {
+				delete physicsObject;
+			}
+			node->SetUserData( NULL );
+			node = node->GetNext();
 		}
-		node->SetUserData( NULL );
-		node = node->GetNext();
+		delete _world;
 	}
-	delete _world;
 }
 
 void WorldController::init( int positionIterations, int velocityIterations ) {

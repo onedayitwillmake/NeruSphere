@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "NPVisualizerView.h"
+#import "CCGLTouchViewController.h"
 
-@interface NPVisualizerViewController : UIViewController {
+@interface NPVisualizerViewController : CCGLTouchViewController {
 	NPVisualizerView* _visualizerView;
 }
+@property (weak, nonatomic) IBOutlet UIImageView *groma;
 @end

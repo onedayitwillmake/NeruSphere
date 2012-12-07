@@ -148,7 +148,7 @@ using namespace std;
  */
 
 - (void)captureNextFrame;
--(void)sendCaptureToPhotoAlbum;
+- (void)sendCaptureToPhotoAlbum;
 - (UIImage *)glToUIImage;
 
 /**

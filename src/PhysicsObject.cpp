@@ -144,7 +144,7 @@ void PhysicsObject::applyRadialGravity( b2Vec2 center ) {
 
 void PhysicsObject::applyNoise( ) {
 	b2Vec2 pos = _body->GetPosition();
-	ci::Vec3f noise = Constants::Instances::PERLIN_NOISE()->dfBm( ci::Vec3f( pos.x, pos.y, (float)ci::app::App::get()->getElapsedFrames() * 0.001) ) * Constants::Heads::PERLIN_STRENGTH * _agePer;
+	ci::Vec3f noise = Constants::Instances::PERLIN_NOISE()->dfBm( ci::Vec3f( pos.x, pos.y, (float)AppInfo::getInstance().getElapsedFrames() * 0.001) ) * Constants::Heads::PERLIN_STRENGTH * _agePer;
 	b2Vec2 force = b2Vec2( noise.x, noise.y );
 
 

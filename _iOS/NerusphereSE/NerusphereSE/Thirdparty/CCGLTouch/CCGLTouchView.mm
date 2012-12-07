@@ -21,10 +21,7 @@
 //  * Redistributions of source code must retain the above copyright notice, this list of conditions and
 //  the following disclaimer.
 //  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and
-//  the following disclaimer in the documentation and/or other materials provided with the distribution.
-//
-//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-//  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+//  the followwzCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 //  PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
 //   ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
 //  TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -61,13 +58,11 @@
  */
 
 //The GL view is stored in the nib file. When it's unarchived it's sent -initWithCoder:
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     return [self initWithFrame:frame andSharegroup:[[EAGLSharegroup alloc] init]];
 }
 
-- (id)initWithFrame:(CGRect)frame andSharegroup:(EAGLSharegroup *)_sharegroup
-{
+- (id)initWithFrame:(CGRect)frame andSharegroup:(EAGLSharegroup *)_sharegroup {
 	if ( (self = [super initWithFrame:frame]) ) {
         // Animation
         animating = NO;
@@ -114,8 +109,68 @@
 	return self;
 }
 
-- (void)setCurrentBounds:(CGRect)frame
-{
+/**
+ *	Preparing to draw
+ */
+
+- (void)prepareSettings {}
+
+- (void)setup {
+	[self glView];
+	[self glParams];
+    
+    // calculate the animation's frame interval here so that the user can set it in setup
+    animationFrameInterval = 60/frameRate;
+    
+    // confirm that setup has been executed
+	appSetupCalled = YES;
+    
+    // it's all good, let's start
+    [self startAnimation];
+}
+
+/**
+ *	Convenience camera method to be used in setup (or when resized, etc.)
+ */
+
+- (void)glView {
+	glViewport(0, 0, backingWidth, backingHeight);
+	CameraPersp cam( backingWidth, backingHeight, 60.0f );
+	
+	glMatrixMode( GL_PROJECTION );
+	glLoadMatrixf( cam.getProjectionMatrix().m );
+	
+	glMatrixMode( GL_MODELVIEW );
+	glLoadMatrixf( cam.getModelViewMatrix().m );
+	glScalef( 1.0f, -1.0f, 1.0f );           // invert Y axis so increasing Y goes down.
+	glTranslatef( 0.0f, (float)-[self frame].size.height, 0.0f );       // shift origin up to upper-left corner.
+}
+
+/**
+ *	Some default GL parameters to be used in setup
+ */
+
+- (void)glParams {
+	gl::enableDepthWrite();
+	gl::enableDepthRead();
+	gl::enableAlphaBlending();
+	glDisable( GL_TEXTURE_2D );
+    glShadeModel(GL_SMOOTH);
+}
+
+
+
+/**
+ *  Actual drawing, to be overridden with your drawings (here with some default screen clearing)
+ */
+
+- (void)draw {
+	// this pair of lines is the standard way to clear the screen in OpenGL
+	gl::clear( Color( 0.5f, 0.5f, 0.5f ), true );
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+}
+
+- (void)setCurrentBounds:(CGRect)frame {
     // Bounds of the current screen
     bounds = frame;
     backingWidth = bounds.size.width;
@@ -262,8 +317,7 @@
  *	This is the "native" draw loop (similar to drawRect in OSX version)
  */
 
--(void)drawView:(id)sender
-{
+-(void)drawView:(id)sender {
 	if (!appSetupCalled)
 		[self setup];
 	
@@ -354,16 +408,15 @@
 	cinder::gl::setMatricesWindow( backingWidth, backingHeight );
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
+	[self stopAnimation];
+
     if ([EAGLContext currentContext] == context)
         [EAGLContext setCurrentContext:nil];
-//    [context release];
+	
     context = nil;
     sharegroup = nil;
-//    [ccglCapture release];
     ccglCapture = nil;
-//    [super dealloc];
 }
 
 
@@ -372,19 +425,16 @@
  *  OpenGL capture methods
  */
 
-- (void)captureNextFrame
-{
+- (void)captureNextFrame {
     ccglCaptureFlag = YES;
 }
 
-- (void)sendCaptureToPhotoAlbum
-{
+- (void)sendCaptureToPhotoAlbum {
     // save to THE photo album only
     UIImageWriteToSavedPhotosAlbum(ccglCapture, self, nil, nil);
 }
 
-- (UIImage *)glToUIImage
-{
+- (UIImage *)glToUIImage {
     NSInteger myDataLength = [self getWindowWidth] * [self getWindowHeight] * 4;
     
     // allocate array and read pixels into it.
@@ -426,8 +476,9 @@
  *	Handling "timer" and animation flag
  */
 
-- (void)startAnimation
-{
+- (void)startAnimation {
+	NSLog(@"startAnimation");
+	
 	if (!appSetupCalled)
 		[self setup];
     
@@ -440,8 +491,8 @@
     }
 }
 
-- (void)stopAnimation
-{
+- (void)stopAnimation {
+	NSLog(@"StopAnimation");
 	if( animating ) {
 		[displayLink invalidate];
 		displayLink = nil;
@@ -450,13 +501,11 @@
 	}
 }
 
-- (NSInteger)animationFrameInterval
-{
+- (NSInteger)animationFrameInterval {
 	return animationFrameInterval;
 }
 
-- (void)setAnimationFrameInterval:(NSInteger)frameInterval
-{
+- (void)setAnimationFrameInterval:(NSInteger)frameInterval {
 	if ( frameInterval >= 1 ) {
 		animationFrameInterval = frameInterval;
 		
@@ -466,72 +515,6 @@
 		}
 	}
 }
-
-
-
-/**
- *	Preparing to draw
- */
-
-- (void)prepareSettings {}
-
-- (void)setup
-{
-	[self glView];
-	[self glParams];
-    
-    // calculate the animation's frame interval here so that the user can set it in setup
-    animationFrameInterval = 60/frameRate;
-    
-    // confirm that setup has been executed
-	appSetupCalled = YES;
-    
-    // it's all good, let's start
-    [self startAnimation];
-}
-
-/**
- *	Convenience camera method to be used in setup (or when resized, etc.)
- */
-
-- (void)glView {
-	glViewport(0, 0, backingWidth, backingHeight);
-	CameraPersp cam( backingWidth, backingHeight, 60.0f );
-	
-	glMatrixMode( GL_PROJECTION );
-	glLoadMatrixf( cam.getProjectionMatrix().m );
-	
-	glMatrixMode( GL_MODELVIEW );
-	glLoadMatrixf( cam.getModelViewMatrix().m );
-	glScalef( 1.0f, -1.0f, 1.0f );           // invert Y axis so increasing Y goes down.
-	glTranslatef( 0.0f, (float)-[self frame].size.height, 0.0f );       // shift origin up to upper-left corner.
-}
-
-/**
- *	Some default GL parameters to be used in setup
- */
-
-- (void)glParams
-{
-	gl::enableDepthWrite();
-	gl::enableDepthRead();
-	gl::enableAlphaBlending();
-	glDisable( GL_TEXTURE_2D );
-    glShadeModel(GL_SMOOTH);
-}
-
-
-
-/**
- *  Actual drawing, to be overridden with your drawings (here with some default screen clearing)
- */
-
-- (void)draw {
-	// this pair of lines is the standard way to clear the screen in OpenGL
-	gl::clear( Color( 0.5f, 0.5f, 0.5f ), true );
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-}
-
 
 
 /**

@@ -25,47 +25,49 @@
     return self;
 }
 
--(void)dealloc {
+-(void)dealloc {	
 	_planetBody = NULL;
 	_planet = NULL;
 }
 
 -(void)prepareSettings {
 	[self enableAntiAliasing];
+	[super prepareSettings];
 }
 
 -(void)setup {
-	_elapsedFrames = 0;
-	
-	// Initialize contants
-	AppInfo::getInstance().setWindowSize(self.frame.size.width, self.frame.size.height);
-	
-	Constants::init();
-	Constants::Defaults::setGravityPoint( [self getWindowCenter] );
-	Constants::Textures::loadTextures( string([[[NSBundle mainBundle] bundlePath] cStringUsingEncoding:NSUTF8StringEncoding]) );
-	
-	
-	// Start Box2D
-	_worldController.init( 4, 2 );
-
+//	_elapsedFrames = 0;
+//	
+//	// Initialize contants
+//	AppInfo::getInstance().setWindowSize(self.frame.size.width, self.frame.size.height);
+//	
+//	Constants::init();
+//	Constants::Defaults::setGravityPoint( [self getWindowCenter] );
+//	Constants::Textures::loadTextures( string([[[NSBundle mainBundle] bundlePath] cStringUsingEncoding:NSUTF8StringEncoding]) );
+//	
+//	
+//	// Start Box2D
+//	_worldController.init( 4, 2 );
+//	[self createHeads];
 	
 	[super setup];
+	
 	
 }
 
 -(void)createHeads {
-//	int count = Constants::Defaults::HEAD_COUNT;
-//	float spread = 0.4f;
-//	for(int i = 1; i <= count; i++) {
-//		ci::Vec2f pos = Constants::Defaults::[self getWindowCenter];
-//		pos.x += ci::Rand::randFloat(-Constants::Defaults::windowWidth*spread, Constants::Defaults::windowWidth*spread);
-//		pos.y += ci::Rand::randFloat(-Constants::Defaults::windowHeight*spread, Constants::Defaults::windowHeight*spread);
-//		
-//		b2Body* body = _worldController.createCircle( ci::Rand::randFloat(Constants::Defaults::HEAD_SIZE_MIN, Constants::Defaults::HEAD_SIZE_MAX), pos );
-//		PhysicsObject* physicsObject = new PhysicsObject( body );
-//		physicsObject->setupTexture();
-//		body->SetUserData( physicsObject );
-//	}
+	int count = Constants::Defaults::HEAD_COUNT;
+	float spread = 0.4f;
+	for(int i = 1; i <= count; i++) {
+		ci::Vec2f pos = ci::Vec2f::zero();
+		pos.x += ci::Rand::randFloat(-Constants::Defaults::windowWidth*spread, Constants::Defaults::windowWidth*spread);
+		pos.y += ci::Rand::randFloat(-Constants::Defaults::windowHeight*spread, Constants::Defaults::windowHeight*spread);
+		
+		b2Body* body = _worldController.createCircle( ci::Rand::randFloat(Constants::Defaults::HEAD_SIZE_MIN, Constants::Defaults::HEAD_SIZE_MAX), pos );
+		PhysicsObject* physicsObject = new PhysicsObject( body );
+		physicsObject->setupTexture();
+		body->SetUserData( physicsObject );
+	}
 }
 
 -(void)update {
@@ -140,6 +142,7 @@
 }
 
 -(void)draw {
+	return;
 	[self update];
 	ci::gl::clear( ci::Color::black() );
 	
@@ -149,9 +152,9 @@
 //	
 //	gl::setMatricesWindow([self getWindowWidth], [self getWindowHeight]);
 	
-//	gl::enableAlphaBlending();
-//	gl::disableDepthRead();
-//	gl::disableDepthWrite();
+	gl::enableAlphaBlending();
+	gl::disableDepthRead();
+	gl::disableDepthWrite();
 	
 	//	if( Constants::Defaults::DRAW_AUDIO_ANALYZER ) _audioAnalyzer.draw();
 	_worldController.draw();

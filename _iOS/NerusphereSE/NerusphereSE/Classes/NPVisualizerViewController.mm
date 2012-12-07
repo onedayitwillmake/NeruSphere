@@ -17,16 +17,32 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	
-	self.view.frame = CGRectMake(0, 0, 768, 1024);
-	_visualizerView = [[NPVisualizerView alloc] initWithFrame: self.view.frame];
-	[self.view addSubview: _visualizerView ];
 }
 
-- (void)didReceiveMemoryWarning {
+-(void)viewDidAppear:(BOOL)animated {
+	
+	// Animate groma out, on complete initialzie the visualizer view
+	[UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+		self.groma.transform = CGAffineTransformScale(CGAffineTransformIdentity, 8, 8);
+	} completion:^(BOOL done) {
+		[self.groma removeFromSuperview];
+		
+		self.view.frame = CGRectMake(0, 0, 768, 1024 - self.view.superview.frame.origin.y);
+		_visualizerView = [[NPVisualizerView alloc] initWithFrame: self.view.frame];
+		[self.view addSubview: _visualizerView ];
+	}];
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+	[super viewDidDisappear:animated];
+	[_visualizerView removeFromSuperview];
+	_visualizerView = nil;
+	
+}
+
+-(void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	
 }
 
 @end

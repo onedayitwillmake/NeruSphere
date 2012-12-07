@@ -8,9 +8,14 @@
         <scene sceneID="8uP-fs-vXV">
             <objects>
                 <navigationController definesPresentationContext="YES" id="LBi-iY-zSc" sceneMemberID="viewController">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9qE-QB-7TS">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="pzm-N2-KgG">
+                        <rect key="frame" x="0.0" y="960" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="2" kind="relationship" relationship="rootViewController" id="ykz-Qg-vS8"/>
                     </connections>
@@ -29,7 +34,8 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jr4-hR-X7n">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="198" id="xFW-x6-cPt"/>
+                                    <constraint firstAttribute="height" constant="47" id="PUJ-hd-MX1"/>
+                                    <constraint firstAttribute="width" constant="200" id="cXy-Zu-VGt"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="START VISUALIZER">
@@ -43,11 +49,41 @@
                                     <segue destination="YnK-o8-ZUd" kind="push" id="CXa-8Q-0U1"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JO7-I7-z5E">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="47" id="KBZ-zc-AYg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Start Audioplayer">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="jPt-Sx-nQv" kind="push" id="oL1-Ss-Uye"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Nerusphere SE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3VK-Aq-Rqv">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="580" id="5OE-CZ-5u2"/>
+                                    <constraint firstAttribute="height" constant="126" id="ocA-ij-kix"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="72"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cyan="0.48604460685483875" magenta="0.18809853830645165" yellow="0.0" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Jr4-hR-X7n" firstAttribute="top" secondItem="5" secondAttribute="top" constant="458" id="Ah9-2X-MuO"/>
-                            <constraint firstItem="Jr4-hR-X7n" firstAttribute="centerX" secondItem="5" secondAttribute="centerX" type="default" id="uTm-tZ-isK"/>
+                            <constraint firstItem="3VK-Aq-Rqv" firstAttribute="centerX" secondItem="Jr4-hR-X7n" secondAttribute="centerX" type="default" id="Ked-YB-jRe"/>
+                            <constraint firstItem="JO7-I7-z5E" firstAttribute="trailing" secondItem="Jr4-hR-X7n" secondAttribute="trailing" type="default" id="OOW-Vl-A8e"/>
+                            <constraint firstItem="3VK-Aq-Rqv" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="87" id="P54-Dv-CsU"/>
+                            <constraint firstItem="3VK-Aq-Rqv" firstAttribute="top" secondItem="5" secondAttribute="top" constant="277" id="ZTP-h7-9fz"/>
+                            <constraint firstItem="JO7-I7-z5E" firstAttribute="leading" secondItem="Jr4-hR-X7n" secondAttribute="leading" type="default" id="gX6-cL-XDe"/>
+                            <constraint firstItem="Jr4-hR-X7n" firstAttribute="top" secondItem="3VK-Aq-Rqv" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="rka-Wf-X3K"/>
+                            <constraint firstItem="JO7-I7-z5E" firstAttribute="top" secondItem="Jr4-hR-X7n" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="w1e-g0-lBp"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Vmo-Zu-dTq"/>
@@ -56,22 +92,52 @@
             </objects>
             <point key="canvasLocation" x="1287" y="-106"/>
         </scene>
-        <!--Visualizer View Controller-->
+        <!--View Controller - AudioPlayer-->
+        <scene sceneID="Ea2-Ba-4ND">
+            <objects>
+                <viewController title="AudioPlayer" id="jPt-Sx-nQv" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1sF-If-iPy">
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" cyan="0.0" magenta="0.14317666330645162" yellow="0.50122857862903225" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="AudioPlayer" id="T0C-B2-EVS"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n3M-lC-20R" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2278" y="-910"/>
+        </scene>
+        <!--Visualizer View Controller - Visualizer-->
         <scene sceneID="iy3-kY-I1t">
             <objects>
                 <viewController id="YnK-o8-ZUd" customClass="NPVisualizerViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pbz-x3-v0m">
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="center" image="gromacirclepink.png" translatesAutoresizingMaskIntoConstraints="NO" id="EGi-1M-PDX"/>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="EGi-1M-PDX" firstAttribute="centerX" secondItem="pbz-x3-v0m" secondAttribute="centerX" type="default" id="SHZ-py-MnY"/>
+                            <constraint firstItem="EGi-1M-PDX" firstAttribute="centerY" secondItem="pbz-x3-v0m" secondAttribute="centerY" type="default" id="xIg-6a-TuW"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="w9P-PH-iCy"/>
+                    <navigationItem key="navigationItem" title="Visualizer" id="w9P-PH-iCy">
+                        <barButtonItem key="backBarButtonItem" title="HEllo" id="YB0-Wm-WTQ"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="groma" destination="EGi-1M-PDX" id="HlQ-vE-lfp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jWb-eL-ad9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2278" y="197"/>
+            <point key="canvasLocation" x="2278" y="213"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="gromacirclepink.png" width="290" height="300"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

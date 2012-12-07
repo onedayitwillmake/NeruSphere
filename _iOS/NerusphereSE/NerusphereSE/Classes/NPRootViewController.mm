@@ -25,6 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	NSLog(@"%@", self.view);
 //	[self.navigationController pushViewController:[[NPVisualizerViewController alloc] init] animated:NO];
 	
 	// Do any additional setup after loading the view.
