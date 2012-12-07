@@ -8,6 +8,10 @@
 
 #import "NPRootViewController.h"
 #import "NPVisualizerViewController.h"
+#import "MPFoldEnumerations.h"
+#import "MPFlipEnumerations.h"
+#import "NPConstants.h"
+#import "MPFoldTransition.h"
 
 @interface NPRootViewController ()
 
@@ -35,5 +39,19 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)shouldStartVisualizer:(id)sender {
+	[self presentNPViewController:NPkViewControllerIdentifierNPVisualizer];
+}
+- (IBAction)shouldStartAudioPlayer:(id)sender {
+	[self presentNPViewController:NPkViewControllerIdentifierNPAudioPlayer];
+}
+
+-(void)presentNPViewController:(NSString*)viewControllerIdentifier {
+	UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[NPkConstants storyboardName] bundle:nil];
+	UIViewController *viewControllertoPresent = [storyboard instantiateViewControllerWithIdentifier:viewControllerIdentifier];
+	
+	[self.navigationController pushViewController:viewControllertoPresent foldStyle: MPFoldStyleUnfold];
+}
+
 
 @end

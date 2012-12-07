@@ -23,6 +23,7 @@
 		ED1D0BA71672769D009BE8FA /* MPFoldNavPopSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0B9C1672769D009BE8FA /* MPFoldNavPopSegue.m */; };
 		ED1D0BA81672769D009BE8FA /* MPFoldNavPushSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0B9E1672769D009BE8FA /* MPFoldNavPushSegue.m */; };
 		ED1D0BA91672769D009BE8FA /* MPFoldSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BA01672769D009BE8FA /* MPFoldSegue.m */; };
+		ED1D0BB416727D4C009BE8FA /* NPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BB316727D4C009BE8FA /* NPConstants.m */; };
 		ED36870F166FD3700019F726 /* circle-0.png in Resources */ = {isa = PBXBuildFile; fileRef = ED3686FA166FD3700019F726 /* circle-0.png */; };
 		ED368710166FD3700019F726 /* circle-1.png in Resources */ = {isa = PBXBuildFile; fileRef = ED3686FB166FD3700019F726 /* circle-1.png */; };
 		ED368711166FD3700019F726 /* circle-2.png in Resources */ = {isa = PBXBuildFile; fileRef = ED3686FC166FD3700019F726 /* circle-2.png */; };
@@ -165,6 +166,8 @@
 		ED1D0B9E1672769D009BE8FA /* MPFoldNavPushSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFoldNavPushSegue.m; sourceTree = "<group>"; };
 		ED1D0B9F1672769D009BE8FA /* MPFoldSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFoldSegue.h; sourceTree = "<group>"; };
 		ED1D0BA01672769D009BE8FA /* MPFoldSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFoldSegue.m; sourceTree = "<group>"; };
+		ED1D0BB216727D4C009BE8FA /* NPConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPConstants.h; path = NerusphereSE/Classes/NPConstants.h; sourceTree = "<group>"; };
+		ED1D0BB316727D4C009BE8FA /* NPConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPConstants.m; path = NerusphereSE/Classes/NPConstants.m; sourceTree = "<group>"; };
 		ED3686FA166FD3700019F726 /* circle-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-0.png"; path = "../../../resources/circle-0.png"; sourceTree = "<group>"; };
 		ED3686FB166FD3700019F726 /* circle-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-1.png"; path = "../../../resources/circle-1.png"; sourceTree = "<group>"; };
 		ED3686FC166FD3700019F726 /* circle-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-2.png"; path = "../../../resources/circle-2.png"; sourceTree = "<group>"; };
@@ -192,15 +195,15 @@
 		EDC55C55166E702400765AED /* NerusphereSE-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NerusphereSE-Info.plist"; sourceTree = "<group>"; };
 		EDC55C57166E702400765AED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EDC55C5B166E702400765AED /* NerusphereSE-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NerusphereSE-Prefix.pch"; sourceTree = "<group>"; };
-		EDC55C5C166E702400765AED /* NPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NPAppDelegate.h; path = Classes/NPAppDelegate.h; sourceTree = "<group>"; };
-		EDC55C5D166E702400765AED /* NPAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = NPAppDelegate.mm; path = Classes/NPAppDelegate.mm; sourceTree = "<group>"; };
+		EDC55C5C166E702400765AED /* NPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NPAppDelegate.h; path = NerusphereSE/Classes/NPAppDelegate.h; sourceTree = "<group>"; };
+		EDC55C5D166E702400765AED /* NPAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = NPAppDelegate.mm; path = NerusphereSE/Classes/NPAppDelegate.mm; sourceTree = "<group>"; };
 		EDC55C5F166E702400765AED /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		EDC55C61166E702400765AED /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		EDC55C63166E702400765AED /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		EDC55C66166E702400765AED /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		EDC55C69166E702400765AED /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		EDC55C6B166E702400765AED /* NPVisualizerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NPVisualizerViewController.h; path = Classes/NPVisualizerViewController.h; sourceTree = "<group>"; };
-		EDC55C6C166E702400765AED /* NPVisualizerViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = NPVisualizerViewController.mm; path = Classes/NPVisualizerViewController.mm; sourceTree = "<group>"; };
+		EDC55C6B166E702400765AED /* NPVisualizerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NPVisualizerViewController.h; path = NerusphereSE/Classes/NPVisualizerViewController.h; sourceTree = "<group>"; };
+		EDC55C6C166E702400765AED /* NPVisualizerViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = NPVisualizerViewController.mm; path = NerusphereSE/Classes/NPVisualizerViewController.mm; sourceTree = "<group>"; };
 		EDC55C73166E702400765AED /* NerusphereSETests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NerusphereSETests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDC55C74166E702400765AED /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		EDC55C7C166E702400765AED /* NerusphereSETests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NerusphereSETests-Info.plist"; sourceTree = "<group>"; };
@@ -222,8 +225,8 @@
 		EDC55CA6166E731200765AED /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		EDC55CB4166E735600765AED /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		EDC55CB7166E737100765AED /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
-		EDC55CC4166E816400765AED /* NPRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPRootViewController.h; path = Classes/NPRootViewController.h; sourceTree = "<group>"; };
-		EDC55CC5166E816400765AED /* NPRootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NPRootViewController.mm; path = Classes/NPRootViewController.mm; sourceTree = "<group>"; };
+		EDC55CC4166E816400765AED /* NPRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPRootViewController.h; path = NerusphereSE/Classes/NPRootViewController.h; sourceTree = "<group>"; };
+		EDC55CC5166E816400765AED /* NPRootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NPRootViewController.mm; path = NerusphereSE/Classes/NPRootViewController.mm; sourceTree = "<group>"; };
 		EDC55D2C166E82D600765AED /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Box2D.h; path = ../../../thirdparty/Box2D/Box2D.h; sourceTree = "<group>"; };
 		EDC55D2E166E82D700765AED /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
 		EDC55D2F166E82D700765AED /* b2BroadPhase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2BroadPhase.h; sourceTree = "<group>"; };
@@ -442,6 +445,13 @@
 			path = Segues;
 			sourceTree = "<group>";
 		};
+		ED1D0BB516727D4F009BE8FA /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
 		ED3686F8166FD3520019F726 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -451,12 +461,25 @@
 				EDC55C68166E702400765AED /* MainStoryboard_iPad.storyboard */,
 			);
 			name = Resources;
+			path = NerusphereSE;
 			sourceTree = "<group>";
 		};
 		EDC55C3E166E702400765AED = {
 			isa = PBXGroup;
 			children = (
-				EDC55C53166E702400765AED /* NerusphereSE */,
+				EDC55DEB166E86E100765AED /* Visualizer */,
+				ED1D0BB216727D4C009BE8FA /* NPConstants.h */,
+				ED1D0BB316727D4C009BE8FA /* NPConstants.m */,
+				EDC55C5C166E702400765AED /* NPAppDelegate.h */,
+				EDC55C5D166E702400765AED /* NPAppDelegate.mm */,
+				EDC55CC4166E816400765AED /* NPRootViewController.h */,
+				EDC55CC5166E816400765AED /* NPRootViewController.mm */,
+				EDC55C6B166E702400765AED /* NPVisualizerViewController.h */,
+				EDC55C6C166E702400765AED /* NPVisualizerViewController.mm */,
+				EDC55C8B166E703000765AED /* Thirdparty */,
+				EDC55C54166E702400765AED /* Supporting Files */,
+				ED3686F8166FD3520019F726 /* Resources */,
+				ED1D0BB516727D4F009BE8FA /* New Group */,
 				EDC55C7A166E702400765AED /* NerusphereSETests */,
 				EDC55C4C166E702400765AED /* Frameworks */,
 				EDC55C4A166E702400765AED /* Products */,
@@ -491,23 +514,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		EDC55C53166E702400765AED /* NerusphereSE */ = {
-			isa = PBXGroup;
-			children = (
-				EDC55DEB166E86E100765AED /* Visualizer */,
-				EDC55C5C166E702400765AED /* NPAppDelegate.h */,
-				EDC55C5D166E702400765AED /* NPAppDelegate.mm */,
-				EDC55CC4166E816400765AED /* NPRootViewController.h */,
-				EDC55CC5166E816400765AED /* NPRootViewController.mm */,
-				EDC55C6B166E702400765AED /* NPVisualizerViewController.h */,
-				EDC55C6C166E702400765AED /* NPVisualizerViewController.mm */,
-				EDC55C8B166E703000765AED /* Thirdparty */,
-				EDC55C54166E702400765AED /* Supporting Files */,
-				ED3686F8166FD3520019F726 /* Resources */,
-			);
-			path = NerusphereSE;
-			sourceTree = "<group>";
-		};
 		EDC55C54166E702400765AED /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -520,6 +526,7 @@
 				EDC55C63166E702400765AED /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			path = NerusphereSE;
 			sourceTree = "<group>";
 		};
 		EDC55C7A166E702400765AED /* NerusphereSETests */ = {
@@ -549,6 +556,7 @@
 				EDC55C93166E711400765AED /* CCGLTouch */,
 			);
 			name = Thirdparty;
+			path = NerusphereSE;
 			sourceTree = "<group>";
 		};
 		EDC55C93166E711400765AED /* CCGLTouch */ = {
@@ -741,6 +749,7 @@
 				EDC55E0C166E8CE900765AED /* NPVisualizerView.mm */,
 			);
 			name = Visualizer;
+			path = NerusphereSE;
 			sourceTree = "<group>";
 		};
 		EDC55E0F166E951C00765AED /* model */ = {
@@ -964,6 +973,7 @@
 				ED1D0BA71672769D009BE8FA /* MPFoldNavPopSegue.m in Sources */,
 				ED1D0BA81672769D009BE8FA /* MPFoldNavPushSegue.m in Sources */,
 				ED1D0BA91672769D009BE8FA /* MPFoldSegue.m in Sources */,
+				ED1D0BB416727D4C009BE8FA /* NPConstants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
