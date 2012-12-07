@@ -24,6 +24,7 @@
 		ED1D0BA81672769D009BE8FA /* MPFoldNavPushSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0B9E1672769D009BE8FA /* MPFoldNavPushSegue.m */; };
 		ED1D0BA91672769D009BE8FA /* MPFoldSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BA01672769D009BE8FA /* MPFoldSegue.m */; };
 		ED1D0BB416727D4C009BE8FA /* NPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BB316727D4C009BE8FA /* NPConstants.m */; };
+		ED1D0BBC16728469009BE8FA /* NPAudioPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BBB16728469009BE8FA /* NPAudioPlayerViewController.m */; };
 		ED36870F166FD3700019F726 /* circle-0.png in Resources */ = {isa = PBXBuildFile; fileRef = ED3686FA166FD3700019F726 /* circle-0.png */; };
 		ED368710166FD3700019F726 /* circle-1.png in Resources */ = {isa = PBXBuildFile; fileRef = ED3686FB166FD3700019F726 /* circle-1.png */; };
 		ED368711166FD3700019F726 /* circle-2.png in Resources */ = {isa = PBXBuildFile; fileRef = ED3686FC166FD3700019F726 /* circle-2.png */; };
@@ -168,6 +169,8 @@
 		ED1D0BA01672769D009BE8FA /* MPFoldSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFoldSegue.m; sourceTree = "<group>"; };
 		ED1D0BB216727D4C009BE8FA /* NPConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPConstants.h; path = NerusphereSE/Classes/NPConstants.h; sourceTree = "<group>"; };
 		ED1D0BB316727D4C009BE8FA /* NPConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPConstants.m; path = NerusphereSE/Classes/NPConstants.m; sourceTree = "<group>"; };
+		ED1D0BBA16728469009BE8FA /* NPAudioPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPAudioPlayerViewController.h; path = Classes/NPAudioPlayerViewController.h; sourceTree = "<group>"; };
+		ED1D0BBB16728469009BE8FA /* NPAudioPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPAudioPlayerViewController.m; path = Classes/NPAudioPlayerViewController.m; sourceTree = "<group>"; };
 		ED3686FA166FD3700019F726 /* circle-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-0.png"; path = "../../../resources/circle-0.png"; sourceTree = "<group>"; };
 		ED3686FB166FD3700019F726 /* circle-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-1.png"; path = "../../../resources/circle-1.png"; sourceTree = "<group>"; };
 		ED3686FC166FD3700019F726 /* circle-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-2.png"; path = "../../../resources/circle-2.png"; sourceTree = "<group>"; };
@@ -445,11 +448,14 @@
 			path = Segues;
 			sourceTree = "<group>";
 		};
-		ED1D0BB516727D4F009BE8FA /* New Group */ = {
+		ED1D0BB61672826B009BE8FA /* AudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				ED1D0BBA16728469009BE8FA /* NPAudioPlayerViewController.h */,
+				ED1D0BBB16728469009BE8FA /* NPAudioPlayerViewController.m */,
 			);
-			name = "New Group";
+			name = AudioPlayer;
+			path = NerusphereSE;
 			sourceTree = "<group>";
 		};
 		ED3686F8166FD3520019F726 /* Resources */ = {
@@ -467,6 +473,7 @@
 		EDC55C3E166E702400765AED = {
 			isa = PBXGroup;
 			children = (
+				ED1D0BB61672826B009BE8FA /* AudioPlayer */,
 				EDC55DEB166E86E100765AED /* Visualizer */,
 				ED1D0BB216727D4C009BE8FA /* NPConstants.h */,
 				ED1D0BB316727D4C009BE8FA /* NPConstants.m */,
@@ -479,7 +486,6 @@
 				EDC55C8B166E703000765AED /* Thirdparty */,
 				EDC55C54166E702400765AED /* Supporting Files */,
 				ED3686F8166FD3520019F726 /* Resources */,
-				ED1D0BB516727D4F009BE8FA /* New Group */,
 				EDC55C7A166E702400765AED /* NerusphereSETests */,
 				EDC55C4C166E702400765AED /* Frameworks */,
 				EDC55C4A166E702400765AED /* Products */,
@@ -974,6 +980,7 @@
 				ED1D0BA81672769D009BE8FA /* MPFoldNavPushSegue.m in Sources */,
 				ED1D0BA91672769D009BE8FA /* MPFoldSegue.m in Sources */,
 				ED1D0BB416727D4C009BE8FA /* NPConstants.m in Sources */,
+				ED1D0BBC16728469009BE8FA /* NPAudioPlayerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

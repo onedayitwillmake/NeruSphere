@@ -46,10 +46,10 @@ void WorldController::init( int positionIterations, int velocityIterations ) {
 	_positionIterations = positionIterations;
 	_velocityIterations = velocityIterations;
 	_timeStep = 1.0f / 60.0f;
-}
+}0
 
-void WorldController::update() {
-	_world->Step( _timeStep, _velocityIterations, _positionIterations );
+void WorldController::update( float dt ) {
+	_world->Step( dt, _velocityIterations, _positionIterations );
 	_world->ClearForces();
 
 	b2Body* node = _world->GetBodyList();

@@ -25,7 +25,7 @@ class WorldController
 
 		///// METHODS
 		void init( int velocityIterations, int positionIterations );
-		void update();
+		void update( float dt );
 		void clear();
 		void debugDraw( bool drawBodies=true, bool drawContacts=true );
 		void draw();

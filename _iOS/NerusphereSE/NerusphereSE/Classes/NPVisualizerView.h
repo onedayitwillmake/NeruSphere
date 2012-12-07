@@ -19,6 +19,7 @@
 	WorldController _worldController;
 	b2Body* _planetBody;
 	Planet* _planet;
+	double	_lastElapsedSeconds;
 }
 
 
@@ -26,9 +27,5 @@
 -(void)createHeads;
 -(void)update;
 -(void)drawParticles;
-
-
-// Extra accessors
--(ci::Vec2f)getWindowCenter;
 
 @end

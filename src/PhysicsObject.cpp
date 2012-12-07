@@ -222,13 +222,13 @@ void PhysicsObject::reset() {
 	_body->SetLinearVelocity( b2Vec2(0,0) );
 	_body->SetAngularVelocity( 0 );
 
-	float appWidth = (float)Constants::Defaults::windowWidth;
-	float appHeight = (float)Constants::Defaults::windowHeight;
+	float appWidth = (float)AppInfo::getInstance().getWindowWidth();
+	float appHeight = (float)AppInfo::getInstance().getWindowHeight();
 	float radius = ci::math<float>::sqrt( appWidth*appWidth + appHeight*appHeight ) + _radius;
 	float angle = ci::Rand::randFloat(M_PI*2);
 
-	float x = Constants::Defaults::getWindowCenter().x + ci::math<float>::cos( angle ) * radius*0.5;
-	float y = Constants::Defaults::getWindowCenter().y + ci::math<float>::sin( angle ) * radius*0.5;
+	float x = (float)AppInfo::getInstance().getWindowCenter().x + ci::math<float>::cos( angle ) * radius*0.5;
+	float y =(float)AppInfo::getInstance().getWindowCenter().y + ci::math<float>::sin( angle ) * radius*0.5;
 	ci::Vec2f position = ci::Vec2f(x, y);
 	_body->SetTransform( Conversions::toPhysics(position), 0);
 

@@ -36,19 +36,20 @@
 }
 
 -(void)setup {
-//	_elapsedFrames = 0;
-//	
-//	// Initialize contants
-//	AppInfo::getInstance().setWindowSize(self.frame.size.width, self.frame.size.height);
-//	
-//	Constants::init();
-//	Constants::Defaults::setGravityPoint( [self getWindowCenter] );
-//	Constants::Textures::loadTextures( string([[[NSBundle mainBundle] bundlePath] cStringUsingEncoding:NSUTF8StringEncoding]) );
-//	
-//	
-//	// Start Box2D
-//	_worldController.init( 4, 2 );
-//	[self createHeads];
+	_elapsedFrames = 0;
+	_lastElapsedSeconds = [self getElapsedSeconds];
+	
+	// Initialize contants
+	AppInfo::getInstance().setWindowSize(self.frame.size.width, self.frame.size.height);
+	
+	Constants::init();
+	Constants::Defaults::setGravityPoint( AppInfo::getInstance().getWindowCenter() );
+	Constants::Textures::loadTextures( string([[[NSBundle mainBundle] bundlePath] cStringUsingEncoding:NSUTF8StringEncoding]) );
+	
+	
+	// Start Box2D
+	_worldController.init( 4, 2 );
+	[self createHeads];
 	
 	[super setup];
 	
@@ -57,11 +58,12 @@
 
 -(void)createHeads {
 	int count = Constants::Defaults::HEAD_COUNT;
-	float spread = 0.4f;
+	float spreadFactor = 0.4f;
+	float spreadX = (float)AppInfo::getInstance().getWindowWidth()*spreadFactor;
 	for(int i = 1; i <= count; i++) {
 		ci::Vec2f pos = ci::Vec2f::zero();
-		pos.x += ci::Rand::randFloat(-Constants::Defaults::windowWidth*spread, Constants::Defaults::windowWidth*spread);
-		pos.y += ci::Rand::randFloat(-Constants::Defaults::windowHeight*spread, Constants::Defaults::windowHeight*spread);
+		pos.x += ci::Rand::randFloat((float)AppInfo::getInstance().getWindowCenter().x - spreadX, (float)AppInfo::getInstance().getWindowCenter().x + spreadX);
+		pos.y += ci::Rand::randFloat(-50, - 100);
 		
 		b2Body* body = _worldController.createCircle( ci::Rand::randFloat(Constants::Defaults::HEAD_SIZE_MIN, Constants::Defaults::HEAD_SIZE_MAX), pos );
 		PhysicsObject* physicsObject = new PhysicsObject( body );
@@ -71,6 +73,8 @@
 }
 
 -(void)update {
+	
+	double delta = [self getElapsedSeconds] - _lastElapsedSeconds;
 	// First run
 	if(!_planet) {
 		// Create planet b2Body
@@ -81,10 +85,11 @@
 		mFixtureDef.shape = &shape;
 		b2BodyDef mBodyDef;
 		mBodyDef.type = b2_staticBody;
-		mBodyDef.position = cinder::box2d::Conversions::toPhysics( [self getWindowCenter]  );
+		mBodyDef.position = cinder::box2d::Conversions::toPhysics( AppInfo::getInstance().getWindowCenter()  );
 		
 		_planetBody = _worldController.getWorld()->CreateBody( &mBodyDef );
 		_planetBody->CreateFixture( &mFixtureDef );
+		_planetBody->SetTransform(cinder::box2d::Conversions::toPhysics( AppInfo::getInstance().getWindowCenter() ), 0);
 		_planet = new Planet( _planetBody );
 		_planet->setupTexture();
 		_planetBody->SetUserData( _planet );
@@ -94,13 +99,13 @@
 	AppInfo::getInstance().setElapsedSeconds([self getElapsedSeconds]);
 	AppInfo::getInstance().setElapsedFrames( ++_elapsedFrames );
 	
-	_worldController.update();
+	_worldController.update( delta );
 	
 	//	_audioAnalyzer.update();
 	
 	using namespace ci::box2d;
 	static float lastSize = 1;
-	float newSize = fabs( Conversions::toPhysics( Constants::Instances::PERLIN_NOISE()->noise( [self getWindowCenter].x, _elapsedFrames * 0.01) ) * 300 );//Conversions::toPhysics( Constants::Planet::MIN_SIZE + _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE );
+	float newSize = fabs( Conversions::toPhysics( Constants::Instances::PERLIN_NOISE()->noise( AppInfo::getInstance().getWindowCenter().x, _elapsedFrames * 0.01) ) * 300 );//Conversions::toPhysics( Constants::Planet::MIN_SIZE + _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE );
 	float maxSize = [self getWindowWidth] < [self getWindowHeight] ? [self getWindowWidth]*0.49 : [self getWindowHeight]*0.49;
 	newSize = ci::math<float>::min( newSize, Conversions::toPhysics( maxSize ) );
 	
@@ -127,7 +132,7 @@
 	mFixtureDef.density = 1.0f;
 	
 	//Constants::Defaults::getGravityPoint()
-	static ci::Vec2f currentPosition( 0, [self getWindowCenter].y * 0.5);
+	static ci::Vec2f currentPosition( AppInfo::getInstance().getWindowCenter().x, AppInfo::getInstance().getWindowCenter().y);
 	
 	currentPosition -= (currentPosition - Constants::Defaults::getGravityPoint() ) * 0.2f;
 	// Body definition
@@ -139,10 +144,11 @@
 	_planetBody->DestroyFixture( _planetBody->GetFixtureList() );
 	_planetBody->CreateFixture( &mFixtureDef );
 	_planetBody->SetTransform( mBodyDef.position, 0 );
+	
+	_lastElapsedSeconds = [self getElapsedSeconds];
 }
 
 -(void)draw {
-	return;
 	[self update];
 	ci::gl::clear( ci::Color::black() );
 	
@@ -199,17 +205,5 @@
 	_planetBody = NULL;
 	_planet = NULL;
 }
-
--(ci::Vec2f)getWindowCenter {
-	return ci::Vec2f([self getWindowWidth]*0.5, [self getWindowHeight]*0.5);
-}
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end
