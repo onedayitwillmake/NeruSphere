@@ -9,6 +9,7 @@
 #import "NPAudioPlayerViewController.h"
 #import "MPFoldTransition.h"
 #import "MPFoldEnumerations.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface NPAudioPlayerViewController ()
 
@@ -28,12 +29,14 @@
     [super viewDidLoad];
 	
 	// Override backbutton behavior so we can call popViewController
-	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
-																   style:UIBarButtonItemStyleBordered
-																  target:self
-																  action:@selector(shouldPopViewController:)];
-	
+	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered
+																  target:self action:@selector(shouldPopViewController:)];
 	self.navigationItem.leftBarButtonItem = backButton;
+	
+	_myPlayer = [MPMusicPlayerController applicationMusicPlayer];
+	// assign a playback queue containing all media items on the device
+	[_myPlayer setQueueWithQuery: [MPMediaQuery songsQuery]];
+	[_myPlayer play];
 }
 
 -(void)shouldPopViewController:(id)sender {

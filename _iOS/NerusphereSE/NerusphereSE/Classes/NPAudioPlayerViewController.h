@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MediaPlayer/MediaPlayer.h>
 
-@interface NPAudioPlayerViewController : UIViewController <UINavigationBarDelegate>
+@interface NPAudioPlayerViewController : UIViewController <UINavigationBarDelegate> {
+	MPMusicPlayerController* _myPlayer;
+}
 
 -(void)shouldPopViewController:(id)sender;
 @end

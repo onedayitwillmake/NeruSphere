@@ -25,6 +25,7 @@
 		ED1D0BA91672769D009BE8FA /* MPFoldSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BA01672769D009BE8FA /* MPFoldSegue.m */; };
 		ED1D0BB416727D4C009BE8FA /* NPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BB316727D4C009BE8FA /* NPConstants.m */; };
 		ED1D0BBC16728469009BE8FA /* NPAudioPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BBB16728469009BE8FA /* NPAudioPlayerViewController.m */; };
+		ED1D0BBF16729BF2009BE8FA /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED1D0BBD16729BE7009BE8FA /* MediaPlayer.framework */; };
 		ED36870F166FD3700019F726 /* circle-0.png in Resources */ = {isa = PBXBuildFile; fileRef = ED3686FA166FD3700019F726 /* circle-0.png */; };
 		ED368710166FD3700019F726 /* circle-1.png in Resources */ = {isa = PBXBuildFile; fileRef = ED3686FB166FD3700019F726 /* circle-1.png */; };
 		ED368711166FD3700019F726 /* circle-2.png in Resources */ = {isa = PBXBuildFile; fileRef = ED3686FC166FD3700019F726 /* circle-2.png */; };
@@ -171,6 +172,7 @@
 		ED1D0BB316727D4C009BE8FA /* NPConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPConstants.m; path = NerusphereSE/Classes/NPConstants.m; sourceTree = "<group>"; };
 		ED1D0BBA16728469009BE8FA /* NPAudioPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPAudioPlayerViewController.h; path = Classes/NPAudioPlayerViewController.h; sourceTree = "<group>"; };
 		ED1D0BBB16728469009BE8FA /* NPAudioPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPAudioPlayerViewController.m; path = Classes/NPAudioPlayerViewController.m; sourceTree = "<group>"; };
+		ED1D0BBD16729BE7009BE8FA /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		ED3686FA166FD3700019F726 /* circle-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-0.png"; path = "../../../resources/circle-0.png"; sourceTree = "<group>"; };
 		ED3686FB166FD3700019F726 /* circle-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-1.png"; path = "../../../resources/circle-1.png"; sourceTree = "<group>"; };
 		ED3686FC166FD3700019F726 /* circle-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-2.png"; path = "../../../resources/circle-2.png"; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED1D0BBF16729BF2009BE8FA /* MediaPlayer.framework in Frameworks */,
 				EDC55CAE166E732A00765AED /* AVFoundation.framework in Frameworks */,
 				EDC55CAF166E732A00765AED /* CoreMedia.framework in Frameworks */,
 				EDC55C50166E702400765AED /* Foundation.framework in Frameworks */,
@@ -504,6 +507,7 @@
 		EDC55C4C166E702400765AED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ED1D0BBD16729BE7009BE8FA /* MediaPlayer.framework */,
 				EDC55CB7166E737100765AED /* CoreVideo.framework */,
 				EDC55CB4166E735600765AED /* CoreAudio.framework */,
 				EDC55CA1166E731200765AED /* AudioToolbox.framework */,
