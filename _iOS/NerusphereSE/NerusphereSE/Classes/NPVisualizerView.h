@@ -12,14 +12,16 @@
 #import "Conversions.h"
 #import "Planet.h"
 #import "Box2D/Box2D.h"
+#import "AudioAnalyzer.h"
 
 
 @interface NPVisualizerView : CCGLTouchView {
-	uint32_t _elapsedFrames;
 	WorldController _worldController;
 	b2Body* _planetBody;
 	Planet* _planet;
-	double	_lastElapsedSeconds;
+	AudioAnalyzer _audioAnalyzer;
+	
+	double	_lastElapsedSeconds;	// Store to keep track of delta
 }
 
 

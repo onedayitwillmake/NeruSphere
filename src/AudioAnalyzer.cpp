@@ -1,112 +1,114 @@
-///*
-// * AudioAnalyzer.cpp
-// *
-// *  Created on: Sep 25, 2011
-// *      Author: onedayitwillmake
-// */
-//
-//#include "AudioAnalyzer.h"
-//#include "cinder/app/AppBasic.h"
-//#include "cinder/Utilities.h"
-//using namespace ci;
-//
-//AudioAnalyzer::AudioAnalyzer() {
-//	// TODO Auto-generated constructor stub
-//	//iterate input devices and print their names to the console
-//	std::string inputDeviceNames[] = {"4PR909", "Built-in Microphone", "Built-in Input"};
-//
-//
-//	//iterate input devices and print their names to the console
-////	const std::vector<audio::InputDeviceRef>& devices = audio::Input::getDevices();
-////	for( std::vector<audio::InputDeviceRef>::const_iterator iter = devices.begin(); iter != devices.end(); ++iter ) {
-////		std::cout << (*iter)->getName() << std::endl;
-////	}
-//
-//	//initialize the audio Input, using the default input device
-//	mInput = audio::Input();
-//	ci::sleep( 3000 );
-//
-//
-////	mInput = audio::Input::getDefaultDevice();
-////	std::cout <<  mInput.getDefaultDevice()->getName() << std::endl;
-//
-//
-//
-//	_averageVolume = 0;
-//
-//	//tell the input to start capturing audio
-//	mInput.start();
-//}
-//
-//void AudioAnalyzer::update()
-//{
-//	mPcmBuffer = mInput.getPcmBuffer();
-//	if( ! mPcmBuffer ) {
-//		return;
-//	}
-//
-//	uint16_t bandCount = 512;
-//	//presently FFT only works on OS X, not iOS
-//	mFftDataRef = audio::calculateFft( mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_LEFT ), bandCount );
-//	if( ! mFftDataRef ) {
-//		return;
-//	}
-//
-//	float * fftBuffer = mFftDataRef.get();
-//
-//	float average = 0;
-//	float ht = 1000.0f;
-//	for( int i = 0; i < ( bandCount ); i++ ) {
-//		average += fftBuffer[i] / bandCount * ht;
-//	}
-//	_averageVolume = average/(bandCount/2);
-//}
-//
-//void AudioAnalyzer::draw() {
-//	glPushMatrix();
-//		glTranslatef( 0.0f, ci::app::App::get()->getWindowHeight() -150, 0.0f );
-//		drawFft();
-//	glPopMatrix();
-//}
-//
-//void AudioAnalyzer::drawFft()
-//{
-//	uint16_t bandCount = 512;
-//	float ht = 1000.0f;
-//	float bottom = 150.0f;
-//
-//	if( ! mFftDataRef ) {
-//		return;
-//	}
-//
-//	float * fftBuffer = mFftDataRef.get();
-//
-//
-//
-//	glPushMatrix();
-//	glTranslatef( 0.0f, 0.0f, 0.0f );
-//
-//
-//	float bandColor = 1.0 / 6.0f;
-//	float halfBandColor = bandColor * 0.5f;
-//
-//	for( int i = 0; i < ( bandCount ); i++ ) {
-//		float barY = fftBuffer[i] / bandCount * ht;
-//		float delta = bottom - barY;
-//
-//		float size = 10;
-//		glBegin( GL_QUADS );
-//			glColor3f( halfBandColor, halfBandColor, halfBandColor );
-//			glVertex2f( i * size, bottom );
-//			glVertex2f( i * size + size/2, bottom );
-//			glColor3f( bandColor, bandColor, bandColor );
-//			glVertex2f( i * size + size/2, bottom - barY );
-//			glVertex2f( i * size, bottom - barY );
-//		glEnd();
-//	}
-//	glPopMatrix();
-//}
-//
-//AudioAnalyzer::~AudioAnalyzer() {
-//	// TODO Auto-generated destructor stub
-//}
+/*
+ * AudioAnalyzer.cpp
+ *
+ *  Created on: Sep 25, 2011
+ *      Author: onedayitwillmake
+ */
+
+#include "AudioAnalyzer.h"
+#include "cinder/gl/gl.h"
+#include "cinder/PolyLine.h"
+#include "cinder/Color.h"
+
+#include "AppInfo.h"
+
+AudioAnalyzer::AudioAnalyzer() {}
+AudioAnalyzer::~AudioAnalyzer() {
+	stopCurrentTrack();
+}
+
+// Runs update logic
+void AudioAnalyzer::update() {
+	// Check if track is playing and has a PCM buffer available
+	if ( mTrack->isPlaying() && mTrack->isPcmBuffering() ) {
+		
+		// Get buffer
+		mBuffer = mTrack->getPcmBuffer();
+		if ( mBuffer && mBuffer->getInterleavedData() ) {
+			
+			// Get sample count
+			uint32_t sampleCount = mBuffer->getInterleavedData()->mSampleCount;
+			if ( sampleCount > 0 ) {
+				
+				// Initialize analyzer
+				if ( !mFft ) {
+					mFft = Kiss::create( sampleCount );
+				}
+				
+				// Analyze data
+				if ( mBuffer->getInterleavedData()->mData != 0 ) {
+					mFft->setData( mBuffer->getInterleavedData()->mData );
+				}
+			}
+		}
+	}
+}
+
+void AudioAnalyzer::loadTrack( std::string filePath ) {
+	stopCurrentTrack();
+	
+	// Load and play audio
+	std::cout << filePath << std::endl;
+	mAudioSource = ci::audio::load( filePath );
+	mTrack = ci::audio::Output::addTrack( mAudioSource, false );
+	mTrack->enablePcmBuffering( true );
+	mTrack->play();
+}
+
+// Stop track
+void AudioAnalyzer::stopCurrentTrack() {
+	if( mTrack ) {
+		mTrack->enablePcmBuffering( false );
+		mTrack->stop();
+	}
+	
+	if ( mFft ) {
+		mFft->stop();
+	}
+}
+
+
+
+void AudioAnalyzer::drawFFT() {
+	// Clear screen
+	ci::gl::clear( ci::ColorAf::black() );
+	
+	// Check init flag
+	if ( mFft ) {
+		
+		// Get data in the frequency (transformed) and time domains
+		float * freqData = mFft->getAmplitude();
+		float * timeData = mFft->getData();
+		int32_t dataSize = mFft->getBinSize();
+		
+		// Cast data size to float
+		float dataSizef = (float)dataSize;
+		
+		// Get dimensions
+		float scale = ( (float)AppInfo::getInstance().getWindowWidth() - 20.0f ) / dataSizef;
+		float windowHeight = (float)AppInfo::getInstance().getWindowHeight();
+		
+		// Use polylines to depict time and frequency domains
+		ci::PolyLine<ci::Vec2f> freqLine;
+		ci::PolyLine<ci::Vec2f> timeLine;
+		
+		// Iterate through data
+		for ( int32_t i = 0; i < dataSize; i++ ) {
+			
+			// Do logarithmic plotting for frequency domain
+			float logSize = ci::math<float>::log( dataSizef );
+			float x = (float)( ( ci::math<float>::log( (float)i ) / logSize ) * dataSizef );
+			float y = ci::math<float>::clamp( freqData[ i ] * ( x / dataSizef ) * ( ci::math<float>::log( ( dataSizef - (float)i ) ) ), 0.0f, 2.0f );
+			
+			// Plot points on lines for tme domain
+			freqLine.push_back( ci::Vec2f(        x * scale + 10.0f,            -y * ( windowHeight - 20.0f ) * 0.25f + ( windowHeight - 10.0f ) ) );
+			timeLine.push_back( ci::Vec2f( (float)i * scale + 10.0f, timeData[ i ] * ( windowHeight - 20.0f ) * 0.25f + ( windowHeight * 0.25f + 10.0f ) ) );
+			
+		}
+		
+		// Draw signals
+		ci::gl::draw( freqLine );
+		ci::gl::draw( timeLine );
+	}
+
+}

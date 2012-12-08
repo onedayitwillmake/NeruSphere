@@ -36,16 +36,18 @@
 }
 
 -(void)setup {
-	_elapsedFrames = 0;
 	_lastElapsedSeconds = [self getElapsedSeconds];
+	std::string bundlePath = std::string([[[NSBundle mainBundle] bundlePath] cStringUsingEncoding:NSUTF8StringEncoding]);
 	
 	// Initialize contants
 	AppInfo::getInstance().setWindowSize(self.frame.size.width, self.frame.size.height);
+	AppInfo::getInstance().setElapsedFrames( 0 );
 	
 	Constants::init();
 	Constants::Defaults::setGravityPoint( AppInfo::getInstance().getWindowCenter() );
-	Constants::Textures::loadTextures( string([[[NSBundle mainBundle] bundlePath] cStringUsingEncoding:NSUTF8StringEncoding]) );
+	Constants::Textures::loadTextures( bundlePath );
 	
+	_audioAnalyzer.loadTrack( bundlePath + "/lgo_let_us_pray.mp3" );
 	
 	// Start Box2D
 	_worldController.init( 4, 2 );
@@ -97,15 +99,16 @@
 	
 	
 	AppInfo::getInstance().setElapsedSeconds([self getElapsedSeconds]);
-	AppInfo::getInstance().setElapsedFrames( ++_elapsedFrames );
+	AppInfo::getInstance().setElapsedFrames( AppInfo::getInstance().getElapsedFrames() + 1 );
 	
 	_worldController.update( delta );
+	_audioAnalyzer.update();
 	
 	//	_audioAnalyzer.update();
 	
 	using namespace ci::box2d;
 	static float lastSize = 1;
-	float newSize = fabs( Conversions::toPhysics( Constants::Instances::PERLIN_NOISE()->noise( AppInfo::getInstance().getWindowCenter().x, _elapsedFrames * 0.01) ) * 300 );//Conversions::toPhysics( Constants::Planet::MIN_SIZE + _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE );
+	float newSize = fabs( Conversions::toPhysics( Constants::Instances::PERLIN_NOISE()->noise( AppInfo::getInstance().getWindowCenter().x, AppInfo::getInstance().getElapsedFrames() * 0.01) ) * 300 );//Conversions::toPhysics( Constants::Planet::MIN_SIZE + _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE );
 	float maxSize = [self getWindowWidth] < [self getWindowHeight] ? [self getWindowWidth]*0.49 : [self getWindowHeight]*0.49;
 	newSize = ci::math<float>::min( newSize, Conversions::toPhysics( maxSize ) );
 	
@@ -150,6 +153,8 @@
 
 -(void)draw {
 	[self update];
+	_audioAnalyzer.drawFFT();
+	return;
 	ci::gl::clear( ci::Color::black() );
 	
 //	ci::gl::draw( *(_planetPhysicsObject->getTexture()), [self getWindowCenter] );

@@ -46,7 +46,7 @@ void WorldController::init( int positionIterations, int velocityIterations ) {
 	_positionIterations = positionIterations;
 	_velocityIterations = velocityIterations;
 	_timeStep = 1.0f / 60.0f;
-}0
+}
 
 void WorldController::update( float dt ) {
 	_world->Step( dt, _velocityIterations, _positionIterations );

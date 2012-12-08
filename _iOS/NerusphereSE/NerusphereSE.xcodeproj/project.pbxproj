@@ -26,6 +26,10 @@
 		ED1D0BB416727D4C009BE8FA /* NPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BB316727D4C009BE8FA /* NPConstants.m */; };
 		ED1D0BBC16728469009BE8FA /* NPAudioPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BBB16728469009BE8FA /* NPAudioPlayerViewController.m */; };
 		ED1D0BBF16729BF2009BE8FA /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED1D0BBD16729BE7009BE8FA /* MediaPlayer.framework */; };
+		ED1D0BD81672AD53009BE8FA /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BD21672AD53009BE8FA /* kiss_fft.c */; };
+		ED1D0BD91672AD53009BE8FA /* kiss_fftr.c in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BD41672AD53009BE8FA /* kiss_fftr.c */; };
+		ED1D0BDA1672AD53009BE8FA /* KissFFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BD61672AD53009BE8FA /* KissFFT.cpp */; };
+		ED1D0BE11672B392009BE8FA /* lgo_let_us_pray.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ED1D0BE01672B392009BE8FA /* lgo_let_us_pray.mp3 */; };
 		ED36870F166FD3700019F726 /* circle-0.png in Resources */ = {isa = PBXBuildFile; fileRef = ED3686FA166FD3700019F726 /* circle-0.png */; };
 		ED368710166FD3700019F726 /* circle-1.png in Resources */ = {isa = PBXBuildFile; fileRef = ED3686FB166FD3700019F726 /* circle-1.png */; };
 		ED368711166FD3700019F726 /* circle-2.png in Resources */ = {isa = PBXBuildFile; fileRef = ED3686FC166FD3700019F726 /* circle-2.png */; };
@@ -173,6 +177,14 @@
 		ED1D0BBA16728469009BE8FA /* NPAudioPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPAudioPlayerViewController.h; path = Classes/NPAudioPlayerViewController.h; sourceTree = "<group>"; };
 		ED1D0BBB16728469009BE8FA /* NPAudioPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPAudioPlayerViewController.m; path = Classes/NPAudioPlayerViewController.m; sourceTree = "<group>"; };
 		ED1D0BBD16729BE7009BE8FA /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		ED1D0BD11672AD53009BE8FA /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _kiss_fft_guts.h; sourceTree = "<group>"; };
+		ED1D0BD21672AD53009BE8FA /* kiss_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fft.c; sourceTree = "<group>"; };
+		ED1D0BD31672AD53009BE8FA /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft.h; sourceTree = "<group>"; };
+		ED1D0BD41672AD53009BE8FA /* kiss_fftr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fftr.c; sourceTree = "<group>"; };
+		ED1D0BD51672AD53009BE8FA /* kiss_fftr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fftr.h; sourceTree = "<group>"; };
+		ED1D0BD61672AD53009BE8FA /* KissFFT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KissFFT.cpp; sourceTree = "<group>"; };
+		ED1D0BD71672AD53009BE8FA /* KissFFT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KissFFT.h; sourceTree = "<group>"; };
+		ED1D0BE01672B392009BE8FA /* lgo_let_us_pray.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = lgo_let_us_pray.mp3; path = Resources/DevAssets/lgo_let_us_pray.mp3; sourceTree = "<group>"; };
 		ED3686FA166FD3700019F726 /* circle-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-0.png"; path = "../../../resources/circle-0.png"; sourceTree = "<group>"; };
 		ED3686FB166FD3700019F726 /* circle-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-1.png"; path = "../../../resources/circle-1.png"; sourceTree = "<group>"; };
 		ED3686FC166FD3700019F726 /* circle-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-2.png"; path = "../../../resources/circle-2.png"; sourceTree = "<group>"; };
@@ -461,9 +473,41 @@
 			path = NerusphereSE;
 			sourceTree = "<group>";
 		};
+		ED1D0BCF1672AD53009BE8FA /* KissFFT */ = {
+			isa = PBXGroup;
+			children = (
+				ED1D0BD01672AD53009BE8FA /* kiss */,
+				ED1D0BD61672AD53009BE8FA /* KissFFT.cpp */,
+				ED1D0BD71672AD53009BE8FA /* KissFFT.h */,
+			);
+			name = KissFFT;
+			path = Thirdparty/KissFFT;
+			sourceTree = "<group>";
+		};
+		ED1D0BD01672AD53009BE8FA /* kiss */ = {
+			isa = PBXGroup;
+			children = (
+				ED1D0BD11672AD53009BE8FA /* _kiss_fft_guts.h */,
+				ED1D0BD21672AD53009BE8FA /* kiss_fft.c */,
+				ED1D0BD31672AD53009BE8FA /* kiss_fft.h */,
+				ED1D0BD41672AD53009BE8FA /* kiss_fftr.c */,
+				ED1D0BD51672AD53009BE8FA /* kiss_fftr.h */,
+			);
+			path = kiss;
+			sourceTree = "<group>";
+		};
+		ED1D0BDF1672B375009BE8FA /* DevAssets */ = {
+			isa = PBXGroup;
+			children = (
+				ED1D0BE01672B392009BE8FA /* lgo_let_us_pray.mp3 */,
+			);
+			name = DevAssets;
+			sourceTree = "<group>";
+		};
 		ED3686F8166FD3520019F726 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				ED1D0BDF1672B375009BE8FA /* DevAssets */,
 				ED1D0B8916727486009BE8FA /* Visualizer */,
 				ED1D0B7516724CCB009BE8FA /* Icons */,
 				EDC55C65166E702400765AED /* MainStoryboard_iPhone.storyboard */,
@@ -561,6 +605,7 @@
 		EDC55C8B166E703000765AED /* Thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				ED1D0BCF1672AD53009BE8FA /* KissFFT */,
 				ED1D0B8A1672769D009BE8FA /* MPFoldTransition */,
 				EDC55DEA166E86AA00765AED /* Box2D */,
 				EDC55C93166E711400765AED /* CCGLTouch */,
@@ -879,6 +924,7 @@
 				ED1D0B8216724CD4009BE8FA /* icon.png in Resources */,
 				ED1D0B8316724CD4009BE8FA /* Icon@2x.png in Resources */,
 				ED1D0B8416724CD4009BE8FA /* iTunesArtwork in Resources */,
+				ED1D0BE11672B392009BE8FA /* lgo_let_us_pray.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -985,6 +1031,9 @@
 				ED1D0BA91672769D009BE8FA /* MPFoldSegue.m in Sources */,
 				ED1D0BB416727D4C009BE8FA /* NPConstants.m in Sources */,
 				ED1D0BBC16728469009BE8FA /* NPAudioPlayerViewController.m in Sources */,
+				ED1D0BD81672AD53009BE8FA /* kiss_fft.c in Sources */,
+				ED1D0BD91672AD53009BE8FA /* kiss_fftr.c in Sources */,
+				ED1D0BDA1672AD53009BE8FA /* KissFFT.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
