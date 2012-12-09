@@ -12,6 +12,7 @@
 #import "MPFlipEnumerations.h"
 #import "NPConstants.h"
 #import "MPFoldTransition.h"
+#import <AVFoundation/AVAudioSession.h>
 
 @interface NPRootViewController ()
 
@@ -29,6 +30,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	[self configureAudioSession];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,5 +51,15 @@
 	[self.navigationController pushViewController:viewControllertoPresent foldStyle: MPFoldStyleUnfold];
 }
 
+
+-(void)configureAudioSession {
+	NSError *setCategoryError = nil;
+	[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: &setCategoryError];
+	
+	if (setCategoryError) {
+		/* handle the error condition */
+		NSLog(@"NPAlert: Error setting audio category");
+	}
+}
 
 @end

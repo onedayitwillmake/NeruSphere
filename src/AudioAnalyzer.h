@@ -24,16 +24,18 @@ public:
 	void drawFFT();
 	void loadTrack( std::string filePath );
 	
-	KissRef	getFFT() { return mFft; };
+	float getAverageVolume() { return mAverageVolume; };
 	
 private:
 	// Audio file
 	ci::audio::SourceRef		mAudioSource;
 	ci::audio::PcmBuffer32fRef	mBuffer;
 	ci::audio::TrackRef			mTrack;
+	std::shared_ptr<float>		mFftDataRef;
 	
 	// Analyzer
 	KissRef						mFft;
+	float						mAverageVolume;
 	
 	void stopCurrentTrack();
 };
