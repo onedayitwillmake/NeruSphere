@@ -12,6 +12,8 @@
 #include "cinder/audio/Output.h"
 #include "cinder/CinderMath.h"
 #include "KissFFT.h"
+#include "fmod.hpp"
+#include "fmod_errors.h"
 
 
 class AudioAnalyzer
@@ -20,24 +22,23 @@ public:
 	AudioAnalyzer();
 	~AudioAnalyzer();
 
-	void update();
-	void drawFFT();
-	void loadTrack( std::string filePath );
+	void	update();
+	void	drawFFT();
 	
-	float getAverageVolume() { return mAverageVolume; };
+	void	load( std::string filePath );
+	void	play();
+	void	stop();
 	
+	float	getAverageVolume() { return mAverageVolume; };
+
 private:
-	// Audio file
-	ci::audio::SourceRef		mAudioSource;
-	ci::audio::PcmBuffer32fRef	mBuffer;
-	ci::audio::TrackRef			mTrack;
-	std::shared_ptr<float>		mFftDataRef;
+	FMOD::System   *system;
+    FMOD::Sound    *sound;
+    FMOD::Channel  *channel;
+	float			mAverageVolume;
 	
-	// Analyzer
-	KissRef						mFft;
-	float						mAverageVolume;
-	
-	void stopCurrentTrack();
+	void	stopCurrentTrack();
+	void	drawSpectrum( FMOD_DSP_FFT_WINDOW style, int yOffset );
 };
 
 #endif /* AUDIOANALYZER_H_ */

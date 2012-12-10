@@ -124,7 +124,7 @@
 		EDC55DE8166E82D700765AED /* b2WheelJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55D89166E82D700765AED /* b2WheelJoint.cpp */; };
 		EDC55DE9166E82D700765AED /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55D8C166E82D700765AED /* b2Rope.cpp */; };
 		EDC55DFC166E86ED00765AED /* Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55DEE166E86ED00765AED /* Constants.cpp */; };
-		EDC55DFD166E86ED00765AED /* AudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55DF1166E86ED00765AED /* AudioAnalyzer.cpp */; };
+		EDC55DFD166E86ED00765AED /* AudioAnalyzer.mm in Sources */ = {isa = PBXBuildFile; fileRef = EDC55DF1166E86ED00765AED /* AudioAnalyzer.mm */; };
 		EDC55DFE166E86ED00765AED /* ParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55DF3166E86ED00765AED /* ParticleSystem.cpp */; };
 		EDC55DFF166E86ED00765AED /* PhysicsObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55DF5166E86ED00765AED /* PhysicsObject.cpp */; };
 		EDC55E00166E86ED00765AED /* Planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55DF7166E86ED00765AED /* Planet.cpp */; };
@@ -339,7 +339,7 @@
 		EDC55DED166E86ED00765AED /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../../../include/Constants.h; sourceTree = "<group>"; };
 		EDC55DEE166E86ED00765AED /* Constants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Constants.cpp; path = ../../../src/Constants.cpp; sourceTree = "<group>"; };
 		EDC55DF0166E86ED00765AED /* AudioAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioAnalyzer.h; path = ../../../src/AudioAnalyzer.h; sourceTree = "<group>"; };
-		EDC55DF1166E86ED00765AED /* AudioAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioAnalyzer.cpp; path = ../../../src/AudioAnalyzer.cpp; sourceTree = "<group>"; };
+		EDC55DF1166E86ED00765AED /* AudioAnalyzer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AudioAnalyzer.mm; path = ../../../src/AudioAnalyzer.mm; sourceTree = "<group>"; };
 		EDC55DF2166E86ED00765AED /* ParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticleSystem.h; path = ../../../src/ParticleSystem.h; sourceTree = "<group>"; };
 		EDC55DF3166E86ED00765AED /* ParticleSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticleSystem.cpp; path = ../../../src/ParticleSystem.cpp; sourceTree = "<group>"; };
 		EDC55DF4166E86ED00765AED /* PhysicsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhysicsObject.h; path = ../../../src/PhysicsObject.h; sourceTree = "<group>"; };
@@ -791,7 +791,7 @@
 			children = (
 				EDC55E0F166E951C00765AED /* model */,
 				EDC55DF0166E86ED00765AED /* AudioAnalyzer.h */,
-				EDC55DF1166E86ED00765AED /* AudioAnalyzer.cpp */,
+				EDC55DF1166E86ED00765AED /* AudioAnalyzer.mm */,
 				EDC55DF2166E86ED00765AED /* ParticleSystem.h */,
 				EDC55DF3166E86ED00765AED /* ParticleSystem.cpp */,
 				EDC55DF4166E86ED00765AED /* PhysicsObject.h */,
@@ -1012,7 +1012,7 @@
 				EDC55DE8166E82D700765AED /* b2WheelJoint.cpp in Sources */,
 				EDC55DE9166E82D700765AED /* b2Rope.cpp in Sources */,
 				EDC55DFC166E86ED00765AED /* Constants.cpp in Sources */,
-				EDC55DFD166E86ED00765AED /* AudioAnalyzer.cpp in Sources */,
+				EDC55DFD166E86ED00765AED /* AudioAnalyzer.mm in Sources */,
 				EDC55DFE166E86ED00765AED /* ParticleSystem.cpp in Sources */,
 				EDC55DFF166E86ED00765AED /* PhysicsObject.cpp in Sources */,
 				EDC55E00166E86ED00765AED /* Planet.cpp in Sources */,
@@ -1159,8 +1159,8 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(CINDER_PATH)/boost",
+					"\"$(SRCROOT)/NerusphereSE/Thirdparty/FMod/inc\"",
 					../../thirdparty,
-					../../thirdparty/FMod/inc,
 				);
 				INFOPLIST_FILE = "NerusphereSE/NerusphereSE-Info.plist";
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/NerusphereSE/Thirdparty/FMod/lib\"";
@@ -1172,10 +1172,12 @@
 				"OTHER_LDFLAGS[sdk=iphoneos*]" = (
 					"\"$(CINDER_PATH)/lib/libcinder-iphone_d.a\"",
 					"-lz",
+					"-lfmodexL_iphoneos",
 				);
 				"OTHER_LDFLAGS[sdk=iphonesimulator*]" = (
 					"\"$(CINDER_PATH)/lib/libcinder-iphone-sim_d.a\"",
 					"-lz",
+					"-lfmodexL_iphoneos",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1202,8 +1204,8 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(CINDER_PATH)/boost",
+					"\"$(SRCROOT)/NerusphereSE/Thirdparty/FMod/inc\"",
 					../../thirdparty,
-					../../thirdparty/FMod/inc,
 				);
 				INFOPLIST_FILE = "NerusphereSE/NerusphereSE-Info.plist";
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/NerusphereSE/Thirdparty/FMod/lib\"";
@@ -1215,10 +1217,12 @@
 				"OTHER_LDFLAGS[sdk=iphoneos*]" = (
 					"\"$(CINDER_PATH)/lib/libcinder-iphone.a\"",
 					"-lz",
+					"-lfmodex_iphoneos",
 				);
 				"OTHER_LDFLAGS[sdk=iphonesimulator*]" = (
 					"\"$(CINDER_PATH)/lib/libcinder-iphone-sim.a\"",
 					"-lz",
+					"-lfmodex_iphoneos",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";

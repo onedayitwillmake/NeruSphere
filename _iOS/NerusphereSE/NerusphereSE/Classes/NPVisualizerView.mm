@@ -47,7 +47,8 @@
 	Constants::Defaults::setGravityPoint( AppInfo::getInstance().getWindowCenter() );
 	Constants::Textures::loadTextures( bundlePath );
 	
-	_audioAnalyzer.loadTrack( bundlePath + "/lgo_let_us_pray.mp3" );
+	_audioAnalyzer.load( bundlePath + "/lgo_let_us_pray.mp3" );
+	_audioAnalyzer.play();
 	
 	// Start Box2D
 	_worldController.init( 4, 2 );
