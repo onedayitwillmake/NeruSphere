@@ -17,16 +17,12 @@
 
 @interface NPVisualizerView : CCGLTouchView {
 	WorldController _worldController;
-	b2Body* _planetBody;
-	Planet* _planet;
 	AudioAnalyzer _audioAnalyzer;
 	
 	double	_lastElapsedSeconds;	// Store to keep track of delta
 }
 
-
 -(void)reset;
--(void)createHeads;
 -(void)update;
 -(void)drawParticles;
 

@@ -13,30 +13,38 @@
 #include <Box2D/Box2D.h>
 #include "cinder/Vector.h"
 
+class Planet;
 class WorldController
 {
-	public:
-		WorldController();
-		virtual ~WorldController();
+public:
+	WorldController();
+	~WorldController();
 
+	void init( int velocityIterations, int positionIterations );
+	void createPlanet();
+	void createHeads(int count);
+	void clear();
+	
+	void update( float dt );
+	void setPlanetSize( float size );
+	void debugDraw( bool drawBodies=true, bool drawContacts=true );
+	void draw();
 
-		///// ACCESSORS
-		b2World* getWorld() { return _world; };
+	///// ACCESSORS
+	b2World*	getWorld() { return _world; };
+	Planet*		getPlanet() { return _planet; };
+	
+	// Helper methods
+	b2Body* createRect( ci::Vec2f size, ci::Vec2f pos );
+	b2Body* createCircle( float size, ci::Vec2f pos );
 
-		///// METHODS
-		void init( int velocityIterations, int positionIterations );
-		void update( float dt );
-		void clear();
-		void debugDraw( bool drawBodies=true, bool drawContacts=true );
-		void draw();
+private:
+	b2World* _world;
+	b2Body* _planetBody;
+	Planet* _planet;
 
-		b2Body* createRect( ci::Vec2f size, ci::Vec2f pos );
-		b2Body* createCircle( float size, ci::Vec2f pos );
-
-	private:
-		b2World* _world;
-		int _velocityIterations, _positionIterations;
-		float _timeStep;
+	int _velocityIterations, _positionIterations;
+	float _timeStep;
 };
 
 #endif /* WORLDCONTROLLER_H_ */

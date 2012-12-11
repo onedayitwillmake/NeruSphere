@@ -46,7 +46,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="shouldStartVisualizer:" destination="2" eventType="touchUpInside" id="jnf-81-yrx"/>
+                                    <segue destination="YnK-o8-ZUd" kind="custom" customClass="MPFoldNavPushSegue" id="Pbr-je-3oW"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JO7-I7-z5E">
@@ -112,7 +112,7 @@
             <objects>
                 <viewController storyboardIdentifier="NPVisualizerViewController" id="YnK-o8-ZUd" customClass="NPVisualizerViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pbz-x3-v0m">
-                        <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="center" image="gromacirclepink.png" translatesAutoresizingMaskIntoConstraints="NO" id="EGi-1M-PDX"/>
@@ -126,6 +126,8 @@
                     <navigationItem key="navigationItem" title="Visualizer" id="w9P-PH-iCy">
                         <barButtonItem key="backBarButtonItem" title="HEllo" id="YB0-Wm-WTQ"/>
                     </navigationItem>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="groma" destination="EGi-1M-PDX" id="HlQ-vE-lfp"/>
                     </connections>

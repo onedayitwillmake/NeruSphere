@@ -18,10 +18,15 @@
 #include "Conversions.h"
 #include "Constants.h"
 #include "PhysicsObject.h"
+#include "Planet.h"
+#include "AppInfo.h"
+#include "cinder/Rand.h"
 
 using namespace ci::box2d;
 WorldController::WorldController() {
 	std::cout << "WorldController Constructor! " << std::endl;
+	_planetBody = NULL;
+	_planet = NULL;
 }
 
 WorldController::~WorldController() {
@@ -38,6 +43,10 @@ WorldController::~WorldController() {
 		}
 		delete _world;
 	}
+	
+	// Initialization code
+	_planetBody = NULL;
+	_planet = NULL;
 }
 
 void WorldController::init( int positionIterations, int velocityIterations ) {
@@ -46,6 +55,42 @@ void WorldController::init( int positionIterations, int velocityIterations ) {
 	_positionIterations = positionIterations;
 	_velocityIterations = velocityIterations;
 	_timeStep = 1.0f / 60.0f;
+	
+	createPlanet();
+}
+
+void WorldController::createPlanet() {
+	// Create planet b2Body
+	b2CircleShape shape;
+	shape.m_radius = 1;
+	
+	b2FixtureDef mFixtureDef;
+	mFixtureDef.shape = &shape;
+	b2BodyDef mBodyDef;
+	mBodyDef.type = b2_staticBody;
+	mBodyDef.position = cinder::box2d::Conversions::toPhysics( AppInfo::getInstance().getWindowCenter()  );
+	
+	_planetBody = getWorld()->CreateBody( &mBodyDef );
+	_planetBody->CreateFixture( &mFixtureDef );
+	_planetBody->SetTransform(cinder::box2d::Conversions::toPhysics( AppInfo::getInstance().getWindowCenter() ), 0);
+	_planet = new Planet( _planetBody );
+	_planet->setupTexture();
+	_planetBody->SetUserData( _planet );
+}
+
+void WorldController::createHeads(int count) {
+	float spreadFactor = 0.4f;
+	float spreadX = (float)AppInfo::getInstance().getWindowWidth()*spreadFactor;
+	for(int i = 1; i <= count; i++) {
+		ci::Vec2f pos = ci::Vec2f::zero();
+		pos.x += ci::Rand::randFloat((float)AppInfo::getInstance().getWindowCenter().x - spreadX, (float)AppInfo::getInstance().getWindowCenter().x + spreadX);
+		pos.y += ci::Rand::randFloat(-50, - 100);
+		
+		b2Body* body = createCircle( ci::Rand::randFloat(Constants::Defaults::HEAD_SIZE_MIN, Constants::Defaults::HEAD_SIZE_MAX), pos );
+		PhysicsObject* physicsObject = new PhysicsObject( body );
+		physicsObject->setupTexture();
+		body->SetUserData( physicsObject );
+	}
 }
 
 void WorldController::update( float dt ) {
@@ -70,6 +115,36 @@ void WorldController::update( float dt ) {
 			}
 		}
 	}
+}
+
+void WorldController::setPlanetSize(float size ) {
+	using namespace ci::box2d;
+
+	b2CircleShape aShape;
+	float previousSize = ( (b2CircleShape*)_planetBody->GetFixtureList()->GetShape() )->m_radius;
+	aShape.m_radius = previousSize - (previousSize - size) * Constants::Planet::EASE_SPEED;
+	
+	
+	// Fixture definition
+	b2FixtureDef mFixtureDef;
+	mFixtureDef.shape = &aShape;
+	mFixtureDef.friction = 1.0f;
+	mFixtureDef.restitution = 0.0f;
+	mFixtureDef.density = 1.0f;
+	
+	static ci::Vec2f currentPosition( AppInfo::getInstance().getWindowCenter().x, AppInfo::getInstance().getWindowCenter().y);
+	currentPosition -= (currentPosition - Constants::Defaults::getGravityPoint() ) * 0.2f;
+	
+	
+	// Body definition
+	b2BodyDef mBodyDef;
+	mBodyDef.type = b2_staticBody;
+	mBodyDef.position = Conversions::toPhysics( currentPosition  );
+	
+	
+	_planetBody->DestroyFixture( _planetBody->GetFixtureList() );
+	_planetBody->CreateFixture( &mFixtureDef );
+	_planetBody->SetTransform( mBodyDef.position, 0 );
 }
 
 void WorldController::clear() {
@@ -99,7 +174,6 @@ void WorldController::draw() {
 		debugDraw();
 		return;
 	}
-
 
 	b2Body* b = _world->GetBodyList();
 	while( b ) {

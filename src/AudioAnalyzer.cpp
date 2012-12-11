@@ -10,7 +10,10 @@
 #include "cinder/PolyLine.h"
 #include "cinder/Color.h"
 #include "AppInfo.h"
-#import "fmod.h"
+
+#include "fmod.h"
+#include "fmod_errors.h"
+
 
 /// Exit on error
 void ERRCHECK(FMOD_RESULT result) {
@@ -103,6 +106,10 @@ void AudioAnalyzer::update() {
         result = system->update();
         ERRCHECK(result);
     }
+	
+	_isPlaying = playing && !paused;
+	_songTime = ms;
+	_songDuration = lenms;
 }
 
 // Load and start strack
@@ -130,12 +137,11 @@ void AudioAnalyzer::stop() {
 }
 
 
-
 void AudioAnalyzer::drawFFT() {
 	ci::gl::clear( ci::ColorAf::black() );
 	if ( channel ) {
 		ci::gl::color( ci::ColorA(0, 1.0, 0.0, 1.0f ) );
-		drawSpectrum( FMOD_DSP_FFT_WINDOW_RECT, 0 );
+		drawSpectrum( FMOD_DSP_FFT_WINDOW_RECT, -100 );
 	}
 }
 
@@ -143,9 +149,9 @@ void AudioAnalyzer::drawSpectrum( FMOD_DSP_FFT_WINDOW style, int yOffset ) {
 	float windowHeight = (float)AppInfo::getInstance().getWindowHeight();
 	
 	// Get data in the frequency (transformed) and time domains
-	int32_t specLen = 256;
+	int32_t specLen = 128;
 	float* specData = (float*)malloc(specLen*sizeof(float));
-	channel->getSpectrum( specData, specLen, 0, style );
+	channel->getWaveData( specData, specLen, 0 );
 	
 	// Cast data size to float
 	float specLenf = (float)specLen;
@@ -156,6 +162,16 @@ void AudioAnalyzer::drawSpectrum( FMOD_DSP_FFT_WINDOW style, int yOffset ) {
 	// Use polylines to depict time and frequency domains
 	ci::PolyLine<ci::Vec2f> freqLine;
 	
+	/*
+	 float* data = mFft->getData(); // Gets normalized input data
+	 int32_t binSize = mFft->getBinSize();
+	 float sum = 0.0f;
+	 for ( int32_t i = 0; i < binSize; ++i ) {
+	 sum += math<float>::pow( data[ i ], 2.0f );
+	 }
+	 float averageVolume = math<float>::sqrt( sum / (float)binSize );
+
+	 */
 	// Iterate through data
 	double sum = 0;
 	for ( int32_t i = 0; i < specLen; i++ ) {
@@ -163,16 +179,16 @@ void AudioAnalyzer::drawSpectrum( FMOD_DSP_FFT_WINDOW style, int yOffset ) {
 		// Do logarithmic plotting for frequency domain
 		float logSize = ci::math<float>::log( specLenf );
 		float x = (float)( ( ci::math<float>::log( (float)i ) / logSize ) * specLenf );
-		float y = ci::math<float>::clamp( specData[ i ] * ( x / specLenf ) * ( ci::math<float>::log( ( specLenf - (float)i ) ) ), 0.0f, 2.0f );
-		sum += y;
+		float y = ci::math<float>::clamp( specData[ i ] * ( x / specLenf ) * ( ci::math<float>::log( ( specLenf - (float)i ) ) ), 0.0f, 2.0f ) + yOffset;
+		sum += ci::math<float>::pow( specData[ i ], 2.0f );
 		
 		// Plot points on lines for tme domain
 		freqLine.push_back( ci::Vec2f(        x * scale + 10.0f,
-									  -y * ( windowHeight - 20.0f ) * 0.25f + ( windowHeight - 10.0f ) ) );
+									  -y * ( windowHeight - 20.0f ) * 0.25f + ( windowHeight - 10.0f ) + yOffset)  );
 	}
 	
-	mAverageVolume = sum/specLenf;
-	std::cout << "Volume:" << mAverageVolume << std::endl;
+	_averageVolume = ci::math<float>::sqrt( sum / specLenf );;
+//	std::cout << "Volume:" << _averageVolume << std::endl;
 	
 	// Draw signals
 	ci::gl::draw( freqLine );

@@ -10,6 +10,7 @@
 #import "MPFoldTransition.h"
 #import "MPFoldEnumerations.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "NPAudioConverter.h"
 
 @interface NPAudioPlayerViewController ()
 
@@ -25,6 +26,15 @@
     return self;
 }
 
+-(void)dealloc {
+	_mediaPicker = nil;
+	_song = nil;
+}
+
+-(void)shouldPopViewController:(id)sender {
+	[self.navigationController popViewControllerWithFoldStyle:MPFoldStyleDefault];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
@@ -32,15 +42,29 @@
 	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered
 																  target:self action:@selector(shouldPopViewController:)];
 	self.navigationItem.leftBarButtonItem = backButton;
-	
-	_myPlayer = [MPMusicPlayerController applicationMusicPlayer];
-	// assign a playback queue containing all media items on the device
-	[_myPlayer setQueueWithQuery: [MPMediaQuery songsQuery]];
-	[_myPlayer play];
 }
 
--(void)shouldPopViewController:(id)sender {
-	[self.navigationController popViewControllerWithFoldStyle:MPFoldStyleDefault];
+-(void)viewDidAppear:(BOOL)animated {
+	if(!_mediaPicker) {
+		_mediaPicker =	[[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeMusic];
+		_mediaPicker.prompt = @"Choose song to export";
+		_mediaPicker.allowsPickingMultipleItems = NO;
+		_mediaPicker.delegate = self;
+		[self presentViewController:_mediaPicker animated:YES completion: nil];
+	} else if(_song) {
+		[[NPAudioConverter sharedConverter] getConvertedSongPath:_song];
+	}
+}
+
+
+
+- (void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection {
+	_song = [[mediaItemCollection items] objectAtIndex:0];
+	[mediaPicker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker {
+	[mediaPicker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

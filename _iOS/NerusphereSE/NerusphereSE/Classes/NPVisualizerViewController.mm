@@ -20,14 +20,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	// Override backbutton behavior so we can call popViewController
-	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
-																   style:UIBarButtonItemStyleBordered
-																  target:self
-																  action:@selector(shouldPopViewController:)];
+	[[self navigationController] setNavigationBarHidden:YES animated:YES];
 	
+	// Override backbutton behavior so we can call popViewController
+//	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+//																   style:UIBarButtonItemStyleBordered
+//																  target:self
+//																  action:@selector(shouldPopViewController:)];
+//	
 	self.groma.center = self.view.center;
-	self.navigationItem.leftBarButtonItem = backButton;
+//	self.navigationItem.leftBarButtonItem = backButton;
 }
 
 -(void)shouldPopViewController:(id)sender {

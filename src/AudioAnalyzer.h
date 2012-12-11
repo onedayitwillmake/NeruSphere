@@ -11,9 +11,7 @@
 #include "cinder/audio/Io.h"
 #include "cinder/audio/Output.h"
 #include "cinder/CinderMath.h"
-#include "KissFFT.h"
 #include "fmod.hpp"
-#include "fmod_errors.h"
 
 
 class AudioAnalyzer
@@ -21,21 +19,32 @@ class AudioAnalyzer
 public:
 	AudioAnalyzer();
 	~AudioAnalyzer();
-
-	void	update();
-	void	drawFFT();
 	
+	// Player actions
 	void	load( std::string filePath );
 	void	play();
 	void	stop();
 	
-	float	getAverageVolume() { return mAverageVolume; };
-
+	// Updates information
+	void	update();
+	void	drawFFT();
+	
+	// Song properties
+	float		getAverageVolume() { return _averageVolume; };
+	uint32_t	getSongTime() { return _songTime; };
+	uint32_t	getSongDuration() { return _songDuration; };
+	bool		getIsPlaying() { return _isPlaying; };
+	
 private:
 	FMOD::System   *system;
     FMOD::Sound    *sound;
     FMOD::Channel  *channel;
-	float			mAverageVolume;
+	
+	float			_averageVolume;
+	
+	uint32_t		_songTime;
+	uint32_t		_songDuration;
+	bool			_isPlaying;
 	
 	void	stopCurrentTrack();
 	void	drawSpectrum( FMOD_DSP_FFT_WINDOW style, int yOffset );

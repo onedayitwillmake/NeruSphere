@@ -30,6 +30,7 @@
 		ED1D0BD91672AD53009BE8FA /* kiss_fftr.c in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BD41672AD53009BE8FA /* kiss_fftr.c */; };
 		ED1D0BDA1672AD53009BE8FA /* KissFFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BD61672AD53009BE8FA /* KissFFT.cpp */; };
 		ED1D0BE11672B392009BE8FA /* lgo_let_us_pray.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ED1D0BE01672B392009BE8FA /* lgo_let_us_pray.mp3 */; };
+		ED32068616770C210064EC9E /* NPAudioConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = ED32068516770C210064EC9E /* NPAudioConverter.m */; };
 		ED36870F166FD3700019F726 /* circle-0.png in Resources */ = {isa = PBXBuildFile; fileRef = ED3686FA166FD3700019F726 /* circle-0.png */; };
 		ED368710166FD3700019F726 /* circle-1.png in Resources */ = {isa = PBXBuildFile; fileRef = ED3686FB166FD3700019F726 /* circle-1.png */; };
 		ED368711166FD3700019F726 /* circle-2.png in Resources */ = {isa = PBXBuildFile; fileRef = ED3686FC166FD3700019F726 /* circle-2.png */; };
@@ -49,6 +50,7 @@
 		ED36871F166FD3700019F726 /* heads_2.png in Resources */ = {isa = PBXBuildFile; fileRef = ED36870A166FD3700019F726 /* heads_2.png */; };
 		ED368720166FD3700019F726 /* heads_3.png in Resources */ = {isa = PBXBuildFile; fileRef = ED36870B166FD3700019F726 /* heads_3.png */; };
 		ED36872A1670111A0019F726 /* AppInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED368728167011190019F726 /* AppInfo.cpp */; };
+		ED95933816766E95006E34A4 /* 2-Fog.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ED95933716766E95006E34A4 /* 2-Fog.mp3 */; };
 		EDC55C4E166E702400765AED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC55C4D166E702400765AED /* UIKit.framework */; };
 		EDC55C50166E702400765AED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC55C4F166E702400765AED /* Foundation.framework */; };
 		EDC55C52166E702400765AED /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC55C51166E702400765AED /* CoreGraphics.framework */; };
@@ -124,7 +126,7 @@
 		EDC55DE8166E82D700765AED /* b2WheelJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55D89166E82D700765AED /* b2WheelJoint.cpp */; };
 		EDC55DE9166E82D700765AED /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55D8C166E82D700765AED /* b2Rope.cpp */; };
 		EDC55DFC166E86ED00765AED /* Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55DEE166E86ED00765AED /* Constants.cpp */; };
-		EDC55DFD166E86ED00765AED /* AudioAnalyzer.mm in Sources */ = {isa = PBXBuildFile; fileRef = EDC55DF1166E86ED00765AED /* AudioAnalyzer.mm */; };
+		EDC55DFD166E86ED00765AED /* AudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55DF1166E86ED00765AED /* AudioAnalyzer.cpp */; };
 		EDC55DFE166E86ED00765AED /* ParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55DF3166E86ED00765AED /* ParticleSystem.cpp */; };
 		EDC55DFF166E86ED00765AED /* PhysicsObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55DF5166E86ED00765AED /* PhysicsObject.cpp */; };
 		EDC55E00166E86ED00765AED /* Planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55DF7166E86ED00765AED /* Planet.cpp */; };
@@ -185,6 +187,8 @@
 		ED1D0BD61672AD53009BE8FA /* KissFFT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KissFFT.cpp; sourceTree = "<group>"; };
 		ED1D0BD71672AD53009BE8FA /* KissFFT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KissFFT.h; sourceTree = "<group>"; };
 		ED1D0BE01672B392009BE8FA /* lgo_let_us_pray.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = lgo_let_us_pray.mp3; path = Resources/DevAssets/lgo_let_us_pray.mp3; sourceTree = "<group>"; };
+		ED32068416770C210064EC9E /* NPAudioConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPAudioConverter.h; sourceTree = "<group>"; };
+		ED32068516770C210064EC9E /* NPAudioConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPAudioConverter.m; sourceTree = "<group>"; };
 		ED3686FA166FD3700019F726 /* circle-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-0.png"; path = "../../../resources/circle-0.png"; sourceTree = "<group>"; };
 		ED3686FB166FD3700019F726 /* circle-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-1.png"; path = "../../../resources/circle-1.png"; sourceTree = "<group>"; };
 		ED3686FC166FD3700019F726 /* circle-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-2.png"; path = "../../../resources/circle-2.png"; sourceTree = "<group>"; };
@@ -205,6 +209,7 @@
 		ED36870B166FD3700019F726 /* heads_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = heads_3.png; path = ../../../resources/heads_3.png; sourceTree = "<group>"; };
 		ED368728167011190019F726 /* AppInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppInfo.cpp; path = Classes/AppInfo.cpp; sourceTree = "<group>"; };
 		ED3687291670111A0019F726 /* AppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppInfo.h; path = Classes/AppInfo.h; sourceTree = "<group>"; };
+		ED95933716766E95006E34A4 /* 2-Fog.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "2-Fog.mp3"; path = "Resources/DevAssets/2-Fog.mp3"; sourceTree = "<group>"; };
 		EDC55C49166E702400765AED /* NerusphereSE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NerusphereSE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDC55C4D166E702400765AED /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		EDC55C4F166E702400765AED /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -339,7 +344,7 @@
 		EDC55DED166E86ED00765AED /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../../../include/Constants.h; sourceTree = "<group>"; };
 		EDC55DEE166E86ED00765AED /* Constants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Constants.cpp; path = ../../../src/Constants.cpp; sourceTree = "<group>"; };
 		EDC55DF0166E86ED00765AED /* AudioAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioAnalyzer.h; path = ../../../src/AudioAnalyzer.h; sourceTree = "<group>"; };
-		EDC55DF1166E86ED00765AED /* AudioAnalyzer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AudioAnalyzer.mm; path = ../../../src/AudioAnalyzer.mm; sourceTree = "<group>"; };
+		EDC55DF1166E86ED00765AED /* AudioAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioAnalyzer.cpp; path = ../../../src/AudioAnalyzer.cpp; sourceTree = "<group>"; };
 		EDC55DF2166E86ED00765AED /* ParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticleSystem.h; path = ../../../src/ParticleSystem.h; sourceTree = "<group>"; };
 		EDC55DF3166E86ED00765AED /* ParticleSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticleSystem.cpp; path = ../../../src/ParticleSystem.cpp; sourceTree = "<group>"; };
 		EDC55DF4166E86ED00765AED /* PhysicsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhysicsObject.h; path = ../../../src/PhysicsObject.h; sourceTree = "<group>"; };
@@ -468,6 +473,8 @@
 			children = (
 				ED1D0BBA16728469009BE8FA /* NPAudioPlayerViewController.h */,
 				ED1D0BBB16728469009BE8FA /* NPAudioPlayerViewController.m */,
+				ED32068416770C210064EC9E /* NPAudioConverter.h */,
+				ED32068516770C210064EC9E /* NPAudioConverter.m */,
 			);
 			name = AudioPlayer;
 			path = NerusphereSE;
@@ -499,6 +506,7 @@
 		ED1D0BDF1672B375009BE8FA /* DevAssets */ = {
 			isa = PBXGroup;
 			children = (
+				ED95933716766E95006E34A4 /* 2-Fog.mp3 */,
 				ED1D0BE01672B392009BE8FA /* lgo_let_us_pray.mp3 */,
 			);
 			name = DevAssets;
@@ -791,7 +799,7 @@
 			children = (
 				EDC55E0F166E951C00765AED /* model */,
 				EDC55DF0166E86ED00765AED /* AudioAnalyzer.h */,
-				EDC55DF1166E86ED00765AED /* AudioAnalyzer.mm */,
+				EDC55DF1166E86ED00765AED /* AudioAnalyzer.cpp */,
 				EDC55DF2166E86ED00765AED /* ParticleSystem.h */,
 				EDC55DF3166E86ED00765AED /* ParticleSystem.cpp */,
 				EDC55DF4166E86ED00765AED /* PhysicsObject.h */,
@@ -925,6 +933,7 @@
 				ED1D0B8316724CD4009BE8FA /* Icon@2x.png in Resources */,
 				ED1D0B8416724CD4009BE8FA /* iTunesArtwork in Resources */,
 				ED1D0BE11672B392009BE8FA /* lgo_let_us_pray.mp3 in Resources */,
+				ED95933816766E95006E34A4 /* 2-Fog.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1012,7 +1021,7 @@
 				EDC55DE8166E82D700765AED /* b2WheelJoint.cpp in Sources */,
 				EDC55DE9166E82D700765AED /* b2Rope.cpp in Sources */,
 				EDC55DFC166E86ED00765AED /* Constants.cpp in Sources */,
-				EDC55DFD166E86ED00765AED /* AudioAnalyzer.mm in Sources */,
+				EDC55DFD166E86ED00765AED /* AudioAnalyzer.cpp in Sources */,
 				EDC55DFE166E86ED00765AED /* ParticleSystem.cpp in Sources */,
 				EDC55DFF166E86ED00765AED /* PhysicsObject.cpp in Sources */,
 				EDC55E00166E86ED00765AED /* Planet.cpp in Sources */,
@@ -1034,6 +1043,7 @@
 				ED1D0BD81672AD53009BE8FA /* kiss_fft.c in Sources */,
 				ED1D0BD91672AD53009BE8FA /* kiss_fftr.c in Sources */,
 				ED1D0BDA1672AD53009BE8FA /* KissFFT.cpp in Sources */,
+				ED32068616770C210064EC9E /* NPAudioConverter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
