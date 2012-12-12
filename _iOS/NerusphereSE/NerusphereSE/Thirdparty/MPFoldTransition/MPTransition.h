@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MPTransitionEnumerations.h"
 
-typedef void (^CompletionBlock)(BOOL);
+typedef void (^MPCompletionBlock)(BOOL);
 
 
 @interface MPTransition : NSObject

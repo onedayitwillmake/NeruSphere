@@ -24,7 +24,7 @@
 		ED1D0BA81672769D009BE8FA /* MPFoldNavPushSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0B9E1672769D009BE8FA /* MPFoldNavPushSegue.m */; };
 		ED1D0BA91672769D009BE8FA /* MPFoldSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BA01672769D009BE8FA /* MPFoldSegue.m */; };
 		ED1D0BB416727D4C009BE8FA /* NPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BB316727D4C009BE8FA /* NPConstants.m */; };
-		ED1D0BBC16728469009BE8FA /* NPAudioPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BBB16728469009BE8FA /* NPAudioPlayerViewController.m */; };
+		ED1D0BBC16728469009BE8FA /* NPAudioPlaylistCreatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BBB16728469009BE8FA /* NPAudioPlaylistCreatorViewController.m */; };
 		ED1D0BBF16729BF2009BE8FA /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED1D0BBD16729BE7009BE8FA /* MediaPlayer.framework */; };
 		ED1D0BD81672AD53009BE8FA /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BD21672AD53009BE8FA /* kiss_fft.c */; };
 		ED1D0BD91672AD53009BE8FA /* kiss_fftr.c in Sources */ = {isa = PBXBuildFile; fileRef = ED1D0BD41672AD53009BE8FA /* kiss_fftr.c */; };
@@ -50,6 +50,13 @@
 		ED36871F166FD3700019F726 /* heads_2.png in Resources */ = {isa = PBXBuildFile; fileRef = ED36870A166FD3700019F726 /* heads_2.png */; };
 		ED368720166FD3700019F726 /* heads_3.png in Resources */ = {isa = PBXBuildFile; fileRef = ED36870B166FD3700019F726 /* heads_3.png */; };
 		ED36872A1670111A0019F726 /* AppInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED368728167011190019F726 /* AppInfo.cpp */; };
+		ED6084AB16790A7800CD96ED /* FacingView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED60849D16790A7800CD96ED /* FacingView.m */; };
+		ED6084AC16790A7800CD96ED /* FoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED60849F16790A7800CD96ED /* FoldView.m */; };
+		ED6084AD16790A7800CD96ED /* MultiFoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6084A116790A7800CD96ED /* MultiFoldView.m */; };
+		ED6084AE16790A7800CD96ED /* PaperFoldView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6084A416790A7800CD96ED /* PaperFoldView.m */; };
+		ED6084AF16790A7800CD96ED /* ShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6084A616790A7800CD96ED /* ShadowView.m */; };
+		ED6084B016790A7800CD96ED /* TouchThroughUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6084A816790A7800CD96ED /* TouchThroughUIView.m */; };
+		ED6084B116790A7800CD96ED /* UIView+Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6084AA16790A7800CD96ED /* UIView+Screenshot.m */; };
 		ED95933816766E95006E34A4 /* 2-Fog.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ED95933716766E95006E34A4 /* 2-Fog.mp3 */; };
 		EDC55C4E166E702400765AED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC55C4D166E702400765AED /* UIKit.framework */; };
 		EDC55C50166E702400765AED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC55C4F166E702400765AED /* Foundation.framework */; };
@@ -70,7 +77,6 @@
 		EDC55C8E166E708C00765AED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC55C8D166E708C00765AED /* main.m */; };
 		EDC55C9A166E711400765AED /* CCGLTouchAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = EDC55C95166E711400765AED /* CCGLTouchAppDelegate.mm */; };
 		EDC55C9B166E711400765AED /* CCGLTouchView.mm in Sources */ = {isa = PBXBuildFile; fileRef = EDC55C97166E711400765AED /* CCGLTouchView.mm */; };
-		EDC55C9C166E711400765AED /* CCGLTouchViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = EDC55C99166E711400765AED /* CCGLTouchViewController.mm */; };
 		EDC55CAD166E732A00765AED /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC55CA1166E731200765AED /* AudioToolbox.framework */; };
 		EDC55CAE166E732A00765AED /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC55CA2166E731200765AED /* AVFoundation.framework */; };
 		EDC55CAF166E732A00765AED /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC55CA3166E731200765AED /* CoreMedia.framework */; };
@@ -176,8 +182,8 @@
 		ED1D0BA01672769D009BE8FA /* MPFoldSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFoldSegue.m; sourceTree = "<group>"; };
 		ED1D0BB216727D4C009BE8FA /* NPConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPConstants.h; path = NerusphereSE/Classes/NPConstants.h; sourceTree = "<group>"; };
 		ED1D0BB316727D4C009BE8FA /* NPConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPConstants.m; path = NerusphereSE/Classes/NPConstants.m; sourceTree = "<group>"; };
-		ED1D0BBA16728469009BE8FA /* NPAudioPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPAudioPlayerViewController.h; path = Classes/NPAudioPlayerViewController.h; sourceTree = "<group>"; };
-		ED1D0BBB16728469009BE8FA /* NPAudioPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPAudioPlayerViewController.m; path = Classes/NPAudioPlayerViewController.m; sourceTree = "<group>"; };
+		ED1D0BBA16728469009BE8FA /* NPAudioPlaylistCreatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPAudioPlaylistCreatorViewController.h; path = Classes/NPAudioPlaylistCreatorViewController.h; sourceTree = "<group>"; };
+		ED1D0BBB16728469009BE8FA /* NPAudioPlaylistCreatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPAudioPlaylistCreatorViewController.m; path = Classes/NPAudioPlaylistCreatorViewController.m; sourceTree = "<group>"; };
 		ED1D0BBD16729BE7009BE8FA /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		ED1D0BD11672AD53009BE8FA /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _kiss_fft_guts.h; sourceTree = "<group>"; };
 		ED1D0BD21672AD53009BE8FA /* kiss_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fft.c; sourceTree = "<group>"; };
@@ -209,6 +215,21 @@
 		ED36870B166FD3700019F726 /* heads_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = heads_3.png; path = ../../../resources/heads_3.png; sourceTree = "<group>"; };
 		ED368728167011190019F726 /* AppInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppInfo.cpp; path = Classes/AppInfo.cpp; sourceTree = "<group>"; };
 		ED3687291670111A0019F726 /* AppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppInfo.h; path = Classes/AppInfo.h; sourceTree = "<group>"; };
+		ED60849C16790A7800CD96ED /* FacingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacingView.h; sourceTree = "<group>"; };
+		ED60849D16790A7800CD96ED /* FacingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacingView.m; sourceTree = "<group>"; };
+		ED60849E16790A7800CD96ED /* FoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoldView.h; sourceTree = "<group>"; };
+		ED60849F16790A7800CD96ED /* FoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoldView.m; sourceTree = "<group>"; };
+		ED6084A016790A7800CD96ED /* MultiFoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiFoldView.h; sourceTree = "<group>"; };
+		ED6084A116790A7800CD96ED /* MultiFoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiFoldView.m; sourceTree = "<group>"; };
+		ED6084A216790A7800CD96ED /* PaperFoldConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperFoldConstants.h; sourceTree = "<group>"; };
+		ED6084A316790A7800CD96ED /* PaperFoldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperFoldView.h; sourceTree = "<group>"; };
+		ED6084A416790A7800CD96ED /* PaperFoldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperFoldView.m; sourceTree = "<group>"; };
+		ED6084A516790A7800CD96ED /* ShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowView.h; sourceTree = "<group>"; };
+		ED6084A616790A7800CD96ED /* ShadowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShadowView.m; sourceTree = "<group>"; };
+		ED6084A716790A7800CD96ED /* TouchThroughUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchThroughUIView.h; sourceTree = "<group>"; };
+		ED6084A816790A7800CD96ED /* TouchThroughUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchThroughUIView.m; sourceTree = "<group>"; };
+		ED6084A916790A7800CD96ED /* UIView+Screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Screenshot.h"; sourceTree = "<group>"; };
+		ED6084AA16790A7800CD96ED /* UIView+Screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Screenshot.m"; sourceTree = "<group>"; };
 		ED95933716766E95006E34A4 /* 2-Fog.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "2-Fog.mp3"; path = "Resources/DevAssets/2-Fog.mp3"; sourceTree = "<group>"; };
 		EDC55C49166E702400765AED /* NerusphereSE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NerusphereSE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDC55C4D166E702400765AED /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -237,8 +258,6 @@
 		EDC55C95166E711400765AED /* CCGLTouchAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCGLTouchAppDelegate.mm; sourceTree = "<group>"; };
 		EDC55C96166E711400765AED /* CCGLTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLTouchView.h; sourceTree = "<group>"; };
 		EDC55C97166E711400765AED /* CCGLTouchView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCGLTouchView.mm; sourceTree = "<group>"; };
-		EDC55C98166E711400765AED /* CCGLTouchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLTouchViewController.h; sourceTree = "<group>"; };
-		EDC55C99166E711400765AED /* CCGLTouchViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCGLTouchViewController.mm; sourceTree = "<group>"; };
 		EDC55CA1166E731200765AED /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		EDC55CA2166E731200765AED /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		EDC55CA3166E731200765AED /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -471,8 +490,8 @@
 		ED1D0BB61672826B009BE8FA /* AudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				ED1D0BBA16728469009BE8FA /* NPAudioPlayerViewController.h */,
-				ED1D0BBB16728469009BE8FA /* NPAudioPlayerViewController.m */,
+				ED1D0BBA16728469009BE8FA /* NPAudioPlaylistCreatorViewController.h */,
+				ED1D0BBB16728469009BE8FA /* NPAudioPlaylistCreatorViewController.m */,
 				ED32068416770C210064EC9E /* NPAudioConverter.h */,
 				ED32068516770C210064EC9E /* NPAudioConverter.m */,
 			);
@@ -525,9 +544,41 @@
 			path = NerusphereSE;
 			sourceTree = "<group>";
 		};
+		ED60849B16790A7800CD96ED /* PaperFold */ = {
+			isa = PBXGroup;
+			children = (
+				ED60849C16790A7800CD96ED /* FacingView.h */,
+				ED60849D16790A7800CD96ED /* FacingView.m */,
+				ED60849E16790A7800CD96ED /* FoldView.h */,
+				ED60849F16790A7800CD96ED /* FoldView.m */,
+				ED6084A016790A7800CD96ED /* MultiFoldView.h */,
+				ED6084A116790A7800CD96ED /* MultiFoldView.m */,
+				ED6084A216790A7800CD96ED /* PaperFoldConstants.h */,
+				ED6084A316790A7800CD96ED /* PaperFoldView.h */,
+				ED6084A416790A7800CD96ED /* PaperFoldView.m */,
+				ED6084A516790A7800CD96ED /* ShadowView.h */,
+				ED6084A616790A7800CD96ED /* ShadowView.m */,
+				ED6084A716790A7800CD96ED /* TouchThroughUIView.h */,
+				ED6084A816790A7800CD96ED /* TouchThroughUIView.m */,
+				ED6084A916790A7800CD96ED /* UIView+Screenshot.h */,
+				ED6084AA16790A7800CD96ED /* UIView+Screenshot.m */,
+			);
+			name = PaperFold;
+			path = Thirdparty/PaperFold;
+			sourceTree = "<group>";
+		};
+		ED6084B216790B6600CD96ED /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Categories;
+			path = NerusphereSE;
+			sourceTree = "<group>";
+		};
 		EDC55C3E166E702400765AED = {
 			isa = PBXGroup;
 			children = (
+				ED6084B216790B6600CD96ED /* Categories */,
 				ED1D0BB61672826B009BE8FA /* AudioPlayer */,
 				EDC55DEB166E86E100765AED /* Visualizer */,
 				ED1D0BB216727D4C009BE8FA /* NPConstants.h */,
@@ -613,6 +664,7 @@
 		EDC55C8B166E703000765AED /* Thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				ED60849B16790A7800CD96ED /* PaperFold */,
 				ED1D0BCF1672AD53009BE8FA /* KissFFT */,
 				ED1D0B8A1672769D009BE8FA /* MPFoldTransition */,
 				EDC55DEA166E86AA00765AED /* Box2D */,
@@ -629,8 +681,6 @@
 				EDC55C95166E711400765AED /* CCGLTouchAppDelegate.mm */,
 				EDC55C96166E711400765AED /* CCGLTouchView.h */,
 				EDC55C97166E711400765AED /* CCGLTouchView.mm */,
-				EDC55C98166E711400765AED /* CCGLTouchViewController.h */,
-				EDC55C99166E711400765AED /* CCGLTouchViewController.mm */,
 			);
 			name = CCGLTouch;
 			path = Thirdparty/CCGLTouch;
@@ -973,7 +1023,6 @@
 				EDC55C8E166E708C00765AED /* main.m in Sources */,
 				EDC55C9A166E711400765AED /* CCGLTouchAppDelegate.mm in Sources */,
 				EDC55C9B166E711400765AED /* CCGLTouchView.mm in Sources */,
-				EDC55C9C166E711400765AED /* CCGLTouchViewController.mm in Sources */,
 				EDC55CC6166E816400765AED /* NPRootViewController.mm in Sources */,
 				EDC55DBD166E82D700765AED /* b2BroadPhase.cpp in Sources */,
 				EDC55DBE166E82D700765AED /* b2CollideCircle.cpp in Sources */,
@@ -1039,11 +1088,18 @@
 				ED1D0BA81672769D009BE8FA /* MPFoldNavPushSegue.m in Sources */,
 				ED1D0BA91672769D009BE8FA /* MPFoldSegue.m in Sources */,
 				ED1D0BB416727D4C009BE8FA /* NPConstants.m in Sources */,
-				ED1D0BBC16728469009BE8FA /* NPAudioPlayerViewController.m in Sources */,
+				ED1D0BBC16728469009BE8FA /* NPAudioPlaylistCreatorViewController.m in Sources */,
 				ED1D0BD81672AD53009BE8FA /* kiss_fft.c in Sources */,
 				ED1D0BD91672AD53009BE8FA /* kiss_fftr.c in Sources */,
 				ED1D0BDA1672AD53009BE8FA /* KissFFT.cpp in Sources */,
 				ED32068616770C210064EC9E /* NPAudioConverter.m in Sources */,
+				ED6084AB16790A7800CD96ED /* FacingView.m in Sources */,
+				ED6084AC16790A7800CD96ED /* FoldView.m in Sources */,
+				ED6084AD16790A7800CD96ED /* MultiFoldView.m in Sources */,
+				ED6084AE16790A7800CD96ED /* PaperFoldView.m in Sources */,
+				ED6084AF16790A7800CD96ED /* ShadowView.m in Sources */,
+				ED6084B016790A7800CD96ED /* TouchThroughUIView.m in Sources */,
+				ED6084B116790A7800CD96ED /* UIView+Screenshot.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

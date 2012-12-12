@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
 
-@interface NPAudioPlayerViewController : UIViewController <UINavigationBarDelegate, MPMediaPickerControllerDelegate> {
+@interface NPAudioPlaylistCreatorViewController : UIViewController <UINavigationBarDelegate, MPMediaPickerControllerDelegate> {
 	MPMediaPickerController*	_mediaPicker;
 	MPMediaItem*				_song;
 }

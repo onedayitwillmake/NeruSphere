@@ -6,17 +6,17 @@
 //  Copyright (c) 2012 Mario Gonzalez. All rights reserved.
 //
 
-#import "NPAudioPlayerViewController.h"
+#import "NPAudioPlaylistCreatorViewController.h"
 #import "MPFoldTransition.h"
 #import "MPFoldEnumerations.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "NPAudioConverter.h"
 
-@interface NPAudioPlayerViewController ()
+@interface NPAudioPlaylistCreatorViewController ()
 
 @end
 
-@implementation NPAudioPlayerViewController
+@implementation NPAudioPlaylistCreatorViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
