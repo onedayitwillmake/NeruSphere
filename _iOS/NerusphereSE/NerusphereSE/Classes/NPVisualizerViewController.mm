@@ -42,14 +42,14 @@
 	} completion:^(BOOL done) {
 		[self.groma removeFromSuperview];
 			
-		_paperFoldView		= [[PaperFoldView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width, boundsHeight)];
-		_visualizerView		= [[NPVisualizerView alloc] initWithFrame: CGRectMake(0,0,[self.view bounds].size.width, boun)];
-		_playlistCreator	= [[NPAudioPlaylistCreatorViewController alloc] initWithNibName:nil bundle:nil];
-		_playlistCreator.view.frame = 
+		//_paperFoldView		= [[PaperFoldView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width, boundsHeight)];
+		_visualizerView		= [[NPVisualizerView alloc] initWithFrame: CGRectMake(0,0,[self.view bounds].size.width, [self.view bounds].size.height)];
+//		_playlistCreator	= [[NPAudioPlaylistCreatorViewController alloc] initWithNibName:nil bundle:nil];
+		//_playlistCreator.view.frame =
 		
 
-		[_paperFoldView setCenterContentView:_visualizerView];
-		[self.view addSubview: _paperFoldView ];
+		//paperFoldView setCenterContentView:_visualizerView];
+		[self.view addSubview: _visualizerView ];
 	}];
 	
 	[self becomeFirstResponder];

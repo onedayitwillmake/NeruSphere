@@ -33,9 +33,9 @@
 	Constants::Defaults::setGravityPoint( AppInfo::getInstance().getWindowCenter() );
 	Constants::Textures::loadTextures( bundlePath );
 	
-//	_audioAnalyzer.load( std::string([[[NPAudioConverter sharedConverter] lastFileWritten] cStringUsingEncoding:NSUTF8StringEncoding]));
+	_audioAnalyzer.load( std::string([[[NPAudioConverter sharedConverter] lastFileWritten] cStringUsingEncoding:NSUTF8StringEncoding]));
 //	_audioAnalyzer.load( bundlePath + "/2-Fog.mp3");
-//	_audioAnalyzer.play();
+	_audioAnalyzer.play();
 	
 	// Start Box2D
 	_worldController.init( 4, 2 );
@@ -56,6 +56,7 @@
 	// Update planet size to match volume
 	static float lastSize = 1;
 	float scale = _audioAnalyzer.getAverageVolume() / 0.05;
+	NSLog(@"%0.2f", scale);
 	float newSize = cinder::box2d::Conversions::toPhysics( Constants::Defaults::HEAD_SIZE_MAX * scale );//fabs( Conversions::toPhysics( Constants::Instances::PERLIN_NOISE()->noise( AppInfo::getInstance().getWindowCenter().x, AppInfo::getInstance().getElapsedFrames() * 0.01) ) * 300 );//Conversions::toPhysics( Constants::Planet::MIN_SIZE + _audioAnalyzer.getAverageVolume() * Constants::Planet::VOLUME_RANGE );
 	float maxSize = [self getWindowWidth] < [self getWindowHeight] ? [self getWindowWidth]*0.49 : [self getWindowHeight]*0.49;
 	newSize = ci::math<float>::min( newSize, cinder::box2d::Conversions::toPhysics( maxSize ) );

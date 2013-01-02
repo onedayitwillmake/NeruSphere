@@ -1229,6 +1229,7 @@
 					../../thirdparty,
 				);
 				INFOPLIST_FILE = "NerusphereSE/NerusphereSE-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/NerusphereSE/Thirdparty/FMod/lib\"";
 				OTHER_LDFLAGS = (
 					"\"$(CINDER_PATH)/lib/libcinder-iphone_d.a\"",
@@ -1274,6 +1275,7 @@
 					../../thirdparty,
 				);
 				INFOPLIST_FILE = "NerusphereSE/NerusphereSE-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/NerusphereSE/Thirdparty/FMod/lib\"";
 				OTHER_LDFLAGS = (
 					"\"$(CINDER_PATH)/lib/libcinder-iphone_d.a\"",
