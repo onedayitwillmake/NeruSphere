@@ -23,6 +23,4 @@
 
 #pragma mark - Methods
 
-/// Sets up the back button, to hi-jack behavior so that we can use the fold-transition
--(void)setupBackButton;
 @end

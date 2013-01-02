@@ -55,9 +55,8 @@
 -(void)configureAudioSession {
 	NSError *setCategoryError = nil;
 	[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: &setCategoryError];
-	
 	if (setCategoryError) {
-		/* handle the error condition */
+		// TODO: Handle error condition better
 		NSLog(@"NPAlert: Error setting audio category");
 	}
 }

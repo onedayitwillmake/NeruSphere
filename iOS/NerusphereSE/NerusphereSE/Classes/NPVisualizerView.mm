@@ -33,9 +33,13 @@
 	Constants::Defaults::setGravityPoint( AppInfo::getInstance().getWindowCenter() );
 	Constants::Textures::loadTextures( bundlePath );
 	
-	_audioAnalyzer.load( std::string([[[NPAudioConverter sharedConverter] lastFileWritten] cStringUsingEncoding:NSUTF8StringEncoding]));
-//	_audioAnalyzer.load( bundlePath + "/2-Fog.mp3");
-	_audioAnalyzer.play();
+	// Load last file written if exist, if not use FOG during dev
+	if( [[NPAudioConverter sharedConverter] lastFileWritten] ) {
+		_audioAnalyzer.load( std::string([[[NPAudioConverter sharedConverter] lastFileWritten] cStringUsingEncoding:NSUTF8StringEncoding]));
+		_audioAnalyzer.play();
+	} else {
+		_audioAnalyzer.load( bundlePath + "/2-Fog.mp3");
+	}
 	
 	// Start Box2D
 	_worldController.init( 4, 2 );

@@ -20,11 +20,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	[self setupBackButton];
-	self.groma.center = self.view.center;
-}
--(void)setupBackButton { 
-	// Override backbutton behavior so we can call popViewController
+	self.groma.center = CGPointMake(self.view.center.x, self.view.center.y - 42);
+
+	/// Sets up the back button, to hi-jack behavior so that we can use the fold-transition
 	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(shouldPopViewController:)];
 	self.navigationItem.leftBarButtonItem = backButton;
 }
@@ -38,18 +36,19 @@
 	
 	// Animate groma out, on complete initialzie the visualizer view
 	[UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-		self.groma.transform = CGAffineTransformScale(CGAffineTransformIdentity, 8, 8);
+		self.groma.transform = CGAffineTransformTranslate( CGAffineTransformScale(CGAffineTransformIdentity, 20, 20), 0, -40);
+		
 	} completion:^(BOOL done) {
 		[self.groma removeFromSuperview];
-			
-		//_paperFoldView		= [[PaperFoldView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width, boundsHeight)];
-		_visualizerView		= [[NPVisualizerView alloc] initWithFrame: CGRectMake(0,0,[self.view bounds].size.width, [self.view bounds].size.height)];
-//		_playlistCreator	= [[NPAudioPlaylistCreatorViewController alloc] initWithNibName:nil bundle:nil];
-		//_playlistCreator.view.frame =
-		
 
-		//paperFoldView setCenterContentView:_visualizerView];
-		[self.view addSubview: _visualizerView ];
+		_paperFoldView		= [[PaperFoldView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width, [self.view bounds].size.width)];
+//		_visualizerView		= [[NPVisualizerView alloc] initWithFrame: CGRectMake(0,0,[self.view bounds].size.width, [self.view bounds].size.height)];
+		[_paperFoldView setCenterContentView: _visualizerView];
+
+		_playlistCreator	= [[NPAudioPlaylistCreatorViewController alloc] initWithNibName:nil bundle:nil];
+		[_paperFoldView setLeftFoldContentView:[_playlistCreator view] foldCount:2 pullFactor:0.9];
+		
+		[self.view addSubview: _paperFoldView ];
 	}];
 	
 	[self becomeFirstResponder];

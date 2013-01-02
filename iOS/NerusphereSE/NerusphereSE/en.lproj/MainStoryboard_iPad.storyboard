@@ -46,7 +46,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="YnK-o8-ZUd" kind="custom" customClass="MPFoldNavPushSegue" id="Pbr-je-3oW"/>
+                                    <segue destination="YnK-o8-ZUd" kind="custom" customClass="MPFlipNavPushSegue" id="7ea-Qg-1zc"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Nerusphere SE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3VK-Aq-Rqv">
@@ -67,9 +67,6 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="jPt-Sx-nQv" kind="push" id="cjO-8W-gHF"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" cyan="0.48604460685483875" magenta="0.18809853830645165" yellow="0.0" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
@@ -86,14 +83,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1287" y="-106"/>
+            <point key="canvasLocation" x="1297" y="-108"/>
         </scene>
         <!--Audio Playlist Creator View Controller - AudioPlayer-->
         <scene sceneID="Ea2-Ba-4ND">
             <objects>
                 <viewController storyboardIdentifier="NPAudioPlayerViewController" title="AudioPlayer" id="jPt-Sx-nQv" customClass="NPAudioPlaylistCreatorViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1sF-If-iPy">
-                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" cyan="0.0" magenta="0.14317666330645162" yellow="0.50122857862903225" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                     </view>
@@ -103,27 +100,26 @@
             </objects>
             <point key="canvasLocation" x="2278" y="-910"/>
         </scene>
-        <!--Visualizer View Controller - Visualizer-->
+        <!--Visualizer View Controller - NPVisualizerViewController-->
         <scene sceneID="iy3-kY-I1t">
             <objects>
-                <viewController storyboardIdentifier="NPVisualizerViewController" id="YnK-o8-ZUd" customClass="NPVisualizerViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NPVisualizerViewController" title="NPVisualizerViewController" id="YnK-o8-ZUd" customClass="NPVisualizerViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pbz-x3-v0m">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="center" image="gromacirclepink.png" translatesAutoresizingMaskIntoConstraints="NO" id="EGi-1M-PDX"/>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="EGi-1M-PDX" firstAttribute="centerX" secondItem="pbz-x3-v0m" secondAttribute="centerX" type="default" id="SHZ-py-MnY"/>
+                            <constraint firstItem="EGi-1M-PDX" firstAttribute="centerX" secondItem="pbz-x3-v0m" secondAttribute="centerX" type="default" id="0C1-Ct-5dz"/>
                             <constraint firstItem="EGi-1M-PDX" firstAttribute="centerY" secondItem="pbz-x3-v0m" secondAttribute="centerY" type="default" id="xIg-6a-TuW"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Visualizer" id="w9P-PH-iCy">
                         <barButtonItem key="backBarButtonItem" title="HEllo" id="YB0-Wm-WTQ"/>
                     </navigationItem>
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedTopBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="groma" destination="EGi-1M-PDX" id="HlQ-vE-lfp"/>
                     </connections>
@@ -136,23 +132,6 @@
     <resources>
         <image name="gromacirclepink.png" width="290" height="300"/>
     </resources>
-    <classes>
-        <class className="NPAudioPlaylistCreatorViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NPAudioPlaylistCreatorViewController.h"/>
-        </class>
-        <class className="NPRootViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NPRootViewController.h"/>
-        </class>
-        <class className="NPVisualizerViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NPVisualizerViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="groma" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
