@@ -5,9 +5,10 @@
  */
 
 #import "NPConstants.h"
-NSString* const NPkViewControllerIdentifierNPVisualizer = @"NPVisualizerViewController";
-NSString* const NPkViewControllerIdentifierNPAudioPlayer = @"NPAudioPlayerViewController";
 
+NSString* const NPkViewControllerIdentifierNPVisualizer = @"NPVisualizerViewController";
+NSString* const NPkViewControllerIdentifierNPAudioPlayer = @"NPPlaylistEditor";
+NSString* const NPkViewControllerIdentifierNPSettingsPanel = @"NPVisualizerSettings";
 @implementation NPkConstants
 +(NSString*)storyboardName {
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -15,5 +16,9 @@ NSString* const NPkViewControllerIdentifierNPAudioPlayer = @"NPAudioPlayerViewCo
 	} else {
 	    return @"MainStoryboard_iPad";
 	}
+}
+
++(const char *)bundlePathAsCString {
+	return [[[NSBundle mainBundle] bundlePath] cStringUsingEncoding:NSUTF8StringEncoding];
 }
 @end

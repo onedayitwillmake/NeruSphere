@@ -45,17 +45,22 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-	if(!_mediaPicker) {
-		_mediaPicker =	[[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeMusic];
-		_mediaPicker.prompt = @"Choose song to export";
-		_mediaPicker.allowsPickingMultipleItems = NO;
-		_mediaPicker.delegate = self;
-		[self presentViewController:_mediaPicker animated:YES completion: nil];
-	} else if(_song) {
-		[[NPAudioConverter sharedConverter] getConvertedSongPath:_song];
-	}
+//	if(!_mediaPicker) {
+//		_mediaPicker =	[[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeMusic];
+//		_mediaPicker.prompt = @"Choose song to export";
+//		_mediaPicker.allowsPickingMultipleItems = YES;
+//		_mediaPicker.delegate = self;
+//		[self presentViewController:_mediaPicker animated:YES completion: nil];
+//	} else if(_song) {
+//		[[NPAudioConverter sharedConverter] getConvertedSongPath:_song];
+//	}
+	NSLog(@"viewDidAppear");
 }
 
+-(void)viewDidDisappear:(BOOL)animated {
+	[super viewDidDisappear:animated];
+	NSLog(@"viewDidDisappear");
+}
 
 
 - (void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection {

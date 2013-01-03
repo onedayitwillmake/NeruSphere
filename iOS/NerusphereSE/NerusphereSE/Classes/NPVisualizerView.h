@@ -16,10 +16,10 @@
 
 
 @interface NPVisualizerView : CCGLTouchView {
-	WorldController _worldController;
-	AudioAnalyzer _audioAnalyzer;
+	WorldController		_worldController;
+	AudioAnalyzer		_audioAnalyzer;
 	
-	double	_lastElapsedSeconds;	// Store to keep track of delta
+	double				_lastElapsedSeconds;	// Store to keep track of delta
 }
 
 -(void)reset;

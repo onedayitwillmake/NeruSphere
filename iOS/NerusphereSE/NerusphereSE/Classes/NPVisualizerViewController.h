@@ -9,15 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "NPVisualizerView.h"
 #import "NPAudioPlaylistCreatorViewController.h"
+#import "NPVisualizerSettingsPanel.h"
 #import "PaperFoldConstants.h"
 #import "PaperFoldView.h"
 
 @interface NPVisualizerViewController : UIViewController {
-	NPVisualizerView*						_visualizerView;
-	NPAudioPlaylistCreatorViewController*	_playlistCreator;
+	NPVisualizerView*							_visualizerView;
+	NPAudioPlaylistCreatorViewController*		_playlistCreator;
+	NPVisualizerSettingsPanel*	_settingsEditor;
 	
 	// Paperfold
-	PaperFoldView*							_paperFoldView;
+	PaperFoldView*								_paperFoldView;
 }
 @property (weak, nonatomic) IBOutlet UIImageView *groma;
 

@@ -81,7 +81,7 @@ namespace Constants {
 		Constants::Heads::MIN_LIFETIME = 500;
 		Constants::Heads::MAX_LIFETIME = 3500;
 		Constants::Heads::MAX_SPEED = 1616.0f;
-		Constants::Heads::PERLIN_STRENGTH = 5.1f;
+		Constants::Heads::PERLIN_STRENGTH = 6.1f;
 		Constants::Heads::ANTI_GRAVITY = 2.1;
 		Constants::Heads::MIN_GRAVITY_DISTANCE = 3000; // min distance Squared
 
@@ -89,8 +89,8 @@ namespace Constants {
 		Constants::Planet::VOLUME_RANGE = 30.0f;
 		Constants::Planet::MIN_SIZE = 32.0f;
 
-		Constants::Particles::MIN = 5;
-		Constants::Particles::MAX = 20;
+		Constants::Particles::MIN = 10;
+		Constants::Particles::MAX = 30;
 
 		Constants::Particles::PARTICLE_SIZE_MIN = 0.5f;
 		Constants::Particles::PARTICLE_SIZE_MAX = 2.5f;

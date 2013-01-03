@@ -139,6 +139,11 @@
 		EDC55E01166E86ED00765AED /* Textures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55DF9166E86ED00765AED /* Textures.cpp */; };
 		EDC55E02166E86ED00765AED /* WorldController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC55DFB166E86ED00765AED /* WorldController.cpp */; };
 		EDC55E0D166E8CE900765AED /* NPVisualizerView.mm in Sources */ = {isa = PBXBuildFile; fileRef = EDC55E0C166E8CE900765AED /* NPVisualizerView.mm */; };
+		EDE0375C1694DE38002E7380 /* icon_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = EDE037581694DE38002E7380 /* icon_menu.png */; };
+		EDE0375D1694DE38002E7380 /* icon_menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EDE037591694DE38002E7380 /* icon_menu@2x.png */; };
+		EDE0375E1694DE38002E7380 /* layers_entrypoint.png in Resources */ = {isa = PBXBuildFile; fileRef = EDE0375A1694DE38002E7380 /* layers_entrypoint.png */; };
+		EDE0375F1694DE38002E7380 /* layers_entrypoint@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EDE0375B1694DE38002E7380 /* layers_entrypoint@2x.png */; };
+		EDE037651694EB30002E7380 /* NPVisualizerSettingsPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE037641694EB30002E7380 /* NPVisualizerSettingsPanel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,8 +185,8 @@
 		ED1D0B9E1672769D009BE8FA /* MPFoldNavPushSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFoldNavPushSegue.m; sourceTree = "<group>"; };
 		ED1D0B9F1672769D009BE8FA /* MPFoldSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFoldSegue.h; sourceTree = "<group>"; };
 		ED1D0BA01672769D009BE8FA /* MPFoldSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFoldSegue.m; sourceTree = "<group>"; };
-		ED1D0BB216727D4C009BE8FA /* NPConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPConstants.h; path = NerusphereSE/Classes/NPConstants.h; sourceTree = "<group>"; };
-		ED1D0BB316727D4C009BE8FA /* NPConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPConstants.m; path = NerusphereSE/Classes/NPConstants.m; sourceTree = "<group>"; };
+		ED1D0BB216727D4C009BE8FA /* NPConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPConstants.h; path = Classes/NPConstants.h; sourceTree = "<group>"; };
+		ED1D0BB316727D4C009BE8FA /* NPConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPConstants.m; path = Classes/NPConstants.m; sourceTree = "<group>"; };
 		ED1D0BBA16728469009BE8FA /* NPAudioPlaylistCreatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPAudioPlaylistCreatorViewController.h; path = Classes/NPAudioPlaylistCreatorViewController.h; sourceTree = "<group>"; };
 		ED1D0BBB16728469009BE8FA /* NPAudioPlaylistCreatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPAudioPlaylistCreatorViewController.m; path = Classes/NPAudioPlaylistCreatorViewController.m; sourceTree = "<group>"; };
 		ED1D0BBD16729BE7009BE8FA /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -376,6 +381,12 @@
 		EDC55DFB166E86ED00765AED /* WorldController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldController.cpp; path = ../../../src/WorldController.cpp; sourceTree = "<group>"; };
 		EDC55E0B166E8CE900765AED /* NPVisualizerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPVisualizerView.h; path = Classes/NPVisualizerView.h; sourceTree = "<group>"; };
 		EDC55E0C166E8CE900765AED /* NPVisualizerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NPVisualizerView.mm; path = Classes/NPVisualizerView.mm; sourceTree = "<group>"; };
+		EDE037581694DE38002E7380 /* icon_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_menu.png; path = assets/ui/icon_menu.png; sourceTree = SOURCE_ROOT; };
+		EDE037591694DE38002E7380 /* icon_menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_menu@2x.png"; path = "assets/ui/icon_menu@2x.png"; sourceTree = SOURCE_ROOT; };
+		EDE0375A1694DE38002E7380 /* layers_entrypoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = layers_entrypoint.png; path = assets/ui/layers_entrypoint.png; sourceTree = SOURCE_ROOT; };
+		EDE0375B1694DE38002E7380 /* layers_entrypoint@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "layers_entrypoint@2x.png"; path = "assets/ui/layers_entrypoint@2x.png"; sourceTree = SOURCE_ROOT; };
+		EDE037631694EB30002E7380 /* NPVisualizerSettingsPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPVisualizerSettingsPanel.h; path = Classes/NPVisualizerSettingsPanel.h; sourceTree = "<group>"; };
+		EDE037641694EB30002E7380 /* NPVisualizerSettingsPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPVisualizerSettingsPanel.m; path = Classes/NPVisualizerSettingsPanel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -534,6 +545,7 @@
 		ED3686F8166FD3520019F726 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EDE037531694D8A1002E7380 /* ui */,
 				ED1D0BDF1672B375009BE8FA /* DevAssets */,
 				ED1D0B8916727486009BE8FA /* Visualizer */,
 				ED1D0B7516724CCB009BE8FA /* Icons */,
@@ -578,15 +590,14 @@
 		EDC55C3E166E702400765AED = {
 			isa = PBXGroup;
 			children = (
-				ED6084B216790B6600CD96ED /* Categories */,
-				ED1D0BB61672826B009BE8FA /* AudioPlayer */,
-				EDC55DEB166E86E100765AED /* Visualizer */,
-				ED1D0BB216727D4C009BE8FA /* NPConstants.h */,
-				ED1D0BB316727D4C009BE8FA /* NPConstants.m */,
 				EDC55C5C166E702400765AED /* NPAppDelegate.h */,
 				EDC55C5D166E702400765AED /* NPAppDelegate.mm */,
 				EDC55CC4166E816400765AED /* NPRootViewController.h */,
 				EDC55CC5166E816400765AED /* NPRootViewController.mm */,
+				EDC55E0F166E951C00765AED /* Model */,
+				ED6084B216790B6600CD96ED /* Categories */,
+				ED1D0BB61672826B009BE8FA /* AudioPlayer */,
+				EDC55DEB166E86E100765AED /* Visualizer */,
 				EDC55C6B166E702400765AED /* NPVisualizerViewController.h */,
 				EDC55C6C166E702400765AED /* NPVisualizerViewController.mm */,
 				EDC55C8B166E703000765AED /* Thirdparty */,
@@ -847,7 +858,6 @@
 		EDC55DEB166E86E100765AED /* Visualizer */ = {
 			isa = PBXGroup;
 			children = (
-				EDC55E0F166E951C00765AED /* model */,
 				EDC55DF0166E86ED00765AED /* AudioAnalyzer.h */,
 				EDC55DF1166E86ED00765AED /* AudioAnalyzer.cpp */,
 				EDC55DF2166E86ED00765AED /* ParticleSystem.h */,
@@ -860,12 +870,14 @@
 				EDC55DFB166E86ED00765AED /* WorldController.cpp */,
 				EDC55E0B166E8CE900765AED /* NPVisualizerView.h */,
 				EDC55E0C166E8CE900765AED /* NPVisualizerView.mm */,
+				EDE037631694EB30002E7380 /* NPVisualizerSettingsPanel.h */,
+				EDE037641694EB30002E7380 /* NPVisualizerSettingsPanel.m */,
 			);
 			name = Visualizer;
 			path = NerusphereSE;
 			sourceTree = "<group>";
 		};
-		EDC55E0F166E951C00765AED /* model */ = {
+		EDC55E0F166E951C00765AED /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				EDC55DEC166E86ED00765AED /* Conversions.h */,
@@ -875,8 +887,22 @@
 				EDC55DF9166E86ED00765AED /* Textures.cpp */,
 				ED368728167011190019F726 /* AppInfo.cpp */,
 				ED3687291670111A0019F726 /* AppInfo.h */,
+				ED1D0BB216727D4C009BE8FA /* NPConstants.h */,
+				ED1D0BB316727D4C009BE8FA /* NPConstants.m */,
 			);
-			name = model;
+			name = Model;
+			path = NerusphereSE;
+			sourceTree = "<group>";
+		};
+		EDE037531694D8A1002E7380 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				EDE037581694DE38002E7380 /* icon_menu.png */,
+				EDE037591694DE38002E7380 /* icon_menu@2x.png */,
+				EDE0375A1694DE38002E7380 /* layers_entrypoint.png */,
+				EDE0375B1694DE38002E7380 /* layers_entrypoint@2x.png */,
+			);
+			name = ui;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -984,6 +1010,10 @@
 				ED1D0B8416724CD4009BE8FA /* iTunesArtwork in Resources */,
 				ED1D0BE11672B392009BE8FA /* lgo_let_us_pray.mp3 in Resources */,
 				ED95933816766E95006E34A4 /* 2-Fog.mp3 in Resources */,
+				EDE0375C1694DE38002E7380 /* icon_menu.png in Resources */,
+				EDE0375D1694DE38002E7380 /* icon_menu@2x.png in Resources */,
+				EDE0375E1694DE38002E7380 /* layers_entrypoint.png in Resources */,
+				EDE0375F1694DE38002E7380 /* layers_entrypoint@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1100,6 +1130,7 @@
 				ED6084AF16790A7800CD96ED /* ShadowView.m in Sources */,
 				ED6084B016790A7800CD96ED /* TouchThroughUIView.m in Sources */,
 				ED6084B116790A7800CD96ED /* UIView+Screenshot.m in Sources */,
+				EDE037651694EB30002E7380 /* NPVisualizerSettingsPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

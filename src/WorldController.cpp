@@ -52,6 +52,10 @@ WorldController::~WorldController() {
 void WorldController::init( int positionIterations, int velocityIterations ) {
 	b2Vec2 gravity(0.0f, 0.0f);
 	_world = new b2World( gravity );
+	_world->SetAllowSleeping( true );
+	_world->SetContinuousPhysics( false );
+	_world->SetSubStepping( false );
+	
 	_positionIterations = positionIterations;
 	_velocityIterations = velocityIterations;
 	_timeStep = 1.0f / 60.0f;
@@ -134,7 +138,6 @@ void WorldController::setPlanetSize(float size ) {
 	
 	static ci::Vec2f currentPosition( AppInfo::getInstance().getWindowCenter().x, AppInfo::getInstance().getWindowCenter().y);
 	currentPosition -= (currentPosition - Constants::Defaults::getGravityPoint() ) * 0.2f;
-	
 	
 	// Body definition
 	b2BodyDef mBodyDef;

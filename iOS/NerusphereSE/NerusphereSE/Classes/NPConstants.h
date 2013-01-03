@@ -25,9 +25,11 @@
 #pragma mark - ViewController Identifiers
 extern NSString* const NPkViewControllerIdentifierNPVisualizer;
 extern NSString* const NPkViewControllerIdentifierNPAudioPlayer;
+extern NSString* const NPkViewControllerIdentifierNPSettingsPanel;
 
 // Place colors or other objects that cannot be statically allocated outside of a class below
 @interface NPkConstants
 /// Returns either the iphone or ipad storyboard based on a simple runtime check
 +(NSString *)storyboardName;
++(const char *)bundlePathAsCString;
 @end

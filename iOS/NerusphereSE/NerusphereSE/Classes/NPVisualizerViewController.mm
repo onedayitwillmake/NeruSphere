@@ -7,6 +7,7 @@
 //
 
 #import "NPVisualizerViewController.h"
+#import "NPConstants.h"
 #import "NPVisualizerView.h"
 #import "MPFoldEnumerations.h"
 #import "MPFoldTransition.h"
@@ -20,11 +21,33 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	// Recenter groma due to a glitch in MPFold transitions placing it at (0,0)
 	self.groma.center = CGPointMake(self.view.center.x, self.view.center.y - 42);
 
-	/// Sets up the back button, to hi-jack behavior so that we can use the fold-transition
-	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(shouldPopViewController:)];
-	self.navigationItem.leftBarButtonItem = backButton;
+	/// Setup the back button to hi-jack behavior so that we can use the fold-transition
+//	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(shouldPopViewController:)];
+//	self.navigationItem.leftBarButtonItem = backButton;
+	
+	/// Setup the PaperFold views
+	UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[NPkConstants storyboardName] bundle:nil];
+	_paperFoldView		= [[PaperFoldView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width, [self.view bounds].size.height)];
+	
+	// Center: Visualizer view
+	_visualizerView		= [[NPVisualizerView alloc] initWithFrame: CGRectMake(0,0,[self.view bounds].size.width, [self.view bounds].size.height)];
+	[_paperFoldView setCenterContentView: _visualizerView];
+	
+	// Leftside: Set the playlist editor
+	_playlistCreator	= [storyboard instantiateViewControllerWithIdentifier: NPkViewControllerIdentifierNPAudioPlayer];
+	[[_playlistCreator view] setFrame: CGRectMake(0, 0, 320, [self.view bounds].size.height) ];
+	[_paperFoldView setLeftFoldContentView:[_playlistCreator view] foldCount:1 pullFactor:0.9];
+	
+	// Rightside: Set the visualizer settings controller
+	_settingsEditor	= [storyboard instantiateViewControllerWithIdentifier: NPkViewControllerIdentifierNPSettingsPanel ];
+	[[_settingsEditor view] setFrame: CGRectMake(0, 0, 320, [self.view bounds].size.height) ];
+	[_paperFoldView setRightFoldContentView:[_settingsEditor view] foldCount:1 pullFactor:0.9];
+	
+	[self.view insertSubview: _paperFoldView atIndex: 0];
+//	[self.view insertSubview:_visualizerView atIndex:0];
 }
 
 -(void)shouldPopViewController:(id)sender {
@@ -33,22 +56,13 @@
 
 #pragma mark View Lifecycle
 -(void)viewDidAppear:(BOOL)animated {
+	//	[self.navigationController setNavigationBarHidden:YES animated:NO];
 	
-	// Animate groma out, on complete initialzie the visualizer view
+	// Animate groma out, on complete initialize the visualizer view
 	[UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
 		self.groma.transform = CGAffineTransformTranslate( CGAffineTransformScale(CGAffineTransformIdentity, 20, 20), 0, -40);
-		
 	} completion:^(BOOL done) {
 		[self.groma removeFromSuperview];
-
-		_paperFoldView		= [[PaperFoldView alloc] initWithFrame:CGRectMake(0,0,[self.view bounds].size.width, [self.view bounds].size.width)];
-//		_visualizerView		= [[NPVisualizerView alloc] initWithFrame: CGRectMake(0,0,[self.view bounds].size.width, [self.view bounds].size.height)];
-		[_paperFoldView setCenterContentView: _visualizerView];
-
-		_playlistCreator	= [[NPAudioPlaylistCreatorViewController alloc] initWithNibName:nil bundle:nil];
-		[_paperFoldView setLeftFoldContentView:[_playlistCreator view] foldCount:2 pullFactor:0.9];
-		
-		[self.view addSubview: _paperFoldView ];
 	}];
 	
 	[self becomeFirstResponder];
@@ -57,6 +71,8 @@
 -(void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
 	[self resignFirstResponder];
+	
+	
 	[_visualizerView removeFromSuperview];
 	_visualizerView = nil;
 	
@@ -68,6 +84,12 @@
 	NSLog(@"Memory warning!");
 }
 
+- (IBAction)shouldOpenPlaylistEditor:(id)sender {
+	[_paperFoldView setPaperFoldState: PaperFoldStateLeftUnfolded];
+}
+- (IBAction)shouldOpenVisualizerSettings:(id)sender {
+	[_paperFoldView setPaperFoldState: PaperFoldStateRightUnfolded];
+}
 
 -(BOOL)canBecomeFirstResponder { return YES; }
 
