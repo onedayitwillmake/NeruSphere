@@ -72,7 +72,7 @@ namespace Constants {
 		Constants::Forces::GRAVITY_FORCE = 40000.0f;
 		Constants::Forces::DIRECTION = 1;
 
-		Constants::Defaults::HEAD_COUNT = 150;
+		Constants::Defaults::HEAD_COUNT = 200;
 		Constants::Defaults::HEAD_SIZE_MIN = 10;
 		Constants::Defaults::HEAD_SIZE_MAX = 28;
 		Constants::Defaults::DEBUG_DRAW = false;

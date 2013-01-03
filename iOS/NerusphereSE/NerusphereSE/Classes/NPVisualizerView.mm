@@ -19,7 +19,7 @@
 @implementation NPVisualizerView
 
 -(void)prepareSettings {
-	[self enableAntiAliasing];
+	[self enableAntiAliasing: false];
 	[super prepareSettings];
 }
 
@@ -38,7 +38,7 @@
 	Constants::Textures::loadTextures( bundlePath );
 	
 	// Start Box2D
-	_worldController.init( 4, 2 );
+	_worldController.init( 1, 1 );
 	_worldController.createHeads( Constants::Defaults::HEAD_COUNT );
 	
 	[super setup];
